@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Budget Buddy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* General Body Styles */
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: linear-gradient(135deg, #a8e063, #56ab2f); /* Default Green Theme */
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      transition: background 0.5s ease-in-out;
+    }
+
+    /* Theme Specific Backgrounds */
+    body.theme-green {
+      background: linear-gradient(135deg, #a8e063, #56ab2f);
+    }
+    body.theme-blue {
+      background: linear-gradient(135deg, #87CEEB, #4682B4); /* Sky Blue */
+    }
+    body.theme-pink {
+      background: linear-gradient(135deg, #FFB6C1, #FF69B4); /* Hot Pink */
+    }
+    body.theme-yellow {
+      background: linear-gradient(135deg, #FFD700, #FFA500); /* Golden Yellow */
+    }
+    body.theme-purple {
+      background: linear-gradient(135deg, #E0BBE4, #957DAD); /* Lavender Purple */
+    }
+
+    /* Floating Elements */
+    .floating-element {
+      position: absolute;
+      opacity: 0.6;
+      animation: float 6s ease-in-out infinite;
+      z-index: 0; /* Ensure they are behind the main container */
+    }
+    .coin { top: 10%; left: 5%; width: 50px; height: 50px; background-color: gold; border-radius: 50%; animation-delay: 0s; }
+    .star { top: 30%; right: 10%; width: 40px; height: 40px; background-color: yellow; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); animation-delay: 2s; }
+    .cloud { bottom: 15%; left: 20%; width: 80px; height: 50px; background-color: white; border-radius: 50px; box-shadow: 20px 0 0 -10px white, 40px 0 0 -20px white; animation-delay: 4s; }
+    .balloon { top: 5%; right: 25%; width: 60px; height: 80px; background-color: #FF6347; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; animation-delay: 1s; }
+    .heart { top: 40%; left: 15%; width: 40px; height: 40px; background-color: #FF69B4; position: relative; transform: rotate(-45deg); animation-delay: 3s; }
+    .heart::before, .heart::after { content: ""; width: 40px; height: 40px; background-color: #FF69B4; border-radius: 50%; position: absolute; }
+    .heart::before { top: -20px; left: 0; }
+    .heart::after { top: 0; left: 20px; }
+    .diamond { bottom: 5%; right: 5%; width: 40px; height: 40px; background-color: #00CED1; transform: rotate(45deg); animation-delay: 5s; }
+    .flower { top: 20%; left: 30%; width: 50px; height: 50px; background-color: #FFD700; border-radius: 50%; animation-delay: 0.5s; }
+    .flower::before, .flower::after { content: ""; position: absolute; background-color: #FFD700; border-radius: 50%; }
+    .flower::before { width: 30px; height: 30px; top: -10px; left: 10px; }
+    .flower::after { width: 30px; height: 30px; top: 10px; left: -10px; }
+    .ferris-wheel {
+      top: 60%;
+      left: 5%;
+      width: 80px;
+      height: 80px;
+      border: 5px solid #FF5722; /* Orange wheel */
+      border-radius: 50%;
+      position: relative;
+      animation: float 7s ease-in-out infinite, spin 10s linear infinite; /* Combine float and spin */
+      animation-delay: 6s;
+    }
+    .ferris-wheel::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 10px;
+      height: 10px;
+      background-color: #FFD700; /* Yellow center */
+      border-radius: 50%;
+    }
+    .ferris-wheel::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      width: 80px;
+      height: 5px;
+      background-color: #FF5722; /* Spokes */
+    }
+    .ferris-wheel .cabin {
+      position: absolute;
+      width: 15px;
+      height: 20px;
+      background-color: #4CAF50; /* Green cabins */
+      border-radius: 3px;
+      transform-origin: 50% 40px; /* Rotate around the center of the wheel */
+    }
+    .ferris-wheel .cabin:nth-child(1) { top: 0; left: 50%; margin-left: -7.5px; transform: rotate(0deg) translateY(-40px); }
+    .ferris-wheel .cabin:nth-child(2) { top: 50%; left: 100%; margin-top: -10px; margin-left: -7.5px; transform: rotate(90deg) translateY(-40px); }
+    .ferris-wheel .cabin:nth-child(3) { top: 100%; left: 50%; margin-top: -10px; margin-left: -7.5px; transform: rotate(180deg) translateY(-40px); }
+    .ferris-wheel .cabin:nth-child(4) { top: 50%; left: 0; margin-top: -10px; transform: rotate(270deg) translateY(-40px); }
+
+
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(0deg); }
+      25% { transform: translateY(-10px) rotate(5deg); }
+      50% { transform: translateY(-20px) rotate(-5deg); }
+      75% { transform: translateY(-10px) rotate(5deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Main Container */
+    .container {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Headings */
+    h1, h2, h3 {
+      font-family: 'Bubblegum Sans', cursive;
+      color: #4CAF50;
+      text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    h1 { font-size: 3em; margin-bottom: 10px; }
+    h2 { font-size: 2.2em; }
+    h3 { font-size: 1.8em; color: #FFC107; }
+
+    /* Cards */
+    .card {
+      background-color: #FFFDE7;
+      border: 2px solid #FFD700;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      text-align: left;
+    }
+
+    /* Input Bars */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    input[type="date"] {
+      width: calc(100% - 20px);
+      padding: 12px;
+      margin: 8px 0;
+      border: 2px solid #9CCC65;
+      border-radius: 10px;
+      font-size: 1.1em;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+    input:focus {
+      border-color: #4CAF50;
+      box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+      outline: none;
+    }
+
+    /* Buttons */
+    button {
+      background-color: #FF9800;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      font-size: 1.2em;
+      font-family: 'Bubblegum Sans', cursive;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      margin: 10px 5px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    button:hover {
+      background-color: #FB8C00;
+      transform: translateY(-3px);
+    }
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Specific button colors */
+    #do-signup, #do-login, #calc-submit { background-color: #4CAF50; }
+    #do-signup:hover, #do-login:hover, #calc-submit:hover { background-color: #43A047; }
+    #do-forgot { background-color: #2196F3; }
+    #do-forgot:hover { background-color: #1976D2; }
+    #do-logout { background-color: #F44336; }
+    #do-logout:hover { background-color: #D32F2F; }
+    #add-other { background-color: #9C27B0; }
+    #add-other:hover { background-color: #7B1FA2; }
+    .rm { background-color: #FF5722; padding: 5px 10px; font-size: 0.9em; border-radius: 15px; }
+    .rm:hover { background-color: #E64A19; }
+
+    /* Icons */
+    .icon {
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    /* Auth Message */
+    #auth-msg {
+      color: #D32F2F;
+      font-weight: bold;
+      margin-top: 15px;
+      font-size: 1.1em;
+    }
+
+    /* Other Expenses List */
+    #other-list div {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+    #other-list input {
+      flex-grow: 1;
+      margin: 0;
+      min-width: 120px;
+    }
+    #other-list .rm {
+      flex-shrink: 0;
+    }
+
+    /* Summary Section */
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      border-bottom: 1px dashed #ccc;
+      flex-wrap: wrap;
+    }
+    .summary-item:last-child {
+      border-bottom: none;
+    }
+    .summary-label {
+      font-weight: bold;
+      color: #66BB6A;
+      flex-basis: 60%;
+      text-align: left;
+    }
+    .summary-value {
+      color: #333;
+      flex-basis: 35%;
+      text-align: right;
+    }
+    #sum-remain, #sum-save {
+      font-weight: bold;
+      color: #4CAF50;
+    }
+
+    /* History Table - Desktop View */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: #E8F5E9;
+      border-radius: 10px;
+      overflow: hidden;
+      display: table; /* Default for desktop */
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #C8E6C9;
+      text-align: center;
+      font-size: 1em;
+    }
+    th {
+      background-color: #81C784;
+      color: white;
+      font-family: 'Bubblegum Sans', cursive;
+      font-size: 1.1em;
+    }
+    tr:nth-child(even) {
+      background-color: #DCEDC8;
+    }
+    tr:hover {
+      background-color: #C5E1A5;
+    }
+
+    /* Month Filter */
+    #month-filter {
+      padding: 8px;
+      border-radius: 10px;
+      border: 2px solid #9CCC65;
+      font-size: 1em;
+      margin-top: 15px;
+      background-color: white;
+      width: calc(100% - 20px);
+      box-sizing: border-box;
+    }
+
+    /* Floating Bulb Icon */
+    #bulb-icon {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(45deg, #FFD700, #FF8C00); /* Golden to Orange */
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2.5em;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      z-index: 100;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      color: white;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+      animation: float 4s ease-in-out infinite; /* Reuse float animation */
+    }
+    #bulb-icon:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Tip Pop-up */
+    .tip-popup {
+      display: none;
+      position: fixed;
+      bottom: 90px; /* Above the bulb icon */
+      right: 20px;
+      background-color: #FFFDE7;
+      border: 2px solid #FFD700;
+      border-radius: 15px;
+      padding: 20px;
+      max-width: 300px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      z-index: 101;
+      text-align: left;
+      font-family: 'Open Sans', sans-serif;
+      color: #333;
+    }
+    .tip-popup h3 {
+      color: #4CAF50;
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 1.5em;
+    }
+    .tip-popup p {
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .tip-popup button {
+      background-color: #FF5722;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      float: right;
+      margin-top: 10px;
+    }
+    .tip-popup button:hover {
+      background-color: #E64A19;
+    }
+
+    /* Praise/Cheer Up Message Pop-up */
+    .message-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #E8F5E9; /* Light green */
+      border: 3px solid #4CAF50; /* Green border */
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      z-index: 102;
+      text-align: center;
+      font-family: 'Bubblegum Sans', cursive;
+      color: #333;
+      animation: fadeInScale 0.3s ease-out;
+    }
+    .message-popup.cheer-up {
+      background-color: #FFEBEE; /* Light red */
+      border-color: #F44336; /* Red border */
+    }
+    .message-popup h3 {
+      color: #4CAF50;
+      font-size: 2em;
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+    .message-popup.cheer-up h3 {
+      color: #F44336;
+    }
+    .message-popup p {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 1.2em;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .message-popup button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-size: 1.1em;
+      font-family: 'Bubblegum Sans', cursive;
+      transition: background-color 0.3s ease;
+    }
+    .message-popup.cheer-up button {
+      background-color: #F44336;
+    }
+    .message-popup button:hover {
+      background-color: #43A047;
+    }
+    .message-popup.cheer-up button:hover {
+      background-color: #D32F2F;
+    }
+
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+      to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    /* Floating Budget Buddy Character */
+    #budget-buddy-char {
+      position: fixed;
+      bottom: 100px; /* Adjust as needed */
+      left: 20px; /* Adjust as needed */
+      width: 70px;
+      height: 70px;
+      background-color: #FFC107; /* Yellow/Orange background for visibility */
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 3em;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      z-index: 99; /* Below bulb icon, above general content */
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      animation: float 5s ease-in-out infinite; /* Reuse float animation */
+    }
+    #budget-buddy-char:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    /* "For More Ideas" Message */
+    #more-ideas-msg {
+      display: none; /* Hidden by default, shown by JS */
+      position: fixed;
+      bottom: 170px; /* Above the character */
+      left: 100px; /* Next to the character */
+      background-color: #4CAF50;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 15px;
+      font-size: 0.9em;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      z-index: 98;
+      cursor: pointer;
+      animation: pulse 1.5s infinite; /* Subtle animation */
+    }
+    #more-ideas-msg span {
+      margin-left: 5px;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.03); opacity: 0.9; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Lesson Pop-up */
+    #lesson-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #E8F5E9; /* Light green */
+      border: 3px solid #4CAF50; /* Green border */
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 600px;
+      width: 90%;
+      height: 80%; /* Make it taller for scrollability */
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      z-index: 103; /* Higher than other popups */
+      text-align: left;
+      font-family: 'Open Sans', sans-serif;
+      color: #333;
+      animation: fadeInScale 0.3s ease-out;
+      overflow-y: auto; /* Enable vertical scrolling */
+    }
+    #lesson-popup h3 {
+      color: #4CAF50;
+      font-size: 1.8em;
+      margin-top: 0;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    #lesson-popup h4 {
+      color: #FF9800;
+      font-size: 1.4em;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+    #lesson-popup p, #lesson-popup ul {
+      font-size: 1em;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+    #lesson-popup ul {
+      list-style-type: disc;
+      margin-left: 20px;
+    }
+    #lesson-popup button {
+      background-color: #FF5722;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-size: 1.1em;
+      font-family: 'Bubblegum Sans', cursive;
+      transition: background-color 0.3s ease;
+      display: block; /* Make button take full width */
+      margin: 20px auto 0; /* Center button */
+    }
+    #lesson-popup button:hover {
+      background-color: #E64A19;
+    }
+
+    /* Theme Picker Styles */
+    #theme-picker {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column; /* Stack buttons vertically */
+      gap: 10px;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 10px;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      animation: float 6s ease-in-out infinite; /* Make it float */
+    }
+    #theme-picker button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid #ccc;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      padding: 0;
+      margin: 0;
+      box-shadow: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5em; /* Icon size */
+      color: white; /* Icon color */
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    }
+    #theme-picker button:hover {
+      transform: scale(1.1);
+      border-color: #4CAF50;
+    }
+    #theme-picker button.active {
+      border-color: #4CAF50;
+      box-shadow: 0 0 0 3px #4CAF50;
+      transform: scale(1.1);
+    }
+
+    #theme-green { background: linear-gradient(135deg, #a8e063, #56ab2f); }
+    #theme-blue { background: linear-gradient(135deg, #87CEEB, #4682B4); }
+    #theme-pink { background: linear-gradient(135deg, #FFB6C1, #FF69B4); }
+    #theme-yellow { background: linear-gradient(135deg, #FFD700, #FFA500); }
+    #theme-purple { background: linear-gradient(135deg, #E0BBE4, #957DAD); }
+
+    /* New Download Button Styles */
+    #download-app-btn {
+      background: linear-gradient(45deg, #FFD700, #FF8C00); /* Golden to Orange */
+      color: white;
+      padding: 15px 30px;
+      border-radius: 30px;
+      font-size: 1.5em;
+      font-family: 'Bubblegum Sans', cursive;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 25px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      display: inline-block; /* To allow margin-top and center */
+      text-decoration: none; /* Remove underline for link */
+      animation: pulse 2s infinite; /* Add a subtle pulse animation */
+    }
+    #download-app-btn:hover {
+      background: linear-gradient(45deg, #FFA500, #FF6347); /* Slightly different gradient on hover */
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+    }
+    #download-app-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    /* Ensure the download button is centered */
+    #auth .card + #download-app-btn {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) { /* Mobile View */
+      body {
+        padding: 10px;
+      }
+      .container {
+        padding: 15px;
+        border-radius: 10px;
+      }
+      button {
+        padding: 10px 15px;
+        font-size: 1em;
+        margin: 8px 3px;
+        width: calc(100% - 6px);
+        box-sizing: border-box;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="password"],
+      input[type="number"],
+      input[type="date"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 1em;
+      }
+      h1 { font-size: 2.2em; }
+      h2 { font-size: 1.6em; }
+      h3 { font-size: 1.4em; }
+
+      .card {
+        padding: 15px;
+        margin: 15px 0;
+      }
+
+      /* Specific adjustments for auth buttons to stack better */
+      #login button, #signup button {
+        display: block;
+        margin: 10px auto;
+      }
+
+      /* Adjust other-list inputs for better stacking */
+      #other-list div {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      #other-list input {
+        width: 100%;
+        min-width: unset;
+      }
+      #other-list .rm {
+        width: 100%;
+        margin-top: 5px;
+      }
+
+      /* History Table - Mobile Specific */
+      table {
+        display: block; /* Make table scrollable on small screens */
+        overflow-x: auto; /* Enable horizontal scrolling */
+        white-space: nowrap; /* Prevent text wrapping in cells */
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+      }
+
+      /* Hide table headers and display them as data attributes for mobile */
+      table thead {
+        display: none;
+      }
+
+      table tbody, table tr {
+        display: block;
+      }
+
+      table tr {
+        margin-bottom: 10px;
+        border: 1px solid #C8E6C9;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      table td {
+        display: block;
+        text-align: right;
+        padding-left: 50%; /* Space for the pseudo-element label */
+        position: relative;
+        border: none; /* Remove individual cell borders */
+      }
+
+      table td::before {
+        content: attr(data-label); /* Use data-label for the pseudo-element */
+        position: absolute;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        color: #66BB6A;
+      }
+
+      #bulb-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 2em;
+        bottom: 10px;
+        right: 10px;
+      }
+      .tip-popup {
+        bottom: 70px;
+        right: 10px;
+        max-width: calc(100% - 40px);
+      }
+      .message-popup {
+        padding: 20px;
+      }
+      .message-popup h3 {
+        font-size: 1.6em;
+      }
+      .message-popup p {
+        font-size: 1em;
+      }
+
+      /* Mobile adjustments for new floating elements */
+      #budget-buddy-char {
+        width: 60px;
+        height: 60px;
+        font-size: 2.5em;
+        bottom: 80px;
+        left: 10px;
+      }
+      #more-ideas-msg {
+        bottom: 140px;
+        left: 80px;
+        font-size: 0.8em;
+        padding: 6px 10px;
+      }
+      #lesson-popup {
+        padding: 20px;
+        height: 90%; /* Take more height on mobile */
+      }
+      #lesson-popup h3 {
+        font-size: 1.5em;
+      }
+      #lesson-popup h4 {
+        font-size: 1.2em;
+      }
+      #lesson-popup p, #lesson-popup ul {
+        font-size: 0.9em;
+      }
+
+      #theme-picker {
+        top: 10px;
+        left: 10px;
+        gap: 5px;
+        padding: 5px;
+      }
+      #theme-picker button {
+        width: 30px;
+        height: 30px;
+      }
+
+      /* Download button on mobile */
+      #download-app-btn {
+        font-size: 1.2em;
+        padding: 12px 20px;
+        margin-top: 20px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      h1 { font-size: 1.8em; }
+      h2 { font-size: 1.4em; }
+      h3 { font-size: 1.2em; }
+    }
+  </style>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import {
+      getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+      sendPasswordResetEmail, setPersistence, browserLocalPersistence,
+      signOut, updateProfile, onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+    import {
+      getDatabase, ref, push, set, onValue, query, orderByChild,
+      equalTo
+    } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAA1HF_zPfNGvy8NOms7JJ-_54tE9rcIjU",
+      authDomain: "budget-buddy-database-e98e1.firebaseapp.com",
+      databaseURL: "https://budget-buddy-database-e98e1-default-rtdb.firebaseio.com/",
+      projectId: "budget-buddy-database-e98e1",
+      storageBucket: "budget-buddy-database-e98e1.appspot.com",
+      messagingSenderId: "334964367990",
+      appId: "1:334964367990:web:11636078de58cb15b17557"
+    };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+    setPersistence(auth, browserLocalPersistence);
+
+    // --- UI Elements (Dynamically created for a cleaner HTML structure) ---
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.innerHTML = `
+        <div class="floating-element coin"></div>
+        <div class="floating-element star"></div>
+        <div class="floating-element cloud"></div>
+        <div class="floating-element balloon"></div>
+        <div class="floating-element heart"></div>
+        <div class="floating-element diamond"></div>
+        <div class="floating-element flower"></div>
+        <div class="floating-element ferris-wheel">
+          <div class="cabin"></div>
+          <div class="cabin"></div>
+          <div class="cabin"></div>
+          <div class="cabin"></div>
+        </div>
+
+        <div id="theme-picker">
+          <button id="theme-green" class="active" data-theme="green">🌳</button>
+          <button id="theme-blue" data-theme="blue">💧</button>
+          <button id="theme-pink" data-theme="pink">🌸</button>
+          <button id="theme-yellow" data-theme="yellow">☀️</button>
+          <button id="theme-purple" data-theme="purple">💜</button>
+        </div>
+
+        <div class="container">
+          <h1><span class="icon">💰</span> Budget Buddy <span class="icon">🐷</span></h1>
+
+          <div id="auth">
+            <h2>Join the Money Adventure!</h2>
+            <div id="login" class="card">
+              <h3>Already a Buddy? Log In!</h3>
+              <input id="li-email" type="email" placeholder="Your Email" /><br/>
+              <input id="li-pass" type="password" placeholder="Secret Password" /><br/>
+              <button id="do-login"><span class="icon">🔑</span> Come On In!</button><br/>
+              <button id="do-forgot"><span class="icon">🤔</span> Forgot My Key!</button>
+              <button id="show-signup-btn"><span class="icon">✨</span> New Buddy? Sign Up!</button>
+            </div>
+            <div id="signup" class="card" style="display:none;">
+              <h3>Sign Up for Fun!</h3>
+              <input id="su-nick" type="text" placeholder="Your Fun Nickname" /><br/>
+              <input id="su-email" type="email" placeholder="Your Email" /><br/>
+              <input id="su-pass" type="password" placeholder="Secret Password" /><br/>
+              <button id="do-signup"><span class="icon">🚀</span> Let's Go!</button><br/>
+              <button id="show-login-btn"><span class="icon">🔙</span> Back to Login</button>
+            </div>
+            <div id="auth-msg"></div>
+            <!-- New Download Button -->
+            <a href="https://drive.google.com/file/d/1dOJ-QXYp7PsNBqS4dB6lRyyTvwM2UE3G/view?usp=sharing" target="_blank" id="download-app-btn">
+              <span class="icon">⬇️</span> Download the App!
+            </a>
+          </div>
+
+          <div id="tracker" style="display:none;">
+            <button id="do-logout"><span class="icon">👋</span> Bye Bye!</button>
+            <h2>Welcome, <span id="nick-span"></span>! Let's Track!</h2>
+
+            <div class="card">
+              <h3><span class="icon">💡</span> Smart Money Tips for Super Savers!</h3>
+              <p>1. Keep track of every coin you spend.<br/>
+              2. Try to save at least 10% of your allowance.<br/>
+              3. Check your money adventure every week!</p>
+            </div>
+
+            <div class="card">
+              <h3><span class="icon">🗓️</span> Today's Money Mission!</h3>
+              <label>Date: <input id="exp-date" type="date"/></label><br/>
+              <label>My Allowance Today: <input id="allowance" type="number" placeholder="How much money did you get?" /></label>
+            </div>
+
+            <div class="card">
+              <h3><span class="icon">🚌</span> Fixed Adventures (Always the Same!)</h3>
+              <label>Transportation: <input id="fixed-transport" type="number" placeholder="Bus, train, or magic carpet?" /></label><br/>
+              <label>Meals/Snacks: <input id="fixed-meals" type="number" placeholder="Yummy food and treats!" /></label>
+            </div>
+
+            <div class="card">
+              <h3><span class="icon">🛍️</span> Other Fun Spends!</h3>
+              <div id="other-list"></div>
+              <button id="add-other"><span class="icon">➕</span> Add Another Fun Thing!</button>
+            </div>
+
+            <button id="calc-submit"><span class="icon">✨</span> Calculate My Money Magic!</button>
+
+            <div class="card">
+              <h3><span class="icon">📊</span> Today's Money Story!</h3>
+              <div class="summary-item"><span class="summary-label">Allowance:</span> <span id="sum-allow" class="summary-value">0</span></div>
+              <div class="summary-item"><span class="summary-label">Expenses:</span> <span id="sum-exp" class="summary-value">0</span></div>
+              <div class="summary-item"><span class="summary-label">Remaining:</span> <span id="sum-remain" class="summary-value">0</span></div>
+              <div class="summary-item"><span class="summary-label">Target Savings (10%):</span> <span id="sum-target" class="summary-value">0</span></div>
+              <div class="summary-item"><span class="summary-label">Actual Savings:</span> <span id="sum-save" class="summary-value">0</span></div>
+            </div>
+
+            <div class="card">
+              <h3><span class="icon">📜</span> My Money Journey History!</h3>
+              <label>Filter by Month:
+                <select id="month-filter">
+                  <option value="">All Months</option>
+                  ${[...Array(12)].map((_, i)=>`<option value="${i+1}">${new Date(0, i).toLocaleString('en-US', { month: 'long' })}</option>`).join("")}
+                </select>
+              </label>
+
+              <table id="history">
+                <thead>
+                  <tr><th>Date</th><th>Allowance</th><th>Expenses</th><th>Remaining</th></tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="bulb-icon">💡</div>
+        <div class="tip-popup" id="tip-popup">
+          <h3>Money Saving Tip!</h3>
+          <p id="tip-text"></p>
+          <button id="close-tip">Got It!</button>
+        </div>
+
+        <div id="message-popup" class="message-popup">
+          <h3 id="message-title"></h3>
+          <p id="message-text"></p>
+          <button id="close-message">Awesome!</button>
+        </div>
+
+        <!-- New Floating Budget Buddy Character -->
+        <div id="budget-buddy-char">🐷</div>
+        <!-- New "For More Ideas" Message -->
+        <div id="more-ideas-msg">For more ideas click here <span>➡️</span></div>
+
+        <!-- New Lesson Pop-up -->
+        <div id="lesson-popup">
+          <h3>Smart Money Management for Kids!</h3>
+          <div class="lesson-content">
+            <h4>What is Smart Money Management?</h4>
+            <p>Smart money management is like being a superhero for your money! It means making good choices about how you earn, save, spend, and share your money. It helps you reach your goals, like buying a cool new toy or saving for something big in the future.</p>
+            <ul>
+              <li><b>Earning:</b> How you get money (allowance, chores, gifts).</li>
+              <li><b>Saving:</b> Putting money aside for later.</li>
+              <li><b>Spending:</b> Using money to buy things you need or want.</li>
+              <li><b>Sharing:</b> Giving money to help others or causes you care about.</li>
+            </ul>
+
+            <h4>How to Practice Smart Money Management?</h4>
+            <p>It's easier than you think! Here are some super tips:</p>
+            <ul>
+              <li><b>Set Goals:</b> Decide what you want to save for. A new video game? A bike? A trip to the ice cream shop? Having a goal makes saving fun!</li>
+              <li><b>Make a Budget:</b> This is your money plan! Figure out how much money you get and how much you plan to spend and save. Our Budget Buddy app helps you do this!</li>
+              <li><b>Track Your Spending:</b> Know where your money goes. Every time you spend, write it down. This helps you see if you're sticking to your budget.</li>
+              <li><b>Save First:</b> When you get money, try to put some into your savings right away, before you spend any. This is called "paying yourself first."</li>
+              <li><b>Be a Smart Shopper:</b> Before you buy something, ask yourself: "Do I really need this?" or "Is there a cheaper way to get this?" Compare prices!</li>
+              <li><b>Avoid Impulse Buys:</b> Don't buy something just because you see it and want it right now. Think about it for a day or two. You might realize you don't need it.</li>
+              <li><b>Earn Extra Money:</b> Look for ways to earn more money, like doing extra chores around the house or helping neighbors.</li>
+              <li><b>Be Patient:</b> Saving takes time. Don't get discouraged if you don't reach your goal right away. Keep going!</li>
+            </ul>
+
+            <h4>When to Start Smart Money Management?</h4>
+            <p>The best time to start is NOW! The younger you start learning about money, the better you'll be at managing it when you're older. It's like learning to ride a bike – the more you practice, the easier it gets!</p>
+            <p>Even small steps, like saving a little bit from your allowance each week, can make a big difference over time. You're already on your way by using Budget Buddy!</p>
+          </div>
+          <button id="close-lesson">Got It, Budget Buddy!</button>
+        </div>
+      `;
+
+      // --- Theme Picker Logic ---
+      const themePicker = document.getElementById('theme-picker');
+      const themeButtons = themePicker.querySelectorAll('button');
+
+      themeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const theme = button.dataset.theme;
+          document.body.className = ''; // Clear existing themes
+          document.body.classList.add(`theme-${theme}`);
+
+          // Update active button state
+          themeButtons.forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+        });
+      });
+
+      // --- Auth Handlers ---
+      const loginCard = document.getElementById('login');
+      const signupCard = document.getElementById('signup');
+      const showSignupBtn = document.getElementById('show-signup-btn');
+      const showLoginBtn = document.getElementById('show-login-btn');
+      const downloadAppBtn = document.getElementById('download-app-btn'); // Get the new button
+
+      showSignupBtn.onclick = () => {
+        loginCard.style.display = 'none';
+        signupCard.style.display = 'block';
+        document.getElementById('auth-msg').innerText = ''; // Clear auth message
+        downloadAppBtn.style.display = 'none'; // Hide download button when signing up
+      };
+
+      showLoginBtn.onclick = () => {
+        signupCard.style.display = 'none';
+        loginCard.style.display = 'block';
+        document.getElementById('auth-msg').innerText = ''; // Clear auth message
+        downloadAppBtn.style.display = 'block'; // Show download button when logging in
+      };
+
+      document.getElementById('do-signup').onclick = async () => {
+        const nick = document.getElementById('su-nick').value;
+        const email = document.getElementById('su-email').value;
+        const pass = document.getElementById('su-pass').value;
+        try {
+          const cred = await createUserWithEmailAndPassword(auth, email, pass);
+          await updateProfile(cred.user, { displayName: nick });
+          document.getElementById('auth-msg').innerText = "Hooray! You're signed up!";
+          // Optionally, switch back to login or directly log in
+          signupCard.style.display = 'none';
+          loginCard.style.display = 'block';
+          downloadAppBtn.style.display = 'block'; // Show download button after signup
+        } catch(e) {
+          document.getElementById('auth-msg').innerText = `Oops! ${e.message}`;
+        }
+      };
+      document.getElementById('do-login').onclick = async () => {
+        const email = document.getElementById('li-email').value;
+        const pass = document.getElementById('li-pass').value;
+        try {
+          await signInWithEmailAndPassword(auth, email, pass);
+        } catch(e) {
+          document.getElementById('auth-msg').innerText = `Uh oh! ${e.message}`;
+        }
+      };
+      document.getElementById('do-forgot').onclick = async () => {
+        const email = document.getElementById('li-email').value;
+        if (!email) return alert("Please type your email first, buddy!");
+        await sendPasswordResetEmail(auth, email);
+        alert("A magic email has been sent to reset your password!");
+      };
+      document.getElementById('do-logout').onclick = () => signOut(auth);
+
+      onAuthStateChanged(auth, user => {
+        if (user) {
+          document.getElementById('auth').style.display = 'none';
+          document.getElementById('tracker').style.display = 'block';
+          document.getElementById('nick-span').innerText = user.displayName || "Little Buddy";
+          downloadAppBtn.style.display = 'none'; // Hide download button when logged in
+          loadHistory();
+        } else {
+          document.getElementById('auth').style.display = 'block';
+          document.getElementById('tracker').style.display = 'none';
+          // Ensure login is shown by default when logged out
+          signupCard.style.display = 'none';
+          loginCard.style.display = 'block';
+          downloadAppBtn.style.display = 'block'; // Show download button when logged out
+        }
+      });
+
+      // --- Expense UI Logic ---
+      document.getElementById('exp-date').valueAsDate = new Date();
+      document.getElementById('add-other').onclick = () => {
+        const div = document.createElement('div');
+        div.innerHTML = `<input class="oth-name" placeholder="What did you buy?" /><input class="oth-amt" type="number" placeholder="How much?" /><button class="rm">x</button>`;
+        div.querySelector('.rm').onclick = () => div.remove();
+        document.getElementById('other-list').append(div);
+      };
+
+      document.getElementById('calc-submit').onclick = () => {
+        const d = document.getElementById('exp-date').value;
+        const allow = +document.getElementById('allowance').value || 0;
+        const fixT = +document.getElementById('fixed-transport').value || 0;
+        const fixM = +document.getElementById('fixed-meals').value || 0;
+        const others = [...document.querySelectorAll('.oth-name')].map((_, i)=>{
+          return +document.querySelectorAll('.oth-amt')[i].value || 0;
+        }).reduce((a,b)=>a+b, 0);
+        const totalExp = fixT + fixM + others;
+        const remain = allow - totalExp;
+        const target = allow * 0.1;
+        const actualSave = remain; // For simplicity, actual savings is remaining. Could be more complex.
+
+        document.getElementById('sum-allow').innerText = allow.toFixed(2);
+        document.getElementById('sum-exp').innerText = totalExp.toFixed(2);
+        document.getElementById('sum-remain').innerText = remain.toFixed(2);
+        document.getElementById('sum-target').innerText = target.toFixed(2);
+        document.getElementById('sum-save').innerText = actualSave.toFixed(2);
+
+        // Save to DB
+        const uid = auth.currentUser.uid;
+        push(ref(db, `users/${uid}/history`), {
+          date: d,
+          allowance: allow,
+          expenses: totalExp,
+          remaining: remain
+        });
+        loadHistory(); // Reload history after saving
+        displaySavingMessage(actualSave, target); // Display message based on savings
+      };
+
+      document.getElementById('month-filter').onchange = loadHistory;
+
+      // --- Load & Filter History ---
+      function loadHistory() {
+        const uid = auth.currentUser.uid;
+        const mm = +document.getElementById('month-filter').value;
+        onValue(ref(db, `users/${uid}/history`), snap => {
+          const tbody = document.querySelector('#history tbody');
+          tbody.innerHTML = ''; // Clear existing rows
+          snap.forEach(s => {
+            const rec = s.val();
+            const dt = new Date(rec.date);
+            // Filter by month if selected
+            if (!mm || dt.getMonth()+1 === mm) {
+              const tr = document.createElement('tr');
+              // Add data-label attributes for mobile view
+              tr.innerHTML = `
+                <td data-label="Date">${("0"+(dt.getMonth()+1)).slice(-2)}/${("0"+dt.getDate()).slice(-2)}/${dt.getFullYear()}</td>
+                <td data-label="Allowance">${rec.allowance.toFixed(2)}</td>
+                <td data-label="Expenses">${rec.expenses.toFixed(2)}</td>
+                <td data-label="Remaining">${rec.remaining.toFixed(2)}</td>
+              `;
+              tbody.append(tr);
+            }
+          });
+        });
+      }
+
+      // --- Money Saving Tips Logic ---
+      const moneyTips = [
+        "Always think before you buy! Do you really need it?",
+        "Pack your lunch instead of buying it. It saves a lot!",
+        "Walk or bike instead of taking the bus for short distances.",
+        "Make a shopping list and stick to it. No impulse buys!",
+        "Save a little bit from every allowance. Even small amounts grow!",
+        "Borrow books from the library instead of buying new ones.",
+        "Turn off lights and electronics when you leave a room to save energy (and money!).",
+        "Look for free activities to do with friends instead of expensive ones.",
+        "Compare prices before buying. Sometimes, another store has a better deal!",
+        "Set a savings goal, like for a new toy or game, to stay motivated.",
+        "Use a piggy bank or a special savings jar.",
+        "Learn to repair small things instead of replacing them.",
+        "Drink water instead of sugary drinks. Healthier and cheaper!",
+        "Sell old toys or clothes you don't use anymore.",
+        "Help out with chores to earn extra money instead of asking for it."
+      ];
+
+      const bulbIcon = document.getElementById('bulb-icon');
+      const tipPopup = document.getElementById('tip-popup');
+      const tipText = document.getElementById('tip-text');
+      const closeTipBtn = document.getElementById('close-tip');
+
+      bulbIcon.onclick = () => {
+        const randomTip = moneyTips[Math.floor(Math.random() * moneyTips.length)];
+        tipText.innerText = randomTip;
+        tipPopup.style.display = 'block';
+      };
+
+      closeTipBtn.onclick = () => {
+        tipPopup.style.display = 'none';
+      };
+
+      // --- Praise/Cheer Up Messages Logic ---
+      const praiseMessages = [
+        "Fantastic job! You're a money-saving superstar!",
+        "Wow! You hit your savings target! Keep up the amazing work!",
+        "You're a financial wizard! So proud of your saving skills!",
+        "Excellent! Your piggy bank is getting happier because of you!",
+        "Hooray! You've mastered the art of saving! Well done!",
+        "Incredible! You're building a bright financial future!",
+        "You're a saving champion! Every penny counts, and you're counting them well!",
+        "Superb effort! Your smart choices are paying off!",
+        "Amazing! You're making your money work for you!",
+        "Pat yourself on the back! You've achieved your saving goal!"
+      ];
+
+      const cheerUpMessages = [
+        "Oops! Didn't hit the target this time, but every day is a new chance to save!",
+        "Don't worry, money adventures have ups and downs. You'll get it next time!",
+        "Saving is a journey, not a race. Keep trying, you're doing great!",
+        "It's okay! Learn from today and aim for an even better tomorrow!",
+        "A little slip won't stop a super saver like you! You've got this!",
+        "Chin up! Every effort counts. Let's make tomorrow a saving success!",
+        "You're still a money hero! Just a small detour on your saving path.",
+        "No problem! Think about what you can do differently next time. You're smart!",
+        "The best savers learn from every experience. You're on your way!",
+        "Keep that saving spirit alive! You'll reach your goals with persistence!"
+      ];
+
+      const messagePopup = document.getElementById('message-popup');
+      const messageTitle = document.getElementById('message-title');
+      const messageText = document.getElementById('message-text');
+      const closeMessageBtn = document.getElementById('close-message');
+
+      function displaySavingMessage(actualSave, target) {
+        messagePopup.classList.remove('cheer-up'); // Reset class
+        if (actualSave >= target) {
+          messageTitle.innerText = "You Did It!";
+          messageText.innerText = praiseMessages[Math.floor(Math.random() * praiseMessages.length)];
+          messagePopup.querySelector('button').style.backgroundColor = '#4CAF50';
+          messagePopup.querySelector('button').onmouseover = function() { this.style.backgroundColor = '#43A047'; };
+          messagePopup.querySelector('button').onmouseout = function() { this.style.backgroundColor = '#4CAF50'; };
+          messagePopup.style.borderColor = '#4CAF50';
+          messagePopup.style.backgroundColor = '#E8F5E9';
+          messageTitle.style.color = '#4CAF50';
+        } else {
+          messageTitle.innerText = "Keep Going!";
+          messageText.innerText = cheerUpMessages[Math.floor(Math.random() * cheerUpMessages.length)];
+          messagePopup.classList.add('cheer-up'); // Add cheer-up specific styling
+          messagePopup.querySelector('button').style.backgroundColor = '#F44336';
+          messagePopup.querySelector('button').onmouseover = function() { this.style.backgroundColor = '#D32F2F'; };
+          messagePopup.querySelector('button').onmouseout = function() { this.style.backgroundColor = '#F44336'; };
+          messagePopup.style.borderColor = '#F44336';
+          messagePopup.style.backgroundColor = '#FFEBEE';
+          messageTitle.style.color = '#F44336';
+        }
+        messagePopup.style.display = 'block';
+      }
+
+      closeMessageBtn.onclick = () => {
+        messagePopup.style.display = 'none';
+      };
+
+      // --- New Budget Buddy Character and Lesson Logic ---
+      const budgetBuddyChar = document.getElementById('budget-buddy-char');
+      const moreIdeasMsg = document.getElementById('more-ideas-msg');
+      const lessonPopup = document.getElementById('lesson-popup');
+      const closeLessonBtn = document.getElementById('close-lesson');
+
+      // Show "more ideas" message after a delay
+      setTimeout(() => {
+        moreIdeasMsg.style.display = 'block';
+      }, 3000); // Show after 3 seconds
+
+      budgetBuddyChar.onclick = () => {
+        lessonPopup.style.display = 'block';
+        moreIdeasMsg.style.display = 'none'; // Hide message when lesson opens
+      };
+
+      moreIdeasMsg.onclick = () => {
+        lessonPopup.style.display = 'block';
+        moreIdeasMsg.style.display = 'none'; // Hide message when lesson opens
+      };
+
+      closeLessonBtn.onclick = () => {
+        lessonPopup.style.display = 'none';
+      };
+    });
+  </script>
+</head>
+<body>
+  <!-- Content will be dynamically loaded by JavaScript -->
+</body>
+</html>
