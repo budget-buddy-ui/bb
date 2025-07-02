@@ -1268,41 +1268,46 @@
     })
 
   // --- Install App Button Logic ---
-  let deferredPrompt = null;
-  const installBtn = document.getElementById('install-btn');
+let deferredPrompt = null;
+const installBtn = document.getElementById('install-btn');
 
-  // 🔧 Always show the button (for testing/demo purposes)
-  installBtn.style.display = 'block';
+// Show the install button immediately (visually)
+installBtn.style.display = 'block';
 
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    console.log('✅ beforeinstallprompt event fired');
-  });
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  console.log('✅ beforeinstallprompt fired');
 
-  installBtn.addEventListener('click', async () => {
-    if (!deferredPrompt) {
-      alert("Install not available yet. Try again later or reload.");
-      return;
-    }
+  // Simulate click after short delay (1.5 seconds)
+  setTimeout(() => {
+    installBtn.click(); // Automatically trigger install prompt
+  }, 1500);
+});
 
-    deferredPrompt.prompt();
-    const choiceResult = await deferredPrompt.userChoice;
+installBtn.addEventListener('click', async () => {
+  if (!deferredPrompt) {
+    alert("Install not available yet. Try again later.");
+    return;
+  }
 
-    if (choiceResult.outcome === 'accepted') {
-      console.log('✅ User accepted the install prompt');
-    } else {
-      console.log('❌ User dismissed the install prompt');
-    }
+  deferredPrompt.prompt();
+  const result = await deferredPrompt.userChoice;
 
-    deferredPrompt = null;
-    installBtn.style.display = 'none';
-  });
+  if (result.outcome === 'accepted') {
+    console.log('✅ User accepted the install');
+  } else {
+    console.log('❌ User dismissed the install');
+  }
 
-  window.addEventListener('appinstalled', () => {
-    console.log('✅ App successfully installed');
-    installBtn.style.display = 'none';
-  });
+  deferredPrompt = null;
+  installBtn.style.display = 'none';
+});
+
+window.addEventListener('appinstalled', () => {
+  console.log('✅ App installed');
+  installBtn.style.display = 'none';
+});
 
 </script>
 </head>
