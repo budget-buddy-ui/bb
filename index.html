@@ -1270,24 +1270,17 @@
   // --- Install App Button Logic ---
 let deferredPrompt = null;
 const installBtn = document.getElementById('install-btn');
-
-// Show the install button immediately (visually)
 installBtn.style.display = 'block';
 
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
   console.log('✅ beforeinstallprompt fired');
-
-  // Simulate click after short delay (1.5 seconds)
-  setTimeout(() => {
-    installBtn.click(); // Automatically trigger install prompt
-  }, 1500);
 });
 
 installBtn.addEventListener('click', async () => {
   if (!deferredPrompt) {
-    alert("Install not available yet. Try again later.");
+    alert("Install not available yet. Please try again in a few moments.");
     return;
   }
 
@@ -1295,20 +1288,15 @@ installBtn.addEventListener('click', async () => {
   const result = await deferredPrompt.userChoice;
 
   if (result.outcome === 'accepted') {
-    console.log('✅ User accepted the install');
+    console.log('✅ User accepted install');
   } else {
-    console.log('❌ User dismissed the install');
+    console.log('❌ User dismissed install');
   }
 
   deferredPrompt = null;
   installBtn.style.display = 'none';
 });
-
-window.addEventListener('appinstalled', () => {
-  console.log('✅ App installed');
-  installBtn.style.display = 'none';
-});
-
+    
 </script>
 </head>
 <body>
