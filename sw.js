@@ -2,12 +2,12 @@ self.addEventListener('install', e => {
   e.waitUntil(
     caches.open('budget-buddy-cache').then(cache => {
       return cache.addAll([
-        '/',
-        '/index.html',
-        '/manifest.json',
-        '/icon-192.png',
-        '/icon-512.png'
-        // Add more static assets (fonts, CSS, etc.) here if needed
+        '/test/',
+        '/test/index.html',
+        '/test/manifest.json',
+        '/test/icon-192.png',
+        '/test/icon-512.png'
+        // Add more files if needed (JS, CSS, fonts, etc.)
       ]);
     })
   );
