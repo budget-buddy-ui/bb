@@ -1267,12 +1267,12 @@
       };
     });
     
-    // --- PWA Service Worker Registration ---
-if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/test/sw.js')
     .then(() => console.log('✅ Service Worker registered!'))
-    .catch(err => console.error('Service Worker failed:', err));
-}
+    .catch(err => console.error('❌ Service Worker failed:', err));
+    }
+    
   </script>
 </head>
 <body>
