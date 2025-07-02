@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Budget Buddy</title>
   <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.json">
   <style>
     /* General Body Styles */
     body {
@@ -1265,6 +1266,13 @@
         lessonPopup.style.display = 'none';
       };
     });
+    
+    // --- PWA Service Worker Registration ---
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js')
+    .then(() => console.log('✅ Service Worker registered!'))
+    .catch(err => console.error('Service Worker failed:', err));
+}
   </script>
 </head>
 <body>
