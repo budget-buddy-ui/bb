@@ -3,7 +3,7 @@ self.addEventListener('install', e => {
     caches.open('budget-buddy-cache').then(cache => {
       return cache.addAll([
         '/',
-        '/bb.html',
+        '/index.html',
         '/manifest.json',
         '/icon-192.png',
         '/icon-512.png'
