@@ -1265,39 +1265,45 @@
       closeLessonBtn.onclick = () => {
         lessonPopup.style.display = 'none';
       };
-    });
-  
+    })
 
-// --- Install App Button Logic ---
-let deferredPrompt = null;
-const installBtn = document.getElementById('install-btn');
+  // --- Install App Button Logic ---
+  let deferredPrompt = null;
+  const installBtn = document.getElementById('install-btn');
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBtn.style.display = 'block'; // Show the install button
-});
+  // 🔧 Always show the button (for testing/demo purposes)
+  installBtn.style.display = 'block';
 
-installBtn.addEventListener('click', async () => {
-  if (!deferredPrompt) return;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    console.log('✅ beforeinstallprompt event fired');
+  });
 
-  deferredPrompt.prompt();
-  const choiceResult = await deferredPrompt.userChoice;
+  installBtn.addEventListener('click', async () => {
+    if (!deferredPrompt) {
+      alert("Install not available yet. Try again later or reload.");
+      return;
+    }
 
-  if (choiceResult.outcome === 'accepted') {
-    console.log('✅ User accepted the install prompt');
-  } else {
-    console.log('❌ User dismissed the install prompt');
-  }
+    deferredPrompt.prompt();
+    const choiceResult = await deferredPrompt.userChoice;
 
-  deferredPrompt = null;
-  installBtn.style.display = 'none';
-});
+    if (choiceResult.outcome === 'accepted') {
+      console.log('✅ User accepted the install prompt');
+    } else {
+      console.log('❌ User dismissed the install prompt');
+    }
 
-window.addEventListener('appinstalled', () => {
-  console.log('✅ App successfully installed');
-  installBtn.style.display = 'none';
-});
+    deferredPrompt = null;
+    installBtn.style.display = 'none';
+  });
+
+  window.addEventListener('appinstalled', () => {
+    console.log('✅ App successfully installed');
+    installBtn.style.display = 'none';
+  });
+
 </script>
 </head>
 <body>
