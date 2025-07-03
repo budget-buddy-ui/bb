@@ -1287,6 +1287,14 @@
       deferredPrompt = null;
     });
   });
+
+ if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/test/service-worker.js')
+      .then(reg => console.log('✅ Service worker registered:', reg.scope))
+      .catch(err => console.log('❌ Service worker registration failed:', err));
+  });
+}   
 </script>
 </head>
 <body>
