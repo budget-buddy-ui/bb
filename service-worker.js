@@ -1,11 +1,11 @@
 const CACHE_NAME = "budget-buddy-v1";
 const URLS_TO_CACHE = [
-  "/b.b/",
-  "/b.b/index.html",
-  "/b.b/manifest.json",
-  "/b.b/icons/icon-192.png",
-  "/b.b/icons/icon-512.png",
-  "https://fonts.googleapis.com/css2?family=Bub.blegum+Sans&family=Open+Sans:wght@400;700&display=swap"
+  "/bb/",
+  "/bb/index.html",
+  "/bb/manifest.json",
+  "/bb/icons/icon-192.png",
+  "/bb/icons/icon-512.png",
+  "https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Open+Sans:wght@400;700&display=swap"
 ];
 
 // Install SW and cache resources
