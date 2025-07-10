@@ -1,10 +1,10 @@
 const CACHE_NAME = "budget-buddy-v1";
 const URLS_TO_CACHE = [
-  "/test/",
-  "/test/index.html",
-  "/test/manifest.json",
-  "/test/icons/icon-192.png",
-  "/test/icons/icon-512.png",
+  "/bb/",
+  "/bb/index.html",
+  "/bb/manifest.json",
+  "/bb/icons/icon-192.png",
+  "/bb/icons/icon-512.png",
   "https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Open+Sans:wght@400;700&display=swap"
 ];
 
