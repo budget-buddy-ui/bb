@@ -5,8 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Budget Buddy</title>
-<link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&amp;family=Open+Sans:wght@400;700&amp;display=swap" rel="stylesheet"/>
-<link rel="manifest" href="/bb/manifest.json"/>
+<link href="https://fonts.googleapis.com/css2?family=Bulegum+Sans&amp;family=Open+Sans:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link rel="manifest" href="//manifest.json"/>
 <style>
     /* General Body Styles */
     body {
@@ -38,7 +38,7 @@
       background: linear-gradient(135deg, #FFD700, #FFA500); /* Golden Yellow */
     }
     body.theme-purple {
-      background: linear-gradient(135deg, #E0BBE4, #957DAD); /* Lavender Purple */
+      background: linear-gradient(135deg, #E0E4, #957DAD); /* Lavender Purple */
     }
 
     /* Floating Elements */
@@ -135,7 +135,7 @@
 
     /* Headings */
     h1, h2, h3 {
-      font-family: 'Bubblegum Sans', cursive;
+      font-family: 'Bulegum Sans', cursive;
       color: #4CAF50;
       text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
       margin-bottom: 20px;
@@ -184,7 +184,7 @@
       border: none;
       border-radius: 25px;
       font-size: 1.2em;
-      font-family: 'Bubblegum Sans', cursive;
+      font-family: 'Bulegum Sans', cursive;
       cursor: pointer;
       transition: background-color 0.3s ease, transform 0.2s ease;
       margin: 10px 5px;
@@ -255,7 +255,7 @@
     }
     .summary-label {
       font-weight: bold;
-      color: #66BB6A;
+      color: #666A;
       flex-basis: 60%;
       text-align: left;
     }
@@ -288,7 +288,7 @@
     th {
       background-color: #81C784;
       color: white;
-      font-family: 'Bubblegum Sans', cursive;
+      font-family: 'Bulegum Sans', cursive;
       font-size: 1.1em;
     }
     tr:nth-child(even) {
@@ -392,7 +392,7 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
       z-index: 102;
       text-align: center;
-      font-family: 'Bubblegum Sans', cursive;
+      font-family: 'Bulegum Sans', cursive;
       color: #333;
       animation: fadeInScale 0.3s ease-out;
     }
@@ -421,7 +421,7 @@
       padding: 10px 20px;
       border-radius: 25px;
       font-size: 1.1em;
-      font-family: 'Bubblegum Sans', cursive;
+      font-family: 'Bulegum Sans', cursive;
       transition: background-color 0.3s ease;
     }
     .message-popup.cheer-up button {
@@ -539,7 +539,7 @@
       padding: 10px 20px;
       border-radius: 25px;
       font-size: 1.1em;
-      font-family: 'Bubblegum Sans', cursive;
+      font-family: 'Bulegum Sans', cursive;
       transition: background-color 0.3s ease;
       display: block; /* Make button take full width */
       margin: 20px auto 0; /* Center button */
@@ -594,7 +594,7 @@
     #theme-blue { background: linear-gradient(135deg, #87CEEB, #4682B4); }
     #theme-pink { background: linear-gradient(135deg, #FFB6C1, #FF69B4); }
     #theme-yellow { background: linear-gradient(135deg, #FFD700, #FFA500); }
-    #theme-purple { background: linear-gradient(135deg, #E0BBE4, #957DAD); }
+    #theme-purple { background: linear-gradient(135deg, #E0E4, #957DAD); }
 
     /* New Download Button Styles */
     #download-app-btn {
@@ -603,7 +603,7 @@
       padding: 15px 30px;
       border-radius: 30px;
       font-size: 1.5em;
-      font-family: 'Bubblegum Sans', cursive;
+      font-family: 'Bulegum Sans', cursive;
       cursor: pointer;
       transition: all 0.3s ease;
       margin-top: 25px;
@@ -724,7 +724,7 @@
         white-space: nowrap;
         text-align: left;
         font-weight: bold;
-        color: #66BB6A;
+        color: #666A;
       }
 
       #bulb-icon {
@@ -1286,7 +1286,7 @@
 
  if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/bb/service-worker.js')
+    navigator.serviceWorker.register('//service-worker.js')
       .then(reg => console.log('✅ Service worker registered:', reg.scope))
       .catch(err => console.log('❌ Service worker registration failed:', err));
   });
@@ -1296,7 +1296,7 @@
 <body>
 <!-- Content will be dynamically loaded by JavaScript -->
 
-<button id="install-btn" style="display: none; position: fixed; bottom: 80px; right: 20px; z-index: 999; background-color: #FF9800; color: white; padding: 12px 20px; border: none; border-radius: 25px; font-size: 1.2em; font-family: 'Bubblegum Sans', cursive; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor: pointer;">
+<button id="install-btn" style="display: none; position: fixed; bottom: 80px; right: 20px; z-index: 999; background-color: #FF9800; color: white; padding: 12px 20px; border: none; border-radius: 25px; font-size: 1.2em; font-family: 'Bulegum Sans', cursive; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor: pointer;">
   📲 Install Budget Buddy
 </button>
 </body>
