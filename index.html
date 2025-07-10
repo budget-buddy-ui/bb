@@ -1,17 +1,278 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Budget Buddy</title>
+<title>Budget Buddy - Your Money Adventure!</title>
 <link href="https://fonts.googleapis.com/css2?family=Bulegum+Sans&amp;family=Open+Sans:wght@400;700&amp;display=swap" rel="stylesheet"/>
 <link rel="manifest" href="/bb/manifest.json"/>
 <style>
+    /* CSS Variables for Theming */
+    :root {
+      /* Default Green Theme (matches initial body background) */
+      --primary-bg-gradient: linear-gradient(135deg, #A8E063, #56AB2F);
+      --container-border-color: #FFC107;
+      --h1-color: #4CAF50;
+      --h2-color: #2196F3;
+      --h3-color: #FF9800;
+      --card-border-color: #FFD700;
+      --input-border-color: #9CCC65;
+      --input-bg-color: #F9FBE7;
+      --button-primary-bg: #4CAF50;
+      --button-primary-hover-bg: #43A047;
+      --button-secondary-bg: #FF9800;
+      --button-secondary-hover-bg: #FB8C00;
+      --button-danger-bg: #F44336;
+      --button-danger-hover-bg: #D32F2F;
+      --button-info-bg: #2196F3;
+      --button-info-hover-bg: #1976D2;
+      --button-purple-bg: #9C27B0;
+      --button-purple-hover-bg: #7B1FA2;
+      --summary-border-color: #FFD700;
+      --summary-label-color: #666;
+      --positive-color: #4CAF50;
+      --table-bg-color: #E8F5E9;
+      --table-border-color: #C8E6C9;
+      --table-header-bg: #81C784;
+      --table-even-row-bg: #DCEDC8;
+      --table-hover-bg: #C5E1A5;
+      --tip-popup-bg: #FFFDE7;
+      --tip-popup-border: #FFD700;
+      --message-popup-bg: #E8F5E9;
+      --message-popup-border: #4CAF50;
+      --message-popup-cheer-bg: #FFEBEE;
+      --message-popup-cheer-border: #F44336;
+      --message-popup-cheer-h3: #F44336;
+      --message-popup-cheer-button: #F44336;
+      --message-popup-cheer-button-hover: #D32F2F;
+      --more-ideas-bg: #4CAF50;
+      --lesson-popup-bg: #E8F5E9;
+      --lesson-popup-border: #4CAF50;
+      --lesson-h3-color: #4CAF50;
+      --lesson-h4-color: #FF9800;
+      --theme-picker-border-active: #4CAF50;
+    }
+
+    /* Theme Specific Variables */
+    body.theme-green {
+      --primary-bg-gradient: linear-gradient(135deg, #A8E063, #56AB2F);
+      --container-border-color: #FFC107;
+      --h1-color: #4CAF50;
+      --h2-color: #2196F3;
+      --h3-color: #FF9800;
+      --card-border-color: #FFD700;
+      --input-border-color: #9CCC65;
+      --input-bg-color: #F9FBE7;
+      --button-primary-bg: #4CAF50;
+      --button-primary-hover-bg: #43A047;
+      --button-secondary-bg: #FF9800;
+      --button-secondary-hover-bg: #FB8C00;
+      --button-danger-bg: #F44336;
+      --button-danger-hover-bg: #D32F2F;
+      --button-info-bg: #2196F3;
+      --button-info-hover-bg: #1976D2;
+      --button-purple-bg: #9C27B0;
+      --button-purple-hover-bg: #7B1FA2;
+      --summary-border-color: #FFD700;
+      --positive-color: #4CAF50;
+      --table-bg-color: #E8F5E9;
+      --table-border-color: #C8E6C9;
+      --table-header-bg: #81C784;
+      --table-even-row-bg: #DCEDC8;
+      --table-hover-bg: #C5E1A5;
+      --tip-popup-bg: #FFFDE7;
+      --tip-popup-border: #FFD700;
+      --message-popup-bg: #E8F5E9;
+      --message-popup-border: #4CAF50;
+      --message-popup-cheer-bg: #FFEBEE;
+      --message-popup-cheer-border: #F44336;
+      --message-popup-cheer-h3: #F44336;
+      --message-popup-cheer-button: #F44336;
+      --message-popup-cheer-button-hover: #D32F2F;
+      --more-ideas-bg: #4CAF50;
+      --lesson-popup-bg: #E8F5E9;
+      --lesson-popup-border: #4CAF50;
+      --lesson-h3-color: #4CAF50;
+      --lesson-h4-color: #FF9800;
+      --theme-picker-border-active: #4CAF50;
+    }
+
+    body.theme-blue {
+      --primary-bg-gradient: linear-gradient(135deg, #87CEEB, #4682B4);
+      --container-border-color: #ADD8E6;
+      --h1-color: #1E90FF;
+      --h2-color: #00BFFF;
+      --h3-color: #4682B4;
+      --card-border-color: #ADD8E6;
+      --input-border-color: #6495ED;
+      --input-bg-color: #E0FFFF;
+      --button-primary-bg: #1E90FF;
+      --button-primary-hover-bg: #007BFF;
+      --button-secondary-bg: #4682B4;
+      --button-secondary-hover-bg: #3A6690;
+      --button-danger-bg: #F44336;
+      --button-danger-hover-bg: #D32F2F;
+      --button-info-bg: #00BFFF;
+      --button-info-hover-bg: #009ACD;
+      --button-purple-bg: #6A5ACD;
+      --button-purple-hover-bg: #5A4BBD;
+      --summary-border-color: #ADD8E6;
+      --positive-color: #1E90FF;
+      --table-bg-color: #E0FFFF;
+      --table-border-color: #B0E0E6;
+      --table-header-bg: #6A5ACD;
+      --table-even-row-bg: #ADD8E6;
+      --table-hover-bg: #87CEEB;
+      --tip-popup-bg: #E0FFFF;
+      --tip-popup-border: #ADD8E6;
+      --message-popup-bg: #E0FFFF;
+      --message-popup-border: #1E90FF;
+      --message-popup-cheer-bg: #FFEBEE;
+      --message-popup-cheer-border: #F44336;
+      --message-popup-cheer-h3: #F44336;
+      --message-popup-cheer-button: #F44336;
+      --message-popup-cheer-button-hover: #D32F2F;
+      --more-ideas-bg: #1E90FF;
+      --lesson-popup-bg: #E0FFFF;
+      --lesson-popup-border: #1E90FF;
+      --lesson-h3-color: #1E90FF;
+      --lesson-h4-color: #4682B4;
+      --theme-picker-border-active: #1E90FF;
+    }
+
+    body.theme-pink {
+      --primary-bg-gradient: linear-gradient(135deg, #FFB6C1, #FF69B4);
+      --container-border-color: #FFC0CB;
+      --h1-color: #FF1493;
+      --h2-color: #FF69B4;
+      --h3-color: #FF6347;
+      --card-border-color: #FFC0CB;
+      --input-border-color: #FF69B4;
+      --input-bg-color: #FFF0F5;
+      --button-primary-bg: #FF1493;
+      --button-primary-hover-bg: #C71585;
+      --button-secondary-bg: #FF6347;
+      --button-secondary-hover-bg: #E64A19;
+      --button-danger-bg: #F44336;
+      --button-danger-hover-bg: #D32F2F;
+      --button-info-bg: #FFB6C1;
+      --button-info-hover-bg: #FF99AA;
+      --button-purple-bg: #DA70D6;
+      --button-purple-hover-bg: #C75ED3;
+      --summary-border-color: #FFC0CB;
+      --positive-color: #FF1493;
+      --table-bg-color: #FFF0F5;
+      --table-border-color: #FFD1DC;
+      --table-header-bg: #FF69B4;
+      --table-even-row-bg: #FFC0CB;
+      --table-hover-bg: #FFB6C1;
+      --tip-popup-bg: #FFF0F5;
+      --tip-popup-border: #FFC0CB;
+      --message-popup-bg: #FFF0F5;
+      --message-popup-border: #FF1493;
+      --message-popup-cheer-bg: #FFEBEE;
+      --message-popup-cheer-border: #F44336;
+      --message-popup-cheer-h3: #F44336;
+      --message-popup-cheer-button: #F44336;
+      --message-popup-cheer-button-hover: #D32F2F;
+      --more-ideas-bg: #FF1493;
+      --lesson-popup-bg: #FFF0F5;
+      --lesson-popup-border: #FF1493;
+      --lesson-h3-color: #FF1493;
+      --lesson-h4-color: #FF6347;
+      --theme-picker-border-active: #FF1493;
+    }
+
+    body.theme-yellow {
+      --primary-bg-gradient: linear-gradient(135deg, #FFD700, #FFA500);
+      --container-border-color: #FFC107;
+      --h1-color: #FF8C00;
+      --h2-color: #FFD700;
+      --h3-color: #FF6347;
+      --card-border-color: #FFD700;
+      --input-border-color: #FFC107;
+      --input-bg-color: #FFFACD;
+      --button-primary-bg: #FF8C00;
+      --button-primary-hover-bg: #E67E00;
+      --button-secondary-bg: #FF6347;
+      --button-secondary-hover-bg: #E64A19;
+      --button-danger-bg: #F44336;
+      --button-danger-hover-bg: #D32F2F;
+      --button-info-bg: #FFD700;
+      --button-info-hover-bg: #FFC107;
+      --button-purple-bg: #B8860B;
+      --button-purple-hover-bg: #A0770A;
+      --summary-border-color: #FFD700;
+      --positive-color: #FF8C00;
+      --table-bg-color: #FFFACD;
+      --table-border-color: #FFEC8B;
+      --table-header-bg: #FFD700;
+      --table-even-row-bg: #FFE4B5;
+      --table-hover-bg: #FFDAB9;
+      --tip-popup-bg: #FFFACD;
+      --tip-popup-border: #FFD700;
+      --message-popup-bg: #FFFACD;
+      --message-popup-border: #FF8C00;
+      --message-popup-cheer-bg: #FFEBEE;
+      --message-popup-cheer-border: #F44336;
+      --message-popup-cheer-h3: #F44336;
+      --message-popup-cheer-button: #F44336;
+      --message-popup-cheer-button-hover: #D32F2F;
+      --more-ideas-bg: #FF8C00;
+      --lesson-popup-bg: #FFFACD;
+      --lesson-popup-border: #FF8C00;
+      --lesson-h3-color: #FF8C00;
+      --lesson-h4-color: #FF6347;
+      --theme-picker-border-active: #FF8C00;
+    }
+
+    body.theme-purple {
+      --primary-bg-gradient: linear-gradient(135deg, #E0BBE4, #957DAD);
+      --container-border-color: #C3B1E1;
+      --h1-color: #8A2BE2;
+      --h2-color: #9370DB;
+      --h3-color: #BA55D3;
+      --card-border-color: #C3B1E1;
+      --input-border-color: #9370DB;
+      --input-bg-color: #F8F0FF;
+      --button-primary-bg: #8A2BE2;
+      --button-primary-hover-bg: #7B1FA2;
+      --button-secondary-bg: #BA55D3;
+      --button-secondary-hover-bg: #A040A0;
+      --button-danger-bg: #F44336;
+      --button-danger-hover-bg: #D32F2F;
+      --button-info-bg: #9370DB;
+      --button-info-hover-bg: #7B68EE;
+      --button-purple-bg: #6A5ACD;
+      --button-purple-hover-bg: #5A4BBD;
+      --summary-border-color: #C3B1E1;
+      --positive-color: #8A2BE2;
+      --table-bg-color: #F8F0FF;
+      --table-border-color: #E6E6FA;
+      --table-header-bg: #9370DB;
+      --table-even-row-bg: #DDA0DD;
+      --table-hover-bg: #E0BBE4;
+      --tip-popup-bg: #F8F0FF;
+      --tip-popup-border: #C3B1E1;
+      --message-popup-bg: #F8F0FF;
+      --message-popup-border: #8A2BE2;
+      --message-popup-cheer-bg: #FFEBEE;
+      --message-popup-cheer-border: #F44336;
+      --message-popup-cheer-h3: #F44336;
+      --message-popup-cheer-button: #F44336;
+      --message-popup-cheer-button-hover: #D32F2F;
+      --more-ideas-bg: #8A2BE2;
+      --lesson-popup-bg: #F8F0FF;
+      --lesson-popup-border: #8A2BE2;
+      --lesson-h3-color: #8A2BE2;
+      --lesson-h4-color: #BA55D3;
+      --theme-picker-border-active: #8A2BE2;
+    }
+
     /* General Body Styles */
     body {
       font-family: 'Open Sans', sans-serif;
-      background: linear-gradient(135deg, #a8e063, #56ab2f); /* Default Green Theme */
+      background: var(--primary-bg-gradient);
       color: #333;
       margin: 0;
       padding: 20px;
@@ -24,52 +285,36 @@
       transition: background 0.5s ease-in-out;
     }
 
-    /* Theme Specific Backgrounds */
-    body.theme-green {
-      background: linear-gradient(135deg, #a8e063, #56ab2f);
-    }
-    body.theme-blue {
-      background: linear-gradient(135deg, #87CEEB, #4682B4); /* Sky Blue */
-    }
-    body.theme-pink {
-      background: linear-gradient(135deg, #FFB6C1, #FF69B4); /* Hot Pink */
-    }
-    body.theme-yellow {
-      background: linear-gradient(135deg, #FFD700, #FFA500); /* Golden Yellow */
-    }
-    body.theme-purple {
-      background: linear-gradient(135deg, #E0E4, #957DAD); /* Lavender Purple */
-    }
-
-    /* Floating Elements */
+    /* Floating Elements - Enhanced animations */
     .floating-element {
       position: absolute;
-      opacity: 0.6;
+      opacity: 0.7; /* Slightly more visible */
       animation: float 6s ease-in-out infinite;
-      z-index: 0; /* Ensure they are behind the main container */
+      z-index: 0;
+      filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2)); /* Add subtle shadow */
     }
-    .coin { top: 10%; left: 5%; width: 50px; height: 50px; background-color: gold; border-radius: 50%; animation-delay: 0s; }
-    .star { top: 30%; right: 10%; width: 40px; height: 40px; background-color: yellow; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); animation-delay: 2s; }
-    .cloud { bottom: 15%; left: 20%; width: 80px; height: 50px; background-color: white; border-radius: 50px; box-shadow: 20px 0 0 -10px white, 40px 0 0 -20px white; animation-delay: 4s; }
-    .balloon { top: 5%; right: 25%; width: 60px; height: 80px; background-color: #FF6347; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; animation-delay: 1s; }
-    .heart { top: 40%; left: 15%; width: 40px; height: 40px; background-color: #FF69B4; position: relative; transform: rotate(-45deg); animation-delay: 3s; }
-    .heart::before, .heart::after { content: ""; width: 40px; height: 40px; background-color: #FF69B4; border-radius: 50%; position: absolute; }
-    .heart::before { top: -20px; left: 0; }
-    .heart::after { top: 0; left: 20px; }
-    .diamond { bottom: 5%; right: 5%; width: 40px; height: 40px; background-color: #00CED1; transform: rotate(45deg); animation-delay: 5s; }
-    .flower { top: 20%; left: 30%; width: 50px; height: 50px; background-color: #FFD700; border-radius: 50%; animation-delay: 0.5s; }
+    .coin { top: 10%; left: 5%; width: 60px; height: 60px; background-color: gold; border-radius: 50%; animation-delay: 0s; font-size: 2em; display: flex; justify-content: center; align-items: center; }
+    .star { top: 30%; right: 10%; width: 50px; height: 50px; background-color: yellow; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); animation-delay: 2s; }
+    .cloud { bottom: 15%; left: 20%; width: 100px; height: 60px; background-color: white; border-radius: 50px; box-shadow: 25px 0 0 -10px white, 50px 0 0 -20px white; animation-delay: 4s; }
+    .balloon { top: 5%; right: 25%; width: 70px; height: 90px; background-color: #FF6347; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; animation-delay: 1s; }
+    .heart { top: 40%; left: 15%; width: 50px; height: 50px; background-color: #FF69B4; position: relative; transform: rotate(-45deg); animation-delay: 3s; }
+    .heart::before, .heart::after { content: ""; width: 50px; height: 50px; background-color: #FF69B4; border-radius: 50%; position: absolute; }
+    .heart::before { top: -25px; left: 0; }
+    .heart::after { top: 0; left: 25px; }
+    .diamond { bottom: 5%; right: 5%; width: 50px; height: 50px; background-color: #00CED1; transform: rotate(45deg); animation-delay: 5s; }
+    .flower { top: 20%; left: 30%; width: 60px; height: 60px; background-color: #FFD700; border-radius: 50%; animation-delay: 0.5s; }
     .flower::before, .flower::after { content: ""; position: absolute; background-color: #FFD700; border-radius: 50%; }
-    .flower::before { width: 30px; height: 30px; top: -10px; left: 10px; }
-    .flower::after { width: 30px; height: 30px; top: 10px; left: -10px; }
+    .flower::before { width: 35px; height: 35px; top: -12px; left: 12px; }
+    .flower::after { width: 35px; height: 35px; top: 12px; left: -12px; }
     .ferris-wheel {
       top: 60%;
       left: 5%;
-      width: 80px;
-      height: 80px;
-      border: 5px solid #FF5722; /* Orange wheel */
+      width: 90px;
+      height: 90px;
+      border: 6px solid var(--button-danger-bg); /* Uses a variable */
       border-radius: 50%;
       position: relative;
-      animation: float 7s ease-in-out infinite, spin 10s linear infinite; /* Combine float and spin */
+      animation: float 7s ease-in-out infinite, spin 10s linear infinite;
       animation-delay: 6s;
     }
     .ferris-wheel::before {
@@ -78,9 +323,9 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 10px;
-      height: 10px;
-      background-color: #FFD700; /* Yellow center */
+      width: 12px;
+      height: 12px;
+      background-color: var(--card-border-color); /* Uses a variable */
       border-radius: 50%;
     }
     .ferris-wheel::after {
@@ -89,29 +334,28 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) rotate(45deg);
-      width: 80px;
-      height: 5px;
-      background-color: #FF5722; /* Spokes */
+      width: 90px;
+      height: 6px;
+      background-color: var(--button-danger-bg); /* Uses a variable */
     }
     .ferris-wheel .cabin {
       position: absolute;
-      width: 15px;
-      height: 20px;
-      background-color: #4CAF50; /* Green cabins */
-      border-radius: 3px;
-      transform-origin: 50% 40px; /* Rotate around the center of the wheel */
+      width: 18px;
+      height: 24px;
+      background-color: var(--button-primary-bg); /* Uses a variable */
+      border-radius: 4px;
+      transform-origin: 50% 45px;
     }
-    .ferris-wheel .cabin:nth-child(1) { top: 0; left: 50%; margin-left: -7.5px; transform: rotate(0deg) translateY(-40px); }
-    .ferris-wheel .cabin:nth-child(2) { top: 50%; left: 100%; margin-top: -10px; margin-left: -7.5px; transform: rotate(90deg) translateY(-40px); }
-    .ferris-wheel .cabin:nth-child(3) { top: 100%; left: 50%; margin-top: -10px; margin-left: -7.5px; transform: rotate(180deg) translateY(-40px); }
-    .ferris-wheel .cabin:nth-child(4) { top: 50%; left: 0; margin-top: -10px; transform: rotate(270deg) translateY(-40px); }
-
+    .ferris-wheel .cabin:nth-child(1) { top: 0; left: 50%; margin-left: -9px; transform: rotate(0deg) translateY(-45px); }
+    .ferris-wheel .cabin:nth-child(2) { top: 50%; left: 100%; margin-top: -12px; margin-left: -9px; transform: rotate(90deg) translateY(-45px); }
+    .ferris-wheel .cabin:nth-child(3) { top: 100%; left: 50%; margin-top: -12px; margin-left: -9px; transform: rotate(180deg) translateY(-45px); }
+    .ferris-wheel .cabin:nth-child(4) { top: 50%; left: 0; margin-top: -12px; transform: rotate(270deg) translateY(-45px); }
 
     @keyframes float {
       0% { transform: translateY(0px) rotate(0deg); }
-      25% { transform: translateY(-10px) rotate(5deg); }
-      50% { transform: translateY(-20px) rotate(-5deg); }
-      75% { transform: translateY(-10px) rotate(5deg); }
+      25% { transform: translateY(-15px) rotate(8deg); } /* More pronounced float */
+      50% { transform: translateY(-30px) rotate(-8deg); }
+      75% { transform: translateY(-15px) rotate(8deg); }
       100% { transform: translateY(0px) rotate(0deg); }
     }
 
@@ -122,107 +366,119 @@
 
     /* Main Container */
     .container {
-      background-color: rgba(255, 255, 255, 0.9);
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      padding: 30px;
-      max-width: 800px;
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 30px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+      padding: 40px;
+      max-width: 850px;
       width: 100%;
       text-align: center;
       position: relative;
       z-index: 10;
+      border: 5px solid var(--container-border-color); /* Uses a variable */
     }
 
-    /* Headings */
+    /* Headings - More playful font and colors */
     h1, h2, h3 {
       font-family: 'Bulegum Sans', cursive;
-      color: #4CAF50;
-      text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
+      text-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+      margin-bottom: 25px;
     }
-    h1 { font-size: 3em; margin-bottom: 10px; }
-    h2 { font-size: 2.2em; }
-    h3 { font-size: 1.8em; color: #FFC107; }
+    h1 { font-size: 3.5em; margin-bottom: 15px; color: var(--h1-color); } /* Uses a variable */
+    h2 { font-size: 2.5em; color: var(--h2-color); } /* Uses a variable */
+    h3 { font-size: 2em; color: var(--h3-color); } /* Uses a variable */
 
-    /* Cards */
+    /* Cards - More vibrant borders */
     .card {
-      background-color: #FFFDE7;
-      border: 2px solid #FFD700;
-      border-radius: 15px;
-      padding: 20px;
-      margin: 20px 0;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      background-color: #FFFDE7; /* Card background remains light */
+      border: 3px solid var(--card-border-color); /* Uses a variable */
+      border-radius: 20px;
+      padding: 25px;
+      margin: 25px 0;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       text-align: left;
     }
 
-    /* Input Bars */
+    /* Input Bars - More friendly appearance */
     input[type="text"],
     input[type="email"],
     input[type="password"],
     input[type="number"],
     input[type="date"] {
-      width: calc(100% - 20px);
-      padding: 12px;
-      margin: 8px 0;
-      border: 2px solid #9CCC65;
-      border-radius: 10px;
-      font-size: 1.1em;
+      width: calc(100% - 24px);
+      padding: 15px;
+      margin: 10px 0;
+      border: 3px solid var(--input-border-color); /* Uses a variable */
+      border-radius: 15px;
+      font-size: 1.2em;
       box-sizing: border-box;
       transition: all 0.3s ease;
+      background-color: var(--input-bg-color); /* Uses a variable */
     }
     input:focus {
-      border-color: #4CAF50;
-      box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+      border-color: var(--button-primary-bg); /* Uses a variable */
+      box-shadow: 0 0 10px rgba(76, 175, 80, 0.6); /* Still green glow for focus */
       outline: none;
     }
 
-    /* Buttons */
+    /* Buttons - More vibrant and playful */
     button {
-      background-color: #FF9800;
+      background-color: var(--button-secondary-bg); /* Uses a variable */
       color: white;
-      padding: 12px 25px;
+      padding: 15px 30px;
       border: none;
-      border-radius: 25px;
-      font-size: 1.2em;
+      border-radius: 30px;
+      font-size: 1.3em;
       font-family: 'Bulegum Sans', cursive;
       cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      margin: 10px 5px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      margin: 12px 6px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
     button:hover {
-      background-color: #FB8C00;
-      transform: translateY(-3px);
+      background-color: var(--button-secondary-hover-bg); /* Uses a variable */
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     }
     button:active {
       transform: translateY(0);
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-    /* Specific button colors */
-    #do-signup, #do-login, #calc-submit { background-color: #4CAF50; }
-    #do-signup:hover, #do-login:hover, #calc-submit:hover { background-color: #43A047; }
-    #do-forgot { background-color: #2196F3; }
-    #do-forgot:hover { background-color: #1976D2; }
-    #do-logout { background-color: #F44336; }
-    #do-logout:hover { background-color: #D32F2F; }
-    #add-other { background-color: #9C27B0; }
-    #add-other:hover { background-color: #7B1FA2; }
-    .rm { background-color: #FF5722; padding: 5px 10px; font-size: 0.9em; border-radius: 15px; }
-    .rm:hover { background-color: #E64A19; }
+    /* Specific button colors - Brighter shades */
+    #do-signup, #do-login, #calc-submit { background-color: var(--button-primary-bg); } /* Uses a variable */
+    #do-signup:hover, #do-login:hover, #calc-submit:hover { background-color: var(--button-primary-hover-bg); } /* Uses a variable */
+    #do-forgot { background-color: var(--button-info-bg); } /* Uses a variable */
+    #do-forgot:hover { background-color: var(--button-info-hover-bg); } /* Uses a variable */
+    #do-logout { background-color: var(--button-danger-bg); } /* Uses a variable */
+    #do-logout:hover { background-color: var(--button-danger-hover-bg); } /* Uses a variable */
+    #add-other { background-color: var(--button-purple-bg); } /* Uses a variable */
+    #add-other:hover { background-color: var(--button-purple-hover-bg); } /* Uses a variable */
+    .rm { background-color: var(--button-danger-bg); padding: 8px 15px; font-size: 1em; border-radius: 20px; } /* Uses a variable */
+    .rm:hover { background-color: var(--button-danger-hover-bg); } /* Uses a variable */
 
-    /* Icons */
+    /* Icons - Larger and more visible */
     .icon {
-      margin-right: 8px;
+      margin-right: 10px;
       vertical-align: middle;
+      font-size: 1.2em;
     }
 
     /* Auth Message */
     #auth-msg {
-      color: #D32F2F;
+      color: var(--button-danger-bg); /* Uses a variable */
       font-weight: bold;
-      margin-top: 15px;
-      font-size: 1.1em;
+      margin-top: 20px;
+      font-size: 1.2em;
+      animation: shake 0.5s ease-in-out;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
     }
 
     /* Other Expenses List */
@@ -230,13 +486,13 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      margin-bottom: 10px;
-      gap: 10px;
+      margin-bottom: 15px;
+      gap: 15px;
     }
     #other-list input {
       flex-grow: 1;
       margin: 0;
-      min-width: 120px;
+      min-width: 150px;
     }
     #other-list .rm {
       flex-shrink: 0;
@@ -246,16 +502,17 @@
     .summary-item {
       display: flex;
       justify-content: space-between;
-      padding: 5px 0;
-      border-bottom: 1px dashed #ccc;
+      padding: 8px 0;
+      border-bottom: 2px dashed var(--summary-border-color); /* Uses a variable */
       flex-wrap: wrap;
+      font-size: 1.1em;
     }
     .summary-item:last-child {
       border-bottom: none;
     }
     .summary-label {
       font-weight: bold;
-      color: #666A;
+      color: var(--summary-label-color); /* Uses a variable */
       flex-basis: 60%;
       text-align: left;
     }
@@ -263,117 +520,130 @@
       color: #333;
       flex-basis: 35%;
       text-align: right;
+      font-weight: bold;
     }
     #sum-remain, #sum-save {
       font-weight: bold;
-      color: #4CAF50;
+      color: var(--positive-color); /* Uses a variable */
+      font-size: 1.2em;
     }
 
     /* History Table - Desktop View */
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 20px;
-      background-color: #E8F5E9;
-      border-radius: 10px;
+      margin-top: 25px;
+      background-color: var(--table-bg-color); /* Uses a variable */
+      border-radius: 15px;
       overflow: hidden;
-      display: table; /* Default for desktop */
+      display: table;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
     }
     th, td {
-      padding: 12px;
-      border: 1px solid #C8E6C9;
+      padding: 15px;
+      border: 1px solid var(--table-border-color); /* Uses a variable */
       text-align: center;
-      font-size: 1em;
-    }
-    th {
-      background-color: #81C784;
-      color: white;
-      font-family: 'Bulegum Sans', cursive;
       font-size: 1.1em;
     }
+    th {
+      background-color: var(--table-header-bg); /* Uses a variable */
+      color: white;
+      font-family: 'Bulegum Sans', cursive;
+      font-size: 1.2em;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
     tr:nth-child(even) {
-      background-color: #DCEDC8;
+      background-color: var(--table-even-row-bg); /* Uses a variable */
     }
     tr:hover {
-      background-color: #C5E1A5;
+      background-color: var(--table-hover-bg); /* Uses a variable */
+      transform: scale(1.01);
+      transition: transform 0.2s ease;
     }
 
     /* Month Filter */
     #month-filter {
-      padding: 8px;
-      border-radius: 10px;
-      border: 2px solid #9CCC65;
-      font-size: 1em;
-      margin-top: 15px;
+      padding: 10px;
+      border-radius: 15px;
+      border: 3px solid var(--input-border-color); /* Uses a variable */
+      font-size: 1.1em;
+      margin-top: 20px;
       background-color: white;
       width: calc(100% - 20px);
       box-sizing: border-box;
+      appearance: none;
+      background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%234CAF50%22%20d%3D%22M287%2C197.3L159.3%2C69.7c-3.2-3.2-8.4-3.2-11.6%2C0L5.4%2C197.3c-3.2%2C3.2-3.2%2C8.4%2C0%2C11.6l11.6%2C11.6c3.2%2C3.2%2C8.4%2C3.2%2C11.6%2C0l120.7-120.7l120.7%2C120.7c3.2%2C3.2%2C8.4%2C3.2%2C11.6%2C0l11.6-11.6C290.2%2C205.7%2C290.2%2C200.5%2C287%2C197.3z%22%2F%3E%3C%2Fsvg%3E'); /* Still green arrow */
+      background-repeat: no-repeat;
+      background-position: right 10px top 50%;
+      background-size: 12px auto;
     }
 
     /* Floating Bulb Icon */
     #bulb-icon {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(45deg, #FFD700, #FF8C00); /* Golden to Orange */
+      bottom: 25px;
+      right: 25px;
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(45deg, var(--card-border-color), var(--h3-color)); /* Uses variables */
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 2.5em;
+      font-size: 3em;
       cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
       z-index: 100;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       color: white;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-      animation: float 4s ease-in-out infinite; /* Reuse float animation */
+      text-shadow: 2px 2px 3px rgba(0,0,0,0.3);
+      animation: float 4s ease-in-out infinite;
     }
     #bulb-icon:hover {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      transform: translateY(-8px) scale(1.1);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
     }
 
     /* Tip Pop-up */
     .tip-popup {
       display: none;
       position: fixed;
-      bottom: 90px; /* Above the bulb icon */
-      right: 20px;
-      background-color: #FFFDE7;
-      border: 2px solid #FFD700;
-      border-radius: 15px;
-      padding: 20px;
-      max-width: 300px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      bottom: 100px;
+      right: 25px;
+      background-color: var(--tip-popup-bg); /* Uses a variable */
+      border: 3px solid var(--tip-popup-border); /* Uses a variable */
+      border-radius: 20px;
+      padding: 25px;
+      max-width: 350px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
       z-index: 101;
       text-align: left;
       font-family: 'Open Sans', sans-serif;
       color: #333;
+      animation: fadeInScale 0.3s ease-out;
     }
     .tip-popup h3 {
-      color: #4CAF50;
+      color: var(--h1-color); /* Uses a variable */
       margin-top: 0;
-      margin-bottom: 10px;
-      font-size: 1.5em;
+      margin-bottom: 15px;
+      font-size: 1.8em;
     }
     .tip-popup p {
-      margin-bottom: 10px;
-      line-height: 1.4;
+      margin-bottom: 15px;
+      line-height: 1.5;
+      font-size: 1.1em;
     }
     .tip-popup button {
-      background-color: #FF5722;
+      background-color: var(--button-danger-bg); /* Uses a variable */
       color: white;
-      padding: 8px 15px;
-      border-radius: 20px;
-      font-size: 0.9em;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-size: 1em;
       float: right;
-      margin-top: 10px;
+      margin-top: 15px;
     }
     .tip-popup button:hover {
-      background-color: #E64A19;
+      background-color: var(--button-danger-hover-bg); /* Uses a variable */
     }
 
     /* Praise/Cheer Up Message Pop-up */
@@ -383,109 +653,110 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background-color: #E8F5E9; /* Light green */
-      border: 3px solid #4CAF50; /* Green border */
-      border-radius: 20px;
-      padding: 30px;
-      max-width: 400px;
+      background-color: var(--message-popup-bg); /* Uses a variable */
+      border: 4px solid var(--message-popup-border); /* Uses a variable */
+      border-radius: 25px;
+      padding: 35px;
+      max-width: 450px;
       width: 90%;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
       z-index: 102;
       text-align: center;
       font-family: 'Bulegum Sans', cursive;
       color: #333;
-      animation: fadeInScale 0.3s ease-out;
+      animation: fadeInScale 0.4s ease-out;
     }
     .message-popup.cheer-up {
-      background-color: #FFEBEE; /* Light red */
-      border-color: #F44336; /* Red border */
+      background-color: var(--message-popup-cheer-bg); /* Uses a variable */
+      border-color: var(--message-popup-cheer-border); /* Uses a variable */
     }
     .message-popup h3 {
-      color: #4CAF50;
-      font-size: 2em;
+      color: var(--h1-color); /* Uses a variable */
+      font-size: 2.5em;
       margin-top: 0;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
     .message-popup.cheer-up h3 {
-      color: #F44336;
+      color: var(--message-popup-cheer-h3); /* Uses a variable */
     }
     .message-popup p {
       font-family: 'Open Sans', sans-serif;
-      font-size: 1.2em;
-      line-height: 1.5;
-      margin-bottom: 20px;
+      font-size: 1.3em;
+      line-height: 1.6;
+      margin-bottom: 25px;
     }
     .message-popup button {
-      background-color: #4CAF50;
+      background-color: var(--button-primary-bg); /* Uses a variable */
       color: white;
-      padding: 10px 20px;
-      border-radius: 25px;
-      font-size: 1.1em;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-size: 1.2em;
       font-family: 'Bulegum Sans', cursive;
       transition: background-color 0.3s ease;
     }
     .message-popup.cheer-up button {
-      background-color: #F44336;
+      background-color: var(--message-popup-cheer-button); /* Uses a variable */
     }
     .message-popup button:hover {
-      background-color: #43A047;
+      background-color: var(--button-primary-hover-bg); /* Uses a variable */
     }
     .message-popup.cheer-up button:hover {
-      background-color: #D32F2F;
+      background-color: var(--message-popup-cheer-button-hover); /* Uses a variable */
     }
 
     @keyframes fadeInScale {
-      from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+      from { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
       to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
     }
 
     /* Floating Budget Buddy Character */
     #budget-buddy-char {
       position: fixed;
-      bottom: 100px; /* Adjust as needed */
-      left: 20px; /* Adjust as needed */
-      width: 70px;
-      height: 70px;
-      background-color: #FFC107; /* Yellow/Orange background for visibility */
+      bottom: 110px;
+      left: 25px;
+      width: 80px;
+      height: 80px;
+      background-color: var(--card-border-color); /* Uses a variable */
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 3em;
+      font-size: 3.5em;
       cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      z-index: 99; /* Below bulb icon, above general content */
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      z-index: 99;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-      animation: float 5s ease-in-out infinite; /* Reuse float animation */
+      animation: float 5s ease-in-out infinite;
     }
     #budget-buddy-char:hover {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      transform: translateY(-8px) scale(1.1);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
     }
 
     /* "For More Ideas" Message */
     #more-ideas-msg {
-      display: none; /* Hidden by default, shown by JS */
+      display: none;
       position: fixed;
-      bottom: 170px; /* Above the character */
-      left: 100px; /* Next to the character */
-      background-color: #4CAF50;
+      bottom: 190px;
+      left: 115px;
+      background-color: var(--more-ideas-bg); /* Uses a variable */
       color: white;
-      padding: 8px 15px;
-      border-radius: 15px;
-      font-size: 0.9em;
+      padding: 10px 18px;
+      border-radius: 20px;
+      font-size: 1em;
       font-weight: bold;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
       z-index: 98;
       cursor: pointer;
-      animation: pulse 1.5s infinite; /* Subtle animation */
+      animation: pulse 1.5s infinite;
     }
     #more-ideas-msg span {
-      margin-left: 5px;
+      margin-left: 8px;
+      font-size: 1.2em;
     }
     @keyframes pulse {
       0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.03); opacity: 0.9; }
+      50% { transform: scale(1.05); opacity: 0.95; }
       100% { transform: scale(1); opacity: 1; }
     }
 
@@ -496,130 +767,135 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background-color: #E8F5E9; /* Light green */
-      border: 3px solid #4CAF50; /* Green border */
-      border-radius: 20px;
-      padding: 30px;
-      max-width: 600px;
+      background-color: var(--lesson-popup-bg); /* Uses a variable */
+      border: 4px solid var(--lesson-popup-border); /* Uses a variable */
+      border-radius: 25px;
+      padding: 35px;
+      max-width: 650px;
       width: 90%;
-      height: 80%; /* Make it taller for scrollability */
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      z-index: 103; /* Higher than other popups */
+      height: 85%;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+      z-index: 103;
       text-align: left;
       font-family: 'Open Sans', sans-serif;
       color: #333;
-      animation: fadeInScale 0.3s ease-out;
-      overflow-y: auto; /* Enable vertical scrolling */
+      animation: fadeInScale 0.4s ease-out;
+      overflow-y: auto;
     }
     #lesson-popup h3 {
-      color: #4CAF50;
-      font-size: 1.8em;
+      color: var(--lesson-h3-color); /* Uses a variable */
+      font-size: 2.2em;
       margin-top: 0;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       text-align: center;
     }
     #lesson-popup h4 {
-      color: #FF9800;
-      font-size: 1.4em;
-      margin-top: 20px;
-      margin-bottom: 10px;
+      color: var(--lesson-h4-color); /* Uses a variable */
+      font-size: 1.6em;
+      margin-top: 25px;
+      margin-bottom: 12px;
     }
     #lesson-popup p, #lesson-popup ul {
-      font-size: 1em;
-      line-height: 1.6;
-      margin-bottom: 10px;
+      font-size: 1.1em;
+      line-height: 1.7;
+      margin-bottom: 12px;
     }
     #lesson-popup ul {
-      list-style-type: disc;
-      margin-left: 20px;
+      list-style-type: '👉 ';
+      margin-left: 25px;
+      padding-left: 5px;
+    }
+    #lesson-popup li {
+      margin-bottom: 8px;
     }
     #lesson-popup button {
-      background-color: #FF5722;
+      background-color: var(--button-danger-bg); /* Uses a variable */
       color: white;
-      padding: 10px 20px;
-      border-radius: 25px;
-      font-size: 1.1em;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-size: 1.2em;
       font-family: 'Bulegum Sans', cursive;
       transition: background-color 0.3s ease;
-      display: block; /* Make button take full width */
-      margin: 20px auto 0; /* Center button */
+      display: block;
+      margin: 25px auto 0;
     }
     #lesson-popup button:hover {
-      background-color: #E64A19;
+      background-color: var(--button-danger-hover-bg); /* Uses a variable */
     }
 
     /* Theme Picker Styles */
     #theme-picker {
       position: fixed;
-      top: 20px;
-      left: 20px;
+      top: 25px;
+      left: 25px;
       z-index: 100;
       display: flex;
-      flex-direction: column; /* Stack buttons vertically */
-      gap: 10px;
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 10px;
-      border-radius: 15px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      animation: float 6s ease-in-out infinite; /* Make it float */
+      flex-direction: column;
+      gap: 12px;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 12px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      animation: float 6s ease-in-out infinite;
     }
     #theme-picker button {
-      width: 40px;
-      height: 40px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
-      border: 2px solid #ccc;
+      border: 3px solid #ccc;
       cursor: pointer;
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
       padding: 0;
       margin: 0;
       box-shadow: none;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 1.5em; /* Icon size */
-      color: white; /* Icon color */
+      font-size: 1.8em;
+      color: white;
       text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
     }
     #theme-picker button:hover {
-      transform: scale(1.1);
-      border-color: #4CAF50;
+      transform: scale(1.15);
+      border-color: var(--theme-picker-border-active); /* Uses a variable */
+      box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.4); /* Still green glow for hover */
     }
     #theme-picker button.active {
-      border-color: #4CAF50;
-      box-shadow: 0 0 0 3px #4CAF50;
-      transform: scale(1.1);
+      border-color: var(--theme-picker-border-active); /* Uses a variable */
+      box-shadow: 0 0 0 5px var(--theme-picker-border-active); /* Uses a variable */
+      transform: scale(1.15);
     }
 
-    #theme-green { background: linear-gradient(135deg, #a8e063, #56ab2f); }
+    #theme-green { background: linear-gradient(135deg, #A8E063, #56AB2F); }
     #theme-blue { background: linear-gradient(135deg, #87CEEB, #4682B4); }
     #theme-pink { background: linear-gradient(135deg, #FFB6C1, #FF69B4); }
     #theme-yellow { background: linear-gradient(135deg, #FFD700, #FFA500); }
-    #theme-purple { background: linear-gradient(135deg, #E0E4, #957DAD); }
+    #theme-purple { background: linear-gradient(135deg, #E0BBE4, #957DAD); }
 
     /* New Download Button Styles */
     #download-app-btn {
-      background: linear-gradient(45deg, #FFD700, #FF8C00); /* Golden to Orange */
+      background: linear-gradient(45deg, var(--card-border-color), var(--h3-color)); /* Uses variables */
       color: white;
-      padding: 15px 30px;
-      border-radius: 30px;
-      font-size: 1.5em;
+      padding: 18px 35px;
+      border-radius: 35px;
+      font-size: 1.8em;
       font-family: 'Bulegum Sans', cursive;
       cursor: pointer;
       transition: all 0.3s ease;
-      margin-top: 25px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-      display: inline-block; /* To allow margin-top and center */
-      text-decoration: none; /* Remove underline for link */
-      animation: pulse 2s infinite; /* Add a subtle pulse animation */
+      margin-top: 30px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      display: inline-block;
+      text-decoration: none;
+      animation: pulse 2s infinite;
     }
     #download-app-btn:hover {
-      background: linear-gradient(45deg, #FFA500, #FF6347); /* Slightly different gradient on hover */
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(45deg, var(--h3-color), var(--button-danger-bg)); /* Uses variables */
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
     }
     #download-app-btn:active {
       transform: translateY(0);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
     /* Ensure the download button is centered */
     #auth .card + #download-app-btn {
@@ -635,15 +911,15 @@
         padding: 10px;
       }
       .container {
-        padding: 15px;
-        border-radius: 10px;
+        padding: 20px;
+        border-radius: 20px;
+        border-width: 3px;
       }
       button {
-        padding: 10px 15px;
-        font-size: 1em;
-        margin: 8px 3px;
-        width: calc(100% - 6px);
-        box-sizing: border-box;
+        padding: 12px 18px;
+        font-size: 1.1em;
+        margin: 10px 5px;
+        width: calc(100% - 10px);
       }
       input[type="text"],
       input[type="email"],
@@ -651,16 +927,19 @@
       input[type="number"],
       input[type="date"] {
         width: 100%;
-        padding: 10px;
-        font-size: 1em;
+        padding: 12px;
+        font-size: 1.1em;
+        border-width: 2px;
       }
-      h1 { font-size: 2.2em; }
-      h2 { font-size: 1.6em; }
-      h3 { font-size: 1.4em; }
+      h1 { font-size: 2.5em; }
+      h2 { font-size: 1.8em; }
+      h3 { font-size: 1.6em; }
 
       .card {
-        padding: 15px;
-        margin: 15px 0;
+        padding: 20px;
+        margin: 20px 0;
+        border-width: 2px;
+        border-radius: 15px;
       }
 
       /* Specific adjustments for auth buttons to stack better */
@@ -673,6 +952,7 @@
       #other-list div {
         flex-direction: column;
         align-items: stretch;
+        gap: 8px;
       }
       #other-list input {
         width: 100%;
@@ -685,13 +965,13 @@
 
       /* History Table - Mobile Specific */
       table {
-        display: block; /* Make table scrollable on small screens */
-        overflow-x: auto; /* Enable horizontal scrolling */
-        white-space: nowrap; /* Prevent text wrapping in cells */
-        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 10px;
       }
 
-      /* Hide table headers and display them as data attributes for mobile */
       table thead {
         display: none;
       }
@@ -702,7 +982,7 @@
 
       table tr {
         margin-bottom: 10px;
-        border: 1px solid #C8E6C9;
+        border: 1px solid var(--table-border-color); /* Uses a variable */
         border-radius: 10px;
         overflow: hidden;
       }
@@ -710,13 +990,14 @@
       table td {
         display: block;
         text-align: right;
-        padding-left: 50%; /* Space for the pseudo-element label */
+        padding-left: 50%;
         position: relative;
-        border: none; /* Remove individual cell borders */
+        border: none;
+        font-size: 1em;
       }
 
       table td::before {
-        content: attr(data-label); /* Use data-label for the pseudo-element */
+        content: attr(data-label);
         position: absolute;
         left: 6px;
         width: 45%;
@@ -724,82 +1005,90 @@
         white-space: nowrap;
         text-align: left;
         font-weight: bold;
-        color: #666A;
+        color: var(--summary-label-color); /* Uses a variable */
       }
 
       #bulb-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 2em;
-        bottom: 10px;
-        right: 10px;
-      }
-      .tip-popup {
-        bottom: 70px;
-        right: 10px;
-        max-width: calc(100% - 40px);
-      }
-      .message-popup {
-        padding: 20px;
-      }
-      .message-popup h3 {
-        font-size: 1.6em;
-      }
-      .message-popup p {
-        font-size: 1em;
-      }
-
-      /* Mobile adjustments for new floating elements */
-      #budget-buddy-char {
         width: 60px;
         height: 60px;
         font-size: 2.5em;
+        bottom: 15px;
+        right: 15px;
+      }
+      .tip-popup {
         bottom: 80px;
-        left: 10px;
+        right: 15px;
+        max-width: calc(100% - 30px);
+        padding: 20px;
+        border-width: 2px;
+        border-radius: 15px;
+      }
+      .tip-popup h3 { font-size: 1.6em; }
+      .tip-popup p { font-size: 1em; }
+
+      .message-popup {
+        padding: 25px;
+        border-width: 3px;
+        border-radius: 20px;
+      }
+      .message-popup h3 { font-size: 2em; }
+      .message-popup p { font-size: 1.1em; }
+
+      /* Mobile adjustments for new floating elements */
+      #budget-buddy-char {
+        width: 65px;
+        height: 65px;
+        font-size: 3em;
+        bottom: 90px;
+        left: 15px;
       }
       #more-ideas-msg {
-        bottom: 140px;
-        left: 80px;
-        font-size: 0.8em;
-        padding: 6px 10px;
+        bottom: 155px;
+        left: 90px;
+        font-size: 0.9em;
+        padding: 8px 12px;
       }
       #lesson-popup {
-        padding: 20px;
-        height: 90%; /* Take more height on mobile */
+        padding: 25px;
+        height: 90%;
+        border-width: 3px;
+        border-radius: 20px;
       }
-      #lesson-popup h3 {
-        font-size: 1.5em;
-      }
-      #lesson-popup h4 {
-        font-size: 1.2em;
-      }
-      #lesson-popup p, #lesson-popup ul {
-        font-size: 0.9em;
-      }
+      #lesson-popup h3 { font-size: 1.8em; }
+      #lesson-popup h4 { font-size: 1.4em; }
+      #lesson-popup p, #lesson-popup ul { font-size: 1em; }
 
       #theme-picker {
-        top: 10px;
-        left: 10px;
-        gap: 5px;
-        padding: 5px;
+        top: 15px;
+        left: 15px;
+        gap: 8px;
+        padding: 8px;
+        border-radius: 15px;
       }
       #theme-picker button {
-        width: 30px;
-        height: 30px;
+        width: 35px;
+        height: 35px;
+        font-size: 1.6em;
+        border-width: 2px;
       }
 
       /* Download button on mobile */
       #download-app-btn {
-        font-size: 1.2em;
-        padding: 12px 20px;
-        margin-top: 20px;
+        font-size: 1.4em;
+        padding: 15px 25px;
+        margin-top: 25px;
       }
     }
 
     @media (max-width: 400px) {
-      h1 { font-size: 1.8em; }
-      h2 { font-size: 1.4em; }
-      h3 { font-size: 1.2em; }
+      h1 { font-size: 2em; }
+      h2 { font-size: 1.6em; }
+      h3 { font-size: 1.4em; }
+      .container { padding: 15px; }
+      .card { padding: 15px; }
+      input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"] { font-size: 1em; }
+      button { font-size: 1em; padding: 10px 15px; }
+      #download-app-btn { font-size: 1.1em; padding: 12px 20px; }
     }
   </style>
 <script type="module">
@@ -831,13 +1120,13 @@
     // --- UI Elements (Dynamically created for a cleaner HTML structure) ---
     document.addEventListener('DOMContentLoaded', () => {
       document.body.innerHTML = `
-        <div class="floating-element coin"></div>
-        <div class="floating-element star"></div>
-        <div class="floating-element cloud"></div>
-        <div class="floating-element balloon"></div>
-        <div class="floating-element heart"></div>
-        <div class="floating-element diamond"></div>
-        <div class="floating-element flower"></div>
+        <div class="floating-element coin">💰</div>
+        <div class="floating-element star">✨</div>
+        <div class="floating-element cloud">☁️</div>
+        <div class="floating-element balloon">🎈</div>
+        <div class="floating-element heart">❤️</div>
+        <div class="floating-element diamond">💎</div>
+        <div class="floating-element flower">🌼</div>
         <div class="floating-element ferris-wheel">
           <div class="cabin"></div>
           <div class="cabin"></div>
@@ -859,27 +1148,30 @@
           <div id="auth">
             <h2>Join the Money Adventure!</h2>
             <div id="login" class="card">
-              <h3>Already a Buddy? Log In!</h3>
+              <h3>Already a Buddy? Log In! <span class="icon">🔑</span></h3>
               <input id="li-email" type="email" placeholder="Your Email" /><br/>
               <input id="li-pass" type="password" placeholder="Secret Password" /><br/>
-              <button id="do-login"><span class="icon">🔑</span> Come On In!</button><br/>
+              <button id="do-login"><span class="icon">🚀</span> Come On In!</button><br/>
               <button id="do-forgot"><span class="icon">🤔</span> Forgot My Key!</button>
               <button id="show-signup-btn"><span class="icon">✨</span> New Buddy? Sign Up!</button>
             </div>
             <div id="signup" class="card" style="display:none;">
-              <h3>Sign Up for Fun!</h3>
+              <h3>Sign Up for Fun! <span class="icon">🎉</span></h3>
               <input id="su-nick" type="text" placeholder="Your Fun Nickname" /><br/>
               <input id="su-email" type="email" placeholder="Your Email" /><br/>
               <input id="su-pass" type="password" placeholder="Secret Password" /><br/>
-              <button id="do-signup"><span class="icon">🚀</span> Let's Go!</button><br/>
+              <button id="do-signup"><span class="icon">🌟</span> Let's Go!</button><br/>
               <button id="show-login-btn"><span class="icon">🔙</span> Back to Login</button>
             </div>
             <div id="auth-msg"></div>
+            <a id="download-app-btn" href="/bb/manifest.json" download>
+                📲 Get Budget Buddy App!
+            </a>
           </div>
 
           <div id="tracker" style="display:none;">
             <button id="do-logout"><span class="icon">👋</span> Bye Bye!</button>
-            <h2>Welcome, <span id="nick-span"></span>! Let's Track!</h2>
+            <h2>Welcome, <span id="nick-span"></span>! Let's Track! <span class="icon">📈</span></h2>
 
             <div class="card">
               <h3><span class="icon">💡</span> Smart Money Tips for Super Savers!</h3>
@@ -938,7 +1230,7 @@
 
         <div id="bulb-icon">💡</div>
         <div class="tip-popup" id="tip-popup">
-          <h3>Money Saving Tip!</h3>
+          <h3>Money Saving Tip! <span class="icon">💰</span></h3>
           <p id="tip-text"></p>
           <button id="close-tip">Got It!</button>
         </div>
@@ -956,7 +1248,7 @@
 
         <!-- New Lesson Pop-up -->
         <div id="lesson-popup">
-          <h3>Smart Money Management for Kids!</h3>
+          <h3>Smart Money Management for Kids! <span class="icon">🧠</span></h3>
           <div class="lesson-content">
             <h4>What is Smart Money Management?</h4>
             <p>Smart money management is like being a superhero for your money! It means making good choices about how you earn, save, spend, and share your money. It helps you reach your goals, like buying a cool new toy or saving for something big in the future.</p>
@@ -992,11 +1284,238 @@
       const themePicker = document.getElementById('theme-picker');
       const themeButtons = themePicker.querySelectorAll('button');
 
+      // Define theme color palettes
+      const themePalettes = {
+        green: {
+          '--primary-bg-gradient': 'linear-gradient(135deg, #A8E063, #56AB2F)',
+          '--container-border-color': '#FFC107',
+          '--h1-color': '#4CAF50',
+          '--h2-color': '#2196F3',
+          '--h3-color': '#FF9800',
+          '--card-border-color': '#FFD700',
+          '--input-border-color': '#9CCC65',
+          '--input-bg-color': '#F9FBE7',
+          '--button-primary-bg': '#4CAF50',
+          '--button-primary-hover-bg': '#43A047',
+          '--button-secondary-bg': '#FF9800',
+          '--button-secondary-hover-bg': '#FB8C00',
+          '--button-danger-bg': '#FF5722', /* Changed from F44336 for consistency with .rm */
+          '--button-danger-hover-bg': '#E64A19', /* Changed from D32F2F for consistency with .rm */
+          '--button-info-bg': '#2196F3',
+          '--button-info-hover-bg': '#1976D2',
+          '--button-purple-bg': '#9C27B0',
+          '--button-purple-hover-bg': '#7B1FA2',
+          '--summary-border-color': '#FFD700',
+          '--positive-color': '#4CAF50',
+          '--table-bg-color': '#E8F5E9',
+          '--table-border-color': '#C8E6C9',
+          '--table-header-bg': '#81C784',
+          '--table-even-row-bg': '#DCEDC8',
+          '--table-hover-bg': '#C5E1A5',
+          '--tip-popup-bg': '#FFFDE7',
+          '--tip-popup-border': '#FFD700',
+          '--message-popup-bg': '#E8F5E9',
+          '--message-popup-border': '#4CAF50',
+          '--message-popup-cheer-bg': '#FFEBEE',
+          '--message-popup-cheer-border': '#F44336',
+          '--message-popup-cheer-h3': '#F44336',
+          '--message-popup-cheer-button': '#F44336',
+          '--message-popup-cheer-button-hover': '#D32F2F',
+          '--more-ideas-bg': '#4CAF50',
+          '--lesson-popup-bg': '#E8F5E9',
+          '--lesson-popup-border': '#4CAF50',
+          '--lesson-h3-color': '#4CAF50',
+          '--lesson-h4-color': '#FF9800',
+          '--theme-picker-border-active': '#4CAF50',
+        },
+        blue: {
+          '--primary-bg-gradient': 'linear-gradient(135deg, #87CEEB, #4682B4)',
+          '--container-border-color': '#ADD8E6',
+          '--h1-color': '#1E90FF',
+          '--h2-color': '#00BFFF',
+          '--h3-color': '#4682B4',
+          '--card-border-color': '#ADD8E6',
+          '--input-border-color': '#6495ED',
+          '--input-bg-color': '#E0FFFF',
+          '--button-primary-bg': '#1E90FF',
+          '--button-primary-hover-bg': '#007BFF',
+          '--button-secondary-bg': '#4682B4',
+          '--button-secondary-hover-bg': '#3A6690',
+          '--button-danger-bg': '#F44336',
+          '--button-danger-hover-bg': '#D32F2F',
+          '--button-info-bg': '#00BFFF',
+          '--button-info-hover-bg': '#009ACD',
+          '--button-purple-bg': '#6A5ACD',
+          '--button-purple-hover-bg': '#5A4BBD',
+          '--summary-border-color': '#ADD8E6',
+          '--positive-color': '#1E90FF',
+          '--table-bg-color': '#E0FFFF',
+          '--table-border-color': '#B0E0E6',
+          '--table-header-bg': '#6A5ACD',
+          '--table-even-row-bg': '#ADD8E6',
+          '--table-hover-bg': '#87CEEB',
+          '--tip-popup-bg': '#E0FFFF',
+          '--tip-popup-border': '#ADD8E6',
+          '--message-popup-bg': '#E0FFFF',
+          '--message-popup-border': '#1E90FF',
+          '--message-popup-cheer-bg': '#FFEBEE',
+          '--message-popup-cheer-border': '#F44336',
+          '--message-popup-cheer-h3': '#F44336',
+          '--message-popup-cheer-button': '#F44336',
+          '--message-popup-cheer-button-hover': '#D32F2F',
+          '--more-ideas-bg': '#1E90FF',
+          '--lesson-popup-bg': '#E0FFFF',
+          '--lesson-popup-border': '#1E90FF',
+          '--lesson-h3-color': '#1E90FF',
+          '--lesson-h4-color': '#4682B4',
+          '--theme-picker-border-active': '#1E90FF',
+        },
+        pink: {
+          '--primary-bg-gradient': 'linear-gradient(135deg, #FFB6C1, #FF69B4)',
+          '--container-border-color': '#FFC0CB',
+          '--h1-color': '#FF1493',
+          '--h2-color': '#FF69B4',
+          '--h3-color': '#FF6347',
+          '--card-border-color': '#FFC0CB',
+          '--input-border-color': '#FF69B4',
+          '--input-bg-color': '#FFF0F5',
+          '--button-primary-bg': '#FF1493',
+          '--button-primary-hover-bg': '#C71585',
+          '--button-secondary-bg': '#FF6347',
+          '--button-secondary-hover-bg': '#E64A19',
+          '--button-danger-bg': '#F44336',
+          '--button-danger-hover-bg': '#D32F2F',
+          '--button-info-bg': '#FFB6C1',
+          '--button-info-hover-bg': '#FF99AA',
+          '--button-purple-bg': '#DA70D6',
+          '--button-purple-hover-bg': '#C75ED3',
+          '--summary-border-color': '#FFC0CB',
+          '--positive-color': '#FF1493',
+          '--table-bg-color': '#FFF0F5',
+          '--table-border-color': '#FFD1DC',
+          '--table-header-bg': '#FF69B4',
+          '--table-even-row-bg': '#FFC0CB',
+          '--table-hover-bg': '#FFB6C1',
+          '--tip-popup-bg': '#FFF0F5',
+          '--tip-popup-border': '#FFC0CB',
+          '--message-popup-bg': '#FFF0F5',
+          '--message-popup-border': '#FF1493',
+          '--message-popup-cheer-bg': '#FFEBEE',
+          '--message-popup-cheer-border': '#F44336',
+          '--message-popup-cheer-h3': '#F44336',
+          '--message-popup-cheer-button': '#F44336',
+          '--message-popup-cheer-button-hover': '#D32F2F',
+          '--more-ideas-bg': '#FF1493',
+          '--lesson-popup-bg': '#FFF0F5',
+          '--lesson-popup-border': '#FF1493',
+          '--lesson-h3-color': '#FF1493',
+          '--lesson-h4-color': '#FF6347',
+          '--theme-picker-border-active': '#FF1493',
+        },
+        yellow: {
+          '--primary-bg-gradient': 'linear-gradient(135deg, #FFD700, #FFA500)',
+          '--container-border-color': '#FFC107',
+          '--h1-color': '#FF8C00',
+          '--h2-color': '#FFD700',
+          '--h3-color': '#FF6347',
+          '--card-border-color': '#FFD700',
+          '--input-border-color': '#FFC107',
+          '--input-bg-color': '#FFFACD',
+          '--button-primary-bg': '#FF8C00',
+          '--button-primary-hover-bg': '#E67E00',
+          '--button-secondary-bg': '#FF6347',
+          '--button-secondary-hover-bg': '#E64A19',
+          '--button-danger-bg': '#F44336',
+          '--button-danger-hover-bg': '#D32F2F',
+          '--button-info-bg': '#FFD700',
+          '--button-info-hover-bg': '#FFC107',
+          '--button-purple-bg': '#B8860B',
+          '--button-purple-hover-bg': '#A0770A',
+          '--summary-border-color': '#FFD700',
+          '--positive-color': '#FF8C00',
+          '--table-bg-color': '#FFFACD',
+          '--table-border-color': '#FFEC8B',
+          '--table-header-bg': '#FFD700',
+          '--table-even-row-bg': '#FFE4B5',
+          '--table-hover-bg': '#FFDAB9',
+          '--tip-popup-bg': '#FFFACD',
+          '--tip-popup-border': '#FFD700',
+          '--message-popup-bg': '#FFFACD',
+          '--message-popup-border': '#FF8C00',
+          '--message-popup-cheer-bg': '#FFEBEE',
+          '--message-popup-cheer-border': '#F44336',
+          '--message-popup-cheer-h3': '#F44336',
+          '--message-popup-cheer-button': '#F44336',
+          '--message-popup-cheer-button-hover': '#D32F2F',
+          '--more-ideas-bg': '#FF8C00',
+          '--lesson-popup-bg': '#FFFACD',
+          '--lesson-popup-border': '#FF8C00',
+          '--lesson-h3-color': '#FF8C00',
+          '--lesson-h4-color': '#FF6347',
+          '--theme-picker-border-active': '#FF8C00',
+        },
+        purple: {
+          '--primary-bg-gradient': 'linear-gradient(135deg, #E0BBE4, #957DAD)',
+          '--container-border-color': '#C3B1E1',
+          '--h1-color': '#8A2BE2',
+          '--h2-color': '#9370DB',
+          '--h3-color': '#BA55D3',
+          '--card-border-color': '#C3B1E1',
+          '--input-border-color': '#9370DB',
+          '--input-bg-color': '#F8F0FF',
+          '--button-primary-bg': '#8A2BE2',
+          '--button-primary-hover-bg': '#7B1FA2',
+          '--button-secondary-bg': '#BA55D3',
+          '--button-secondary-hover-bg': '#A040A0',
+          '--button-danger-bg': '#F44336',
+          '--button-danger-hover-bg': '#D32F2F',
+          '--button-info-bg': '#9370DB',
+          '--button-info-hover-bg': '#7B68EE',
+          '--button-purple-bg': '#6A5ACD',
+          '--button-purple-hover-bg': '#5A4BBD',
+          '--summary-border-color': '#C3B1E1',
+          '--positive-color': '#8A2BE2',
+          '--table-bg-color': '#F8F0FF',
+          '--table-border-color': '#E6E6FA',
+          '--table-header-bg': '#9370DB',
+          '--table-even-row-bg': '#DDA0DD',
+          '--table-hover-bg': '#E0BBE4',
+          '--tip-popup-bg': '#F8F0FF',
+          '--tip-popup-border': '#C3B1E1',
+          '--message-popup-bg': '#F8F0FF',
+          '--message-popup-border': '#8A2BE2',
+          '--message-popup-cheer-bg': '#FFEBEE',
+          '--message-popup-cheer-border': '#F44336',
+          '--message-popup-cheer-h3': '#F44336',
+          '--message-popup-cheer-button': '#F44336',
+          '--message-popup-cheer-button-hover': '#D32F2F',
+          '--more-ideas-bg': '#8A2BE2',
+          '--lesson-popup-bg': '#F8F0FF',
+          '--lesson-popup-border': '#8A2BE2',
+          '--lesson-h3-color': '#8A2BE2',
+          '--lesson-h4-color': '#BA55D3',
+          '--theme-picker-border-active': '#8A2BE2',
+        }
+      };
+
+      // Function to apply theme variables
+      function applyTheme(themeName) {
+        const palette = themePalettes[themeName];
+        for (const [prop, value] of Object.entries(palette)) {
+          document.documentElement.style.setProperty(prop, value);
+        }
+        // Also update the body class for the background gradient
+        document.body.className = '';
+        document.body.classList.add(`theme-${themeName}`);
+      }
+
+      // Set initial theme (e.g., green)
+      applyTheme('green');
+
       themeButtons.forEach(button => {
         button.addEventListener('click', () => {
           const theme = button.dataset.theme;
-          document.body.className = ''; // Clear existing themes
-          document.body.classList.add(`theme-${theme}`);
+          applyTheme(theme); // Apply all variables for the selected theme
 
           // Update active button state
           themeButtons.forEach(btn => btn.classList.remove('active'));
@@ -1009,20 +1528,20 @@
       const signupCard = document.getElementById('signup');
       const showSignupBtn = document.getElementById('show-signup-btn');
       const showLoginBtn = document.getElementById('show-login-btn');
-      const downloadAppBtn = document.getElementById('download-app-btn'); // Get the new button
+      const downloadAppBtn = document.getElementById('download-app-btn');
 
       showSignupBtn.onclick = () => {
         loginCard.style.display = 'none';
         signupCard.style.display = 'block';
-        document.getElementById('auth-msg').innerText = ''; // Clear auth message
-        downloadAppBtn.style.display = 'none'; // Hide download button when signing up
+        document.getElementById('auth-msg').innerText = '';
+        downloadAppBtn.style.display = 'none';
       };
 
       showLoginBtn.onclick = () => {
         signupCard.style.display = 'none';
         loginCard.style.display = 'block';
-        document.getElementById('auth-msg').innerText = ''; // Clear auth message
-        downloadAppBtn.style.display = 'block'; // Show download button when logging in
+        document.getElementById('auth-msg').innerText = '';
+        downloadAppBtn.style.display = 'block';
       };
 
       document.getElementById('do-signup').onclick = async () => {
@@ -1033,10 +1552,9 @@
           const cred = await createUserWithEmailAndPassword(auth, email, pass);
           await updateProfile(cred.user, { displayName: nick });
           document.getElementById('auth-msg').innerText = "Hooray! You're signed up!";
-          // Optionally, switch back to login or directly log in
           signupCard.style.display = 'none';
           loginCard.style.display = 'block';
-          downloadAppBtn.style.display = 'block'; // Show download button after signup
+          downloadAppBtn.style.display = 'block';
         } catch(e) {
           document.getElementById('auth-msg').innerText = `Oops! ${e.message}`;
         }
@@ -1063,15 +1581,14 @@
           document.getElementById('auth').style.display = 'none';
           document.getElementById('tracker').style.display = 'block';
           document.getElementById('nick-span').innerText = user.displayName || "Little Buddy";
-          downloadAppBtn.style.display = 'none'; // Hide download button when logged in
+          downloadAppBtn.style.display = 'none';
           loadHistory();
         } else {
           document.getElementById('auth').style.display = 'block';
           document.getElementById('tracker').style.display = 'none';
-          // Ensure login is shown by default when logged out
           signupCard.style.display = 'none';
           loginCard.style.display = 'block';
-          downloadAppBtn.style.display = 'block'; // Show download button when logged out
+          downloadAppBtn.style.display = 'block';
         }
       });
 
@@ -1095,7 +1612,7 @@
         const totalExp = fixT + fixM + others;
         const remain = allow - totalExp;
         const target = allow * 0.1;
-        const actualSave = remain; // For simplicity, actual savings is remaining. Could be more complex.
+        const actualSave = remain;
 
         document.getElementById('sum-allow').innerText = allow.toFixed(2);
         document.getElementById('sum-exp').innerText = totalExp.toFixed(2);
@@ -1103,7 +1620,6 @@
         document.getElementById('sum-target').innerText = target.toFixed(2);
         document.getElementById('sum-save').innerText = actualSave.toFixed(2);
 
-        // Save to DB
         const uid = auth.currentUser.uid;
         push(ref(db, `users/${uid}/history`), {
           date: d,
@@ -1111,8 +1627,8 @@
           expenses: totalExp,
           remaining: remain
         });
-        loadHistory(); // Reload history after saving
-        displaySavingMessage(actualSave, target); // Display message based on savings
+        loadHistory();
+        displaySavingMessage(actualSave, target);
       };
 
       document.getElementById('month-filter').onchange = loadHistory;
@@ -1123,14 +1639,12 @@
         const mm = +document.getElementById('month-filter').value;
         onValue(ref(db, `users/${uid}/history`), snap => {
           const tbody = document.querySelector('#history tbody');
-          tbody.innerHTML = ''; // Clear existing rows
+          tbody.innerHTML = '';
           snap.forEach(s => {
             const rec = s.val();
             const dt = new Date(rec.date);
-            // Filter by month if selected
             if (!mm || dt.getMonth()+1 === mm) {
               const tr = document.createElement('tr');
-              // Add data-label attributes for mobile view
               tr.innerHTML = `
                 <td data-label="Date">${("0"+(dt.getMonth()+1)).slice(-2)}/${("0"+dt.getDate()).slice(-2)}/${dt.getFullYear()}</td>
                 <td data-label="Allowance">${rec.allowance.toFixed(2)}</td>
@@ -1210,26 +1724,29 @@
       const closeMessageBtn = document.getElementById('close-message');
 
       function displaySavingMessage(actualSave, target) {
-        messagePopup.classList.remove('cheer-up'); // Reset class
+        messagePopup.classList.remove('cheer-up');
         if (actualSave >= target) {
           messageTitle.innerText = "You Did It!";
           messageText.innerText = praiseMessages[Math.floor(Math.random() * praiseMessages.length)];
-          messagePopup.querySelector('button').style.backgroundColor = '#4CAF50';
-          messagePopup.querySelector('button').onmouseover = function() { this.style.backgroundColor = '#43A047'; };
-          messagePopup.querySelector('button').onmouseout = function() { this.style.backgroundColor = '#4CAF50'; };
-          messagePopup.style.borderColor = '#4CAF50';
-          messagePopup.style.backgroundColor = '#E8F5E9';
-          messageTitle.style.color = '#4CAF50';
+          // Apply theme-specific colors for praise message
+          messagePopup.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue('--message-popup-border');
+          messagePopup.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--message-popup-bg');
+          messageTitle.style.color = getComputedStyle(document.documentElement).getPropertyValue('--h1-color');
+          messagePopup.querySelector('button').style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--button-primary-bg');
+          messagePopup.querySelector('button').onmouseover = function() { this.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--button-primary-hover-bg'); };
+          messagePopup.querySelector('button').onmouseout = function() { this.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--button-primary-bg'); };
+
         } else {
           messageTitle.innerText = "Keep Going!";
           messageText.innerText = cheerUpMessages[Math.floor(Math.random() * cheerUpMessages.length)];
-          messagePopup.classList.add('cheer-up'); // Add cheer-up specific styling
-          messagePopup.querySelector('button').style.backgroundColor = '#F44336';
-          messagePopup.querySelector('button').onmouseover = function() { this.style.backgroundColor = '#D32F2F'; };
-          messagePopup.querySelector('button').onmouseout = function() { this.style.backgroundColor = '#F44336'; };
-          messagePopup.style.borderColor = '#F44336';
-          messagePopup.style.backgroundColor = '#FFEBEE';
-          messageTitle.style.color = '#F44336';
+          messagePopup.classList.add('cheer-up');
+          // Apply theme-specific colors for cheer-up message
+          messagePopup.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue('--message-popup-cheer-border');
+          messagePopup.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--message-popup-cheer-bg');
+          messageTitle.style.color = getComputedStyle(document.documentElement).getPropertyValue('--message-popup-cheer-h3');
+          messagePopup.querySelector('button').style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--message-popup-cheer-button');
+          messagePopup.querySelector('button').onmouseover = function() { this.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--message-popup-cheer-button-hover'); };
+          messagePopup.querySelector('button').onmouseout = function() { this.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--message-popup-cheer-button'); };
         }
         messagePopup.style.display = 'block';
       }
@@ -1244,19 +1761,18 @@
       const lessonPopup = document.getElementById('lesson-popup');
       const closeLessonBtn = document.getElementById('close-lesson');
 
-      // Show "more ideas" message after a delay
       setTimeout(() => {
         moreIdeasMsg.style.display = 'block';
-      }, 3000); // Show after 3 seconds
+      }, 3000);
 
       budgetBuddyChar.onclick = () => {
         lessonPopup.style.display = 'block';
-        moreIdeasMsg.style.display = 'none'; // Hide message when lesson opens
+        moreIdeasMsg.style.display = 'none';
       };
 
       moreIdeasMsg.onclick = () => {
         lessonPopup.style.display = 'block';
-        moreIdeasMsg.style.display = 'none'; // Hide message when lesson opens
+        moreIdeasMsg.style.display = 'none';
       };
 
       closeLessonBtn.onclick = () => {
@@ -1268,10 +1784,9 @@
   let deferredPrompt;
 
   window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault(); // Stop the default mini-infobar
+    e.preventDefault();
     deferredPrompt = e;
 
-    // Show prompt immediately
     deferredPrompt.prompt();
 
     deferredPrompt.userChoice.then((choiceResult) => {
@@ -1290,14 +1805,11 @@
       .then(reg => console.log('✅ Service worker registered:', reg.scope))
       .catch(err => console.log('❌ Service worker registration failed:', err));
   });
-}   
+}
 </script>
 </head>
 <body>
 <!-- Content will be dynamically loaded by JavaScript -->
 
-<button id="install-btn" style="display: none; position: fixed; bottom: 80px; right: 20px; z-index: 999; background-color: #FF9800; color: white; padding: 12px 20px; border: none; border-radius: 25px; font-size: 1.2em; font-family: 'Bulegum Sans', cursive; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor: pointer;">
-  📲 Install Budget Buddy
-</button>
 </body>
 </html>
