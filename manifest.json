@@ -1,19 +1,19 @@
 {
   "name": "Budget Buddy",
   "short_name": "BudgetBuddy",
-  "start_url": "/bb/",
+  "start_url": "/b.b/",
   "display": "standalone",
   "background_color": "#a8e063",
   "theme_color": "#56ab2f",
   "description": "A fun and friendly expense tracker for students and kids!",
   "icons": [
     {
-      "src": "/bb/icons/icon-192.png",
+      "src": "/b.b/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/bb/icons/icon-512.png",
+      "src": "/b.b/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
