@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Budget Buddy - Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&amp;family=Fredoka+One&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome for Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<style>
+    /* Kid-Friendly Pastel Lavender Theme */
+    :root {
+      --primary-bg-gradient: linear-gradient(135deg, #E6E6FA, #D8BFD8); /* Lavender to Thistle */
+      --container-border-color: #B0E0E6; /* Powder Blue */
+      --h1-color: #8A2BE2; /* Blue Violet */
+      --h2-color: #6A5ACD; /* Slate Blue */
+      --h3-color: #BA55D3; /* Medium Orchid */
+      --card-border-color: #FFD700; /* Gold */
+      --input-border-color: #ADD8E6; /* Light Blue */
+      --input-bg-color: #FFFFFF; /* White */
+      --button-primary-bg: #9370DB; /* Medium Purple */
+      --button-primary-hover-bg: #8A2BE2; /* Blue Violet */
+      --button-secondary-bg: #FFD700; /* Gold */
+      --button-secondary-hover-bg: #DAA520; /* Goldenrod */
+      --button-danger-bg: #FF6347; /* Tomato */
+      --button-danger-hover-bg: #CD3700; /* Dark Orange Red */
+      --button-info-bg: #1E90FF; /* Dodger Blue */
+      --button-info-hover-bg: #104E8B; /* Dark Dodger Blue */
+      --button-purple-bg: #BA55D3; /* Medium Orchid */
+      --button-purple-hover-bg: #8A2BE2; /* Blue Violet */
+      --summary-border-color: #FFD700; /* Gold */
+      --summary-label-color: #555;
+      --positive-color: #32CD32; /* Lime Green */
+      --table-bg-color: #F8F8FF; /* Ghost White */
+      --table-border-color: #DDA0DD; /* Plum */
+      --table-header-bg: #9932CC; /* Dark Orchid */
+      --table-even-row-bg: #F0F8FF; /* Alice Blue */
+      --table-hover-bg: #E6E6FA; /* Lavender */
+    }
+
+    body {
+      font-family: 'Comic Neue', cursive; /* More playful font */
+      background: var(--primary-bg-gradient);
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      transition: background 0.5s ease-in-out;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.98); /* Slightly more opaque */
+      border-radius: 40px; /* More rounded */
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18); /* Softer shadow */
+      padding: 45px;
+      max-width: 1000px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+      border: 6px solid var(--container-border-color); /* Thicker, fun border */
+      overflow: hidden; /* Ensure floating elements don't overflow container */
+    }
+
+    h1, h2, h3 {
+      font-family: 'Fredoka One', cursive; /* Fun, bold font for headings */
+      text-shadow: 4px 4px 0px rgba(0,0,0,0.1); /* More pronounced shadow */
+      margin-bottom: 30px;
+    }
+    h1 { font-size: 4em; margin-bottom: 20px; color: var(--h1-color); }
+    h2 { font-size: 3em; color: var(--h2-color); }
+    h3 { font-size: 2.5em; color: var(--h3-color); }
+
+    .card {
+      background-color: #FFFACD; /* Lemon Chiffon */
+      border: 4px solid var(--card-border-color); /* Thicker, colorful border */
+      border-radius: 25px; /* More rounded */
+      padding: 30px;
+      margin: 30px 0;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12); /* Softer shadow */
+      text-align: left;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: calc(100% - 30px); /* Adjust padding */
+      padding: 18px; /* Larger padding */
+      margin: 12px 0;
+      border: 4px solid var(--input-border-color); /* Thicker border */
+      border-radius: 20px; /* More rounded */
+      font-size: 1.4em; /* Larger font */
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+      background-color: var(--input-bg-color);
+    }
+    input:focus {
+      border-color: var(--button-primary-bg);
+      box-shadow: 0 0 12px rgba(50, 205, 50, 0.7); /* Brighter focus shadow */
+      outline: none;
+    }
+
+    button {
+      background-color: var(--button-primary-bg);
+      color: white;
+      padding: 18px 35px; /* Larger padding */
+      border: none;
+      border-radius: 35px; /* More rounded */
+      font-size: 1.5em; /* Larger font */
+      font-family: 'Fredoka One', cursive; /* Fun button font */
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      margin: 15px 8px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18); /* Softer shadow */
+      text-transform: uppercase;
+      letter-spacing: 1.5px; /* Slightly more spaced */
+    }
+    button:hover {
+      background-color: var(--button-primary-hover-bg);
+      transform: translateY(-7px) scale(1.03); /* More pronounced hover effect */
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+    }
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    #admin-msg {
+      color: var(--button-danger-bg);
+      font-weight: bold;
+      margin-top: 25px;
+      font-size: 1.4em; /* Larger message font */
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+      background-color: var(--table-bg-color);
+      border-radius: 20px; /* More rounded table */
+      overflow: hidden;
+      display: table;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1); /* Softer shadow */
+    }
+    th, td {
+      padding: 18px; /* Larger padding */
+      border: 2px solid var(--table-border-color); /* Thicker border */
+      text-align: center;
+      font-size: 1.2em; /* Larger font */
+    }
+    th {
+      background-color: var(--table-header-bg);
+      color: white;
+      font-family: 'Fredoka One', cursive; /* Fun header font */
+      font-size: 1.3em; /* Larger header font */
+      text-shadow: 2px 2px 3px rgba(0,0,0,0.15); /* More pronounced shadow */
+    }
+    tr:nth-child(even) {
+      background-color: var(--table-even-row-bg);
+    }
+    tr:hover {
+      background-color: var(--table-hover-bg);
+      transform: scale(1.01);
+      transition: transform 0.2s ease;
+    }
+
+    .summary-dashboard {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 35px;
+        flex-wrap: wrap;
+    }
+    .summary-box {
+        background-color: #E0FFFF; /* Light Cyan */
+        border: 3px solid #87CEFA; /* Light Sky Blue */
+        border-radius: 20px; /* More rounded */
+        padding: 25px;
+        margin: 12px;
+        flex: 1;
+        min-width: 280px; /* Slightly wider */
+        box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+        text-align: center; /* Add center alignment */
+    }
+    .summary-box h3 {
+        color: var(--h2-color);
+        margin-top: 0;
+        font-size: 2em; /* Adjust heading size within box */
+    }
+    .summary-box p {
+        font-size: 3em; /* Larger number */
+        font-weight: bold;
+        color: var(--h1-color);
+        margin: 10px 0 0 0; /* Add some top margin */
+    }
+    .summary-box.achieved p {
+        color: var(--positive-color);
+    }
+    .summary-box.not-achieved p {
+        color: var(--button-danger-bg);
+    }
+
+    #export-btn {
+        background-color: #6B8E23; /* Olive Drab */
+        margin-top: 25px;
+    }
+    #export-btn:hover {
+        background-color: #556B2F; /* Dark Olive Green */
+    }
+
+    /* Dynamic Floating Elements - Clouds */
+    .cloud {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.7); /* Semi-transparent white */
+        border-radius: 50%;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        animation: floatCloud 20s infinite linear;
+        z-index: 1; /* Behind content */
+    }
+    .cloud:nth-child(1) {
+        width: 100px; height: 60px;
+        top: 10%; left: -10%;
+        animation-duration: 25s;
+        animation-delay: 0s;
+    }
+    .cloud:nth-child(2) {
+        width: 150px; height: 80px;
+        top: 30%; left: -20%;
+        animation-duration: 30s;
+        animation-delay: 5s;
+    }
+    .cloud:nth-child(3) {
+        width: 80px; height: 50px;
+        top: 50%; left: -5%;
+        animation-duration: 20s;
+        animation-delay: 10s;
+    }
+    .cloud:nth-child(4) {
+        width: 120px; height: 70px;
+        top: 70%; left: -15%;
+        animation-duration: 28s;
+        animation-delay: 15s;
+    }
+
+    @keyframes floatCloud {
+        0% { transform: translateX(0); opacity: 0.7; }
+        50% { opacity: 0.9; }
+        100% { transform: translateX(120vw); opacity: 0.7; } /* Move across the screen */
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      body { padding: 15px; }
+      .container { padding: 25px; border-radius: 30px; border-width: 4px; }
+      h1 { font-size: 3em; }
+      h2 { font-size: 2.2em; }
+      h3 { font-size: 2em; }
+      input[type="text"], input[type="password"] { width: 100%; padding: 15px; font-size: 1.2em; border-width: 3px; }
+      button { padding: 15px 25px; font-size: 1.3em; margin: 12px auto; display: block; width: calc(100% - 24px); }
+
+      .summary-dashboard {
+          flex-direction: column;
+          align-items: center;
+      }
+      .summary-box {
+          width: 95%; /* Keep width at 95% */
+          min-width: unset;
+          padding: 15px; /* Reduced padding to give more space for text */
+          text-align: center; /* Ensure centered in mobile */
+      }
+      /* FIX: Further reduce font size for h3 within summary boxes on mobile */
+      .summary-box h3 {
+          font-size: 1.2em; /* Further reduced font size */
+          line-height: 1.2;
+          margin-bottom: 8px; /* Slightly less margin */
+      }
+      .summary-box p {
+          font-size: 2.5em; /* Slightly reduced number size as well */
+      }
+
+      /* Table specific mobile adjustments */
+      table {
+        display: block;
+        overflow-x: hidden; /* Hide horizontal scroll if not needed */
+        white-space: normal; /* Allow text to wrap */
+        -webkit-overflow-scrolling: touch;
+        border-radius: 15px;
+        box-shadow: none; /* Remove table shadow on mobile for cleaner look */
+      }
+
+      table thead {
+        display: none;
+      }
+
+      table tbody, table tr {
+        display: block;
+        width: 100%; /* Ensure rows take full width */
+      }
+
+      table tr {
+        margin-bottom: 15px; /* More space between rows */
+        border: 2px solid var(--table-border-color); /* Clearer border for each row */
+        border-radius: 15px; /* Rounded corners for each row */
+        overflow: hidden;
+        background-color: var(--table-bg-color); /* Ensure background for each row */
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08); /* Subtle shadow for each row */
+      }
+      tr:nth-child(even) {
+        background-color: var(--table-even-row-bg); /* Maintain alternating row colors */
+      }
+      tr:hover {
+        background-color: var(--table-hover-bg);
+        transform: scale(1.005); /* Less aggressive hover on mobile */
+      }
+
+
+      table td {
+        display: block;
+        text-align: right;
+        padding: 12px 15px; /* Adjusted padding for cells */
+        padding-left: 55%; /* Space for the label */
+        position: relative;
+        border: none; /* Remove individual cell borders */
+        font-size: 1.1em;
+        word-wrap: break-word; /* Ensure long text wraps */
+      }
+
+      table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px; /* More padding from the left edge */
+        width: 40%; /* Adjust width for label */
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        color: var(--summary-label-color);
+        font-size: 1.1em; /* Larger label font */
+        overflow: hidden; /* Hide overflow if label is too long */
+        text-overflow: ellipsis; /* Add ellipsis if label is too long */
+      }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <!-- Dynamic Floating Elements - Clouds -->
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+
+    <h1>Budget Buddy - Admin Dashboard</h1>
+
+    <div id="admin-login">
+        <h2>Admin Login <i class="fas fa-cloud"></i></h2>
+        <div class="card">
+            <input type="text" id="admin-username" placeholder="Username" /><br/>
+            <input type="password" id="admin-password" placeholder="Password" /><br/>
+            <button id="login-btn">Login</button>
+            <p id="admin-msg"></p>
+        </div>
+    </div>
+
+    <div id="admin-dashboard" style="display:none;">
+        <h2>Welcome, Admin! <i class="fas fa-sun"></i></h2>
+        <button id="logout-btn" style="background-color: var(--button-danger-bg);">Logout</button>
+
+        <div class="card">
+            <h3>User Saving Performance Summary</h3>
+            <div class="summary-dashboard">
+                <div class="summary-box achieved">
+                    <h3>Achieved Saving Target <i class="fas fa-star"></i></h3>
+                    <p id="achieved-count">0</p>
+                </div>
+                <div class="summary-box not-achieved">
+                    <h3>Did Not Achieve Saving Target <i class="fas fa-cloud-rain"></i></h3>
+                    <p id="not-achieved-count">0</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>All User Budget History</h3>
+            <button id="export-btn">Export to Excel (CSV) <i class="fas fa-box"></i></button>
+            <table id="history-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Allowance</th>
+                        <th>Expenses</th>
+                        <th>Saving Target</th>
+                        <th>Actual Saving</th>
+                        <th>Achieved Saving Target?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+
+    // Firebase configuration (copy from index.html)
+    const firebaseConfig = {
+      apiKey: "AIzaSyAA1HF_zPfNGvy8NOms7JJ-_54tE9rcIjU",
+      authDomain: "budget-buddy-database-e98e1.firebaseapp.com",
+      databaseURL: "https://budget-buddy-database-e98e1-default-rtdb.firebaseio.com/",
+      projectId: "budget-buddy-database-e98e1",
+      storageBucket: "budget-buddy-database-e98e1.appspot.com",
+      messagingSenderId: "334964367990",
+      appId: "1:334964367990:web:11636078de58cb15b17557"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    const adminLoginDiv = document.getElementById('admin-login');
+    const adminDashboardDiv = document.getElementById('admin-dashboard');
+    const adminUsernameInput = document.getElementById('admin-username');
+    const adminPasswordInput = document.getElementById('admin-password');
+    const loginBtn = document.getElementById('login-btn');
+    const logoutBtn = document.getElementById('logout-btn');
+    const adminMsg = document.getElementById('admin-msg');
+    const achievedCountSpan = document.getElementById('achieved-count');
+    const notAchievedCountSpan = document.getElementById('not-achieved-count');
+    const historyTableBody = document.querySelector('#history-table tbody');
+    const exportBtn = document.getElementById('export-btn');
+
+    // --- Admin Login Logic (Client-side for demo - NOT SECURE for production) ---
+    const ADMIN_USERNAME = 'admin';
+    const ADMIN_PASSWORD = 'admIn'; // Note: This is hardcoded for demo purposes.
+
+    loginBtn.addEventListener('click', () => {
+        const username = adminUsernameInput.value;
+        const password = adminPasswordInput.value;
+
+        // --- DEBUGGING LOGS ADDED HERE ---
+        console.log('Attempting login...');
+        console.log('Entered Username:', username);
+        console.log('Entered Password:', password);
+        console.log('Expected Username:', ADMIN_USERNAME);
+        console.log('Expected Password:', ADMIN_PASSWORD);
+        // --- END DEBUGGING LOGS ---
+
+        if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+            adminMsg.textContent = '';
+            adminLoginDiv.style.display = 'none';
+            adminDashboardDiv.style.display = 'block';
+            loadAllUserData();
+            console.log('Login successful!'); // Debugging log
+        } else {
+            adminMsg.textContent = 'Invalid username or password.';
+            console.log('Login failed: Invalid credentials.'); // Debugging log
+        }
+    });
+
+    logoutBtn.addEventListener('click', () => {
+        adminDashboardDiv.style.display = 'none';
+        adminLoginDiv.style.display = 'block';
+        adminUsernameInput.value = '';
+        adminPasswordInput.value = '';
+        historyTableBody.innerHTML = ''; // Clear table on logout
+        achievedCountSpan.textContent = '0';
+        notAchievedCountSpan.textContent = '0';
+    });
+
+    // --- Load All User Data from Firebase ---
+    async function loadAllUserData() {
+        historyTableBody.innerHTML = '<tr><td colspan="6">Loading user data...</td></tr>';
+        let achievedCount = 0;
+        let notAchievedCount = 0;
+        const allRecords = [];
+
+        try {
+            const usersRef = ref(db, 'users');
+            onValue(usersRef, (snapshot) => {
+                historyTableBody.innerHTML = ''; // Clear loading message
+                snapshot.forEach((userSnap) => {
+                    const userId = userSnap.key;
+                    const userData = userSnap.val();
+                    // userEmail is no longer used for display, but could be kept for internal logic if needed
+                    // const userEmail = userData.email || 'N/A';
+
+                    // Iterate through user's history
+                    if (userData.history) {
+                        Object.values(userData.history).forEach((record) => {
+                            const allowance = record.allowance || 0;
+                            const expenses = record.expenses || 0;
+                            const remaining = record.remaining || 0;
+                            const savingTarget = allowance * 0.1;
+                            const achieved = remaining >= savingTarget;
+
+                            if (achieved) {
+                                achievedCount++;
+                            } else {
+                                notAchievedCount++;
+                            }
+
+                            const dt = new Date(record.date);
+                            const formattedDate = `${("0"+(dt.getMonth()+1)).slice(-2)}/${("0"+dt.getDate()).slice(-2)}/${dt.getFullYear()}`;
+
+                            const row = `
+                                <tr>
+                                    <td data-label="Date">${formattedDate}</td>
+                                    <td data-label="Allowance">${allowance.toFixed(2)}</td>
+                                    <td data-label="Expenses">${expenses.toFixed(2)}</td>
+                                    <td data-label="Saving Target">${savingTarget.toFixed(2)}</td>
+                                    <td data-label="Actual Saving">${remaining.toFixed(2)}</td>
+                                    <td data-label="Achieved Saving Target?">${achieved ? 'Yes' : 'No'}</td>
+                                </tr>
+                            `;
+                            historyTableBody.insertAdjacentHTML('beforeend', row);
+
+                            allRecords.push({
+                                date: formattedDate,
+                                // email: userEmail, // Removed email from allRecords for export if not needed
+                                allowance: allowance.toFixed(2),
+                                expenses: expenses.toFixed(2),
+                                savingTarget: savingTarget.toFixed(2),
+                                actualSaving: remaining.toFixed(2),
+                                achievedSavingTarget: achieved ? 'Yes' : 'No'
+                            });
+                        });
+                    }
+                });
+
+                achievedCountSpan.textContent = achievedCount;
+                notAchievedCountSpan.textContent = notAchievedCount;
+            }, {
+                onlyOnce: true // Read data once, not real-time updates for admin panel
+            });
+
+        } catch (error) {
+            console.error("Error loading user data:", error);
+            adminMsg.textContent = 'Error loading data. Check console for details.';
+            historyTableBody.innerHTML = '<tr><td colspan="6">Error loading data.</td></tr>';
+        }
+    }
+
+    // --- Export to CSV ---
+    exportBtn.addEventListener('click', () => {
+        // Removed "Email" from headers for CSV export
+        const headers = ["Date", "Allowance", "Expenses", "Saving Target", "Actual Saving", "Achieved Saving Target?"];
+        const rows = Array.from(historyTableBody.querySelectorAll('tr')).map(row =>
+            Array.from(row.querySelectorAll('td')).map(cell => cell.textContent)
+        );
+
+        let csvContent = headers.join(",") + "\n";
+        rows.forEach(row => {
+            csvContent += row.join(",") + "\n";
+        });
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        if (link.download !== undefined) { // feature detection
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", "budget_buddy_data.csv");
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    });
+
+</script>
+</body>
+</html>
