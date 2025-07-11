@@ -254,42 +254,55 @@
 
     /* Responsive adjustments */
     @media (max-width: 768px) {
-      body { padding: 15px; }
+      body {
+        padding: 15px;
+        font-size: 1.1em; /* Slightly increased base font size for mobile body */
+      }
       .container { padding: 25px; border-radius: 30px; border-width: 4px; }
-      h1 { font-size: 3em; }
-      h2 { font-size: 2.2em; }
-      h3 { font-size: 2em; }
-      input[type="text"], input[type="password"] { width: 100%; padding: 15px; font-size: 1.2em; border-width: 3px; }
-      button { padding: 15px 25px; font-size: 1.3em; margin: 12px auto; display: block; width: calc(100% - 24px); }
+      h1 { font-size: 2.8em; } /* Slightly smaller for better fit */
+      h2 { font-size: 2em; }
+      h3 { font-size: 1.8em; }
+      input[type="text"], input[type="password"] {
+        width: 100%;
+        padding: 16px; /* Slightly larger padding */
+        font-size: 1.3em; /* Increased input font size */
+        border-width: 3px;
+      }
+      button {
+        padding: 16px 28px; /* Slightly larger padding */
+        font-size: 1.4em; /* Increased button font size */
+        margin: 12px auto;
+        display: block;
+        width: calc(100% - 24px);
+      }
 
       .summary-dashboard {
           flex-direction: column;
           align-items: center;
       }
       .summary-box {
-          width: 95%; /* Keep width at 95% */
+          width: 95%;
           min-width: unset;
-          padding: 15px; /* Reduced padding to give more space for text */
-          text-align: center; /* Ensure centered in mobile */
+          padding: 18px; /* Increased padding */
+          text-align: center;
       }
-      /* FIX: Further reduce font size for h3 within summary boxes on mobile */
       .summary-box h3 {
-          font-size: 1.2em; /* Further reduced font size */
+          font-size: 1.4em; /* Increased font size for summary box headings */
           line-height: 1.2;
-          margin-bottom: 8px; /* Slightly less margin */
+          margin-bottom: 10px; /* Adjusted margin */
       }
       .summary-box p {
-          font-size: 2.5em; /* Slightly reduced number size as well */
+          font-size: 2.8em; /* Adjusted number size */
       }
 
       /* Table specific mobile adjustments */
       table {
         display: block;
-        overflow-x: hidden; /* Hide horizontal scroll if not needed */
-        white-space: normal; /* Allow text to wrap */
+        overflow-x: hidden;
+        white-space: normal;
         -webkit-overflow-scrolling: touch;
         border-radius: 15px;
-        box-shadow: none; /* Remove table shadow on mobile for cleaner look */
+        box-shadow: none;
       }
 
       table thead {
@@ -298,50 +311,50 @@
 
       table tbody, table tr {
         display: block;
-        width: 100%; /* Ensure rows take full width */
+        width: 100%;
       }
 
       table tr {
-        margin-bottom: 15px; /* More space between rows */
-        border: 2px solid var(--table-border-color); /* Clearer border for each row */
-        border-radius: 15px; /* Rounded corners for each row */
+        margin-bottom: 15px;
+        border: 2px solid var(--table-border-color);
+        border-radius: 15px;
         overflow: hidden;
-        background-color: var(--table-bg-color); /* Ensure background for each row */
-        box-shadow: 0 4px 10px rgba(0,0,0,0.08); /* Subtle shadow for each row */
+        background-color: var(--table-bg-color);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
       }
       tr:nth-child(even) {
-        background-color: var(--table-even-row-bg); /* Maintain alternating row colors */
+        background-color: var(--table-even-row-bg);
       }
       tr:hover {
         background-color: var(--table-hover-bg);
-        transform: scale(1.005); /* Less aggressive hover on mobile */
+        transform: scale(1.005);
       }
 
 
       table td {
         display: block;
         text-align: right;
-        padding: 12px 15px; /* Adjusted padding for cells */
-        padding-left: 55%; /* Space for the label */
+        padding: 14px 18px; /* Adjusted padding for cells */
+        padding-left: 55%;
         position: relative;
-        border: none; /* Remove individual cell borders */
-        font-size: 1.1em;
-        word-wrap: break-word; /* Ensure long text wraps */
+        border: none;
+        font-size: 1.2em; /* Increased table cell font size */
+        word-wrap: break-word;
       }
 
       table td::before {
         content: attr(data-label);
         position: absolute;
-        left: 15px; /* More padding from the left edge */
-        width: 40%; /* Adjust width for label */
+        left: 18px; /* More padding from the left edge */
+        width: 40%;
         padding-right: 10px;
         white-space: nowrap;
         text-align: left;
         font-weight: bold;
         color: var(--summary-label-color);
-        font-size: 1.1em; /* Larger label font */
-        overflow: hidden; /* Hide overflow if label is too long */
-        text-overflow: ellipsis; /* Add ellipsis if label is too long */
+        font-size: 1.2em; /* Increased label font size */
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
 </style>
