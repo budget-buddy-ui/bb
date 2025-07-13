@@ -4,8 +4,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Budget Buddy - Your Money Adventure!</title>
-<!-- Updated Google Fonts link to include Roboto and Arial -->
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;family=Arial:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bulegum+Sans&amp;family=Open+Sans:wght@400;700&amp;display=swap" rel="stylesheet"/>
 <link rel="manifest" href="/bb/manifest.json"/>
 <style>
     /* CSS Variables for Theming */
@@ -272,7 +271,7 @@
 
     /* General Body Styles */
     body {
-      font-family: 'Arial', sans-serif; /* Changed font to Arial */
+      font-family: 'Open Sans', sans-serif;
       background: var(--primary-bg-gradient);
       color: #333;
       margin: 0;
@@ -381,7 +380,7 @@
 
     /* Headings - More playful font and colors */
     h1, h2, h3 {
-      font-family: 'Roboto', sans-serif; /* Changed font to Roboto */
+      font-family: 'Bulegum Sans', cursive;
       text-shadow: 3px 3px 0px rgba(0,0,0,0.1);
       margin-bottom: 25px;
     }
@@ -430,7 +429,7 @@
       border: none;
       border-radius: 30px;
       font-size: 1.3em;
-      font-family: 'Roboto', sans-serif; /* Changed font to Roboto */
+      font-family: 'Bulegum Sans', cursive;
       cursor: pointer;
       transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
       margin: 12px 6px;
@@ -549,7 +548,7 @@
     th {
       background-color: var(--table-header-bg); /* Uses a variable */
       color: white;
-      font-family: 'Roboto', sans-serif; /* Changed font to Roboto */
+      font-family: 'Bulegum Sans', cursive;
       font-size: 1.2em;
       text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     }
@@ -619,7 +618,7 @@
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
       z-index: 101;
       text-align: left;
-      font-family: 'Arial', sans-serif; /* Changed font to Arial */
+      font-family: 'Open Sans', sans-serif;
       color: #333;
       animation: fadeInScale 0.3s ease-out;
     }
@@ -663,7 +662,7 @@
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
       z-index: 102;
       text-align: center;
-      font-family: 'Roboto', sans-serif; /* Changed font to Roboto */
+      font-family: 'Bulegum Sans', cursive;
       color: #333;
       animation: fadeInScale 0.4s ease-out;
     }
@@ -681,7 +680,7 @@
       color: var(--message-popup-cheer-h3); /* Uses a variable */
     }
     .message-popup p {
-      font-family: 'Arial', sans-serif; /* Changed font to Arial */
+      font-family: 'Open Sans', sans-serif;
       font-size: 1.3em;
       line-height: 1.6;
       margin-bottom: 25px;
@@ -692,7 +691,7 @@
       padding: 12px 25px;
       border-radius: 30px;
       font-size: 1.2em;
-      font-family: 'Roboto', sans-serif; /* Changed font to Roboto */
+      font-family: 'Bulegum Sans', cursive;
       transition: background-color 0.3s ease;
     }
     .message-popup.cheer-up button {
@@ -778,7 +777,7 @@
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
       z-index: 103;
       text-align: left;
-      font-family: 'Arial', sans-serif; /* Changed font to Arial */
+      font-family: 'Open Sans', sans-serif;
       color: #333;
       animation: fadeInScale 0.4s ease-out;
       overflow-y: auto;
@@ -815,7 +814,7 @@
       padding: 12px 25px;
       border-radius: 30px;
       font-size: 1.2em;
-      font-family: 'Roboto', sans-serif; /* Changed font to Roboto */
+      font-family: 'Bulegum Sans', cursive;
       transition: background-color 0.3s ease;
       display: block;
       margin: 25px auto 0;
@@ -880,7 +879,7 @@
       padding: 18px 35px;
       border-radius: 35px;
       font-size: 1.8em;
-      font-family: 'Roboto', sans-serif; /* Changed font to Roboto */
+      font-family: 'Bulegum Sans', cursive;
       cursor: pointer;
       transition: all 0.3s ease;
       margin-top: 30px;
@@ -1164,7 +1163,12 @@
               <button id="do-signup"><span class="icon">🌟</span> Let's Go!</button><br/>
               <button id="show-login-btn"><span class="icon">🔙</span> Back to Login</button>
             </div>
-            
+            <div id="auth-msg"></div>
+            <a id="download-app-btn" href="/bb/manifest.json" download>
+                📲 Get Budget Buddy App!
+            </a>
+          </div>
+
           <div id="tracker" style="display:none;">
             <button id="do-logout"><span class="icon">👋</span> Bye Bye!</button>
             <h2>Welcome, <span id="nick-span"></span>! Let's Track! <span class="icon">📈</span></h2>
