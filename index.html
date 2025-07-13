@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Budget Buddy - Your Money Adventure!</title>
-<link href="https://fonts.googleapis.com/css2?family=Bulegum+Sans&amp;family=Open+Sans:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet"/>
 <link rel="manifest" href="/bb/manifest.json"/>
 <style>
     /* CSS Variables for Theming */
@@ -271,7 +271,7 @@
 
     /* General Body Styles */
     body {
-      font-family: 'Open Sans', sans-serif;
+      font-family: 'Open Sans', sans-serif; /* Changed to Open Sans for general text */
       background: var(--primary-bg-gradient);
       color: #333;
       margin: 0;
@@ -283,6 +283,7 @@
       overflow-x: hidden;
       position: relative;
       transition: background 0.5s ease-in-out;
+      line-height: 1.6; /* Improved line spacing for readability */
     }
 
     /* Floating Elements - Enhanced animations */
@@ -380,7 +381,7 @@
 
     /* Headings - More playful font and colors */
     h1, h2, h3 {
-      font-family: 'Bulegum Sans', cursive;
+      font-family: 'Comic Neue', cursive; /* Changed to Comic Neue for playful headings */
       text-shadow: 3px 3px 0px rgba(0,0,0,0.1);
       margin-bottom: 25px;
     }
@@ -429,7 +430,7 @@
       border: none;
       border-radius: 30px;
       font-size: 1.3em;
-      font-family: 'Bulegum Sans', cursive;
+      font-family: 'Comic Neue', cursive; /* Changed to Comic Neue for playful buttons */
       cursor: pointer;
       transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
       margin: 12px 6px;
@@ -548,7 +549,7 @@
     th {
       background-color: var(--table-header-bg); /* Uses a variable */
       color: white;
-      font-family: 'Bulegum Sans', cursive;
+      font-family: 'Comic Neue', cursive; /* Changed to Comic Neue for table headers */
       font-size: 1.2em;
       text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     }
@@ -618,7 +619,7 @@
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
       z-index: 101;
       text-align: left;
-      font-family: 'Open Sans', sans-serif;
+      font-family: 'Open Sans', sans-serif; /* Ensured Open Sans for tip text */
       color: #333;
       animation: fadeInScale 0.3s ease-out;
     }
@@ -662,7 +663,7 @@
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
       z-index: 102;
       text-align: center;
-      font-family: 'Bulegum Sans', cursive;
+      font-family: 'Comic Neue', cursive; /* Changed to Comic Neue for playful messages */
       color: #333;
       animation: fadeInScale 0.4s ease-out;
     }
@@ -680,7 +681,7 @@
       color: var(--message-popup-cheer-h3); /* Uses a variable */
     }
     .message-popup p {
-      font-family: 'Open Sans', sans-serif;
+      font-family: 'Open Sans', sans-serif; /* Ensured Open Sans for message text */
       font-size: 1.3em;
       line-height: 1.6;
       margin-bottom: 25px;
@@ -691,7 +692,7 @@
       padding: 12px 25px;
       border-radius: 30px;
       font-size: 1.2em;
-      font-family: 'Bulegum Sans', cursive;
+      font-family: 'Comic Neue', cursive; /* Changed to Comic Neue for message buttons */
       transition: background-color 0.3s ease;
     }
     .message-popup.cheer-up button {
@@ -777,7 +778,7 @@
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
       z-index: 103;
       text-align: left;
-      font-family: 'Open Sans', sans-serif;
+      font-family: 'Open Sans', sans-serif; /* Ensured Open Sans for lesson text */
       color: #333;
       animation: fadeInScale 0.4s ease-out;
       overflow-y: auto;
@@ -814,7 +815,7 @@
       padding: 12px 25px;
       border-radius: 30px;
       font-size: 1.2em;
-      font-family: 'Bulegum Sans', cursive;
+      font-family: 'Comic Neue', cursive; /* Changed to Comic Neue for lesson button */
       transition: background-color 0.3s ease;
       display: block;
       margin: 25px auto 0;
@@ -879,7 +880,7 @@
       padding: 18px 35px;
       border-radius: 35px;
       font-size: 1.8em;
-      font-family: 'Bulegum Sans', cursive;
+      font-family: 'Comic Neue', cursive; /* Changed to Comic Neue for download button */
       cursor: pointer;
       transition: all 0.3s ease;
       margin-top: 30px;
