@@ -74,21 +74,31 @@
       margin-bottom: 30px;
     }
     h1 { font-size: 4em; margin-bottom: 20px; color: var(--h1-color); }
-    h2 { font-size: 3em; color: var(--h2-color); }
+    h2 { 
+      font-size: 3em; 
+      color: var(--h2-color);
+      transition: all 0.3s ease;
+    }
+    h2:hover {
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+      transform: scale(1.05);
+    }
     h3 { font-size: 2.5em; color: var(--h3-color); }
 
     .card {
       background-color: #FFFACD; /* Lemon Chiffon */
-      border: 4px solid var(--card-border-color); /* Thicker, colorful border */
-      border-radius: 25px; /* More rounded */
-      padding: 30px;
-      margin: 30px 0;
+      border: 3px solid var(--card-border-color); /* Thicker, colorful border */
+      border-radius: 20px; /* More rounded */
+      padding: 20px;
+      margin: 20px 0;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12); /* Softer shadow */
       text-align: left;
     }
 
     input[type="text"],
-    input[type="password"] {
+    input[type="password"],
+    input[type="number"],
+    input[type="date"] {
       width: calc(100% - 30px); /* Adjust padding */
       padding: 18px; /* Larger padding */
       margin: 12px 0;
@@ -176,15 +186,30 @@
         flex-wrap: wrap;
     }
     .summary-box {
-        background-color: #E0FFFF; /* Light Cyan */
-        border: 3px solid #87CEFA; /* Light Sky Blue */
-        border-radius: 20px; /* More rounded */
-        padding: 25px;
-        margin: 12px;
-        flex: 1;
-        min-width: 280px; /* Slightly wider */
-        box-shadow: 0 5px 12px rgba(0,0,0,0.1);
-        text-align: center; /* Add center alignment */
+        background-color: #fff;
+        border: 4px dotted #D8BFD8;
+        border-radius: 25px;
+        padding: 20px;
+        margin: 10px 0;
+        width: 100%;
+        box-shadow: 0 7px 15px rgba(146, 112, 219, 0.2);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+    .summary-box:hover {
+        transform: scale(1.03);
+    }
+    .summary-box::before {
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        right: -10px;
+        bottom: -10px;
+        background: radial-gradient(#F0F8FF 20%, transparent 70%);
+        z-index: -1;
     }
     .summary-box h3 {
         color: var(--h2-color);
@@ -197,12 +222,70 @@
         color: var(--h1-color);
         margin: 10px 0 0 0; /* Add some top margin */
     }
+    .summary-box.achieved {
+        background-color: #F0FFF0;
+    }
     .summary-box.achieved p {
         color: var(--positive-color);
+        font-size: 3.2em;
+        text-shadow: 2px 2px 4px rgba(50, 205, 50, 0.3);
+    }
+    .summary-box.not-achieved {
+        background-color: #FFF0F0;
     }
     .summary-box.not-achieved p {
         color: var(--button-danger-bg);
+        font-size: 3.2em;
+        text-shadow: 2px 2px 4px rgba(255, 99, 71, 0.3);
     }
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+    .bounce { animation: bounce 1.5s infinite; }
+    .blink { animation: blink 1.5s infinite; }
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+    }
+    @keyframes dance {
+      0%, 100% { transform: translateY(0) rotate(-10deg); }
+      50% { transform: translateY(-5px) rotate(10deg); }
+    }
+    .confetti, .rain-drops {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+    }
+    .summary-box.report {
+        background-color: #F5F5FF;
+    }
+    .summary-box.report p {
+        font-size: 1.2em;
+        font-weight: normal;
+        color: #555;
+        text-align: center;
+        margin: 15px 0;
+        padding: 15px;
+        border-radius: 15px;
+        background-color: white;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+    .summary-box.report ul {
+        text-align: left;
+        padding-left: 20px;
+    }
+    .summary-box.report h3 {
+        font-size: 1.8em;
+    }
+
 
     #export-btn {
         background-color: #6B8E23; /* Olive Drab */
@@ -211,6 +294,48 @@
     #export-btn:hover {
         background-color: #556B2F; /* Dark Olive Green */
     }
+
+    .action-buttons button {
+        padding: 10px 15px;
+        font-size: 1em;
+        margin: 5px;
+        border-radius: 20px;
+        box-shadow: none;
+        transform: none;
+    }
+    .action-buttons button:hover {
+        transform: translateY(-3px) scale(1.02);
+    }
+    .delete-btn { background-color: var(--button-danger-bg); }
+    .delete-btn:hover { background-color: var(--button-danger-hover-bg); }
+
+    .sort-buttons {
+        display: inline-flex;
+        flex-direction: column;
+        margin-left: 5px;
+    }
+    .sort-buttons button {
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        color: white;
+        font-size: 0.8em;
+        cursor: pointer;
+        transition: color 0.2s ease;
+        box-shadow: none; /* Remove button shadow */
+        transform: none; /* Remove button transform */
+    }
+    .sort-buttons button:hover {
+        color: #FFD700; /* Gold on hover */
+        transform: none; /* Remove button transform */
+        box-shadow: none; /* Remove button shadow */
+    }
+    .sort-buttons button:active {
+        transform: none;
+        box-shadow: none;
+    }
+
 
     /* Dynamic Floating Elements - Clouds */
     .cloud {
@@ -262,18 +387,17 @@
       h1 { font-size: 2.8em; } /* Slightly smaller for better fit */
       h2 { font-size: 2em; }
       h3 { font-size: 1.8em; }
-      input[type="text"], input[type="password"] {
+      input[type="text"], input[type="password"], input[type="number"], input[type="date"] {
         width: 100%;
         padding: 16px; /* Slightly larger padding */
         font-size: 1.3em; /* Increased input font size */
         border-width: 3px;
       }
       button {
-        padding: 16px 28px; /* Slightly larger padding */
-        font-size: 1.4em; /* Increased button font size */
-        margin: 12px auto;
-        display: block;
-        width: calc(100% - 24px);
+        padding: 14px 20px;
+        font-size: 1.2em;
+        margin: 10px 0;
+        width: 100%;
       }
 
       .summary-dashboard {
@@ -294,6 +418,10 @@
       .summary-box p {
           font-size: 2.8em; /* Adjusted number size */
       }
+      .summary-box.report p {
+          font-size: 1em;
+      }
+
 
       /* Table specific mobile adjustments */
       table {
@@ -332,10 +460,11 @@
 
 
       table td {
-        display: block;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         text-align: right;
-        padding: 14px 18px; /* Adjusted padding for cells */
-        padding-left: 55%;
+        padding: 12px 15px;
         position: relative;
         border: none;
         font-size: 1.2em; /* Increased table cell font size */
@@ -344,17 +473,19 @@
 
       table td::before {
         content: attr(data-label);
-        position: absolute;
-        left: 18px; /* More padding from the left edge */
-        width: 40%;
-        padding-right: 10px;
-        white-space: nowrap;
-        text-align: left;
         font-weight: bold;
         color: var(--summary-label-color);
-        font-size: 1.2em; /* Increased label font size */
-        overflow: hidden;
-        text-overflow: ellipsis;
+        font-size: 1em;
+        margin-right: 10px;
+        flex: 1;
+        text-align: left;
+      }
+
+      .action-buttons button {
+        width: calc(100% - 10px); /* Make delete button full width */
+        display: block;
+        font-size: 1.1em;
+        padding: 10px 15px;
       }
     }
 </style>
@@ -367,10 +498,15 @@
     <div class="cloud"></div>
     <div class="cloud"></div>
 
-    <h1>Budget Buddy - Admin Dashboard</h1>
+    <h1 style="font-size: 2.7em; margin-bottom: 20px; position: relative;">
+      <span style="display: inline-block; transform: rotate(-5deg);">Budget Buddy Admin</span>
+      <span class="title-decoration" style="position: absolute; top: -10px; right: -20px; font-size: 0.8em; animation: bounce 1.5s infinite;">💰</span>
+    </h1>
 
     <div id="admin-login">
-        <h2>Admin Login <i class="fas fa-cloud"></i></h2>
+        <h2 style="font-size: 2em; margin-bottom: 20px; position: relative; display: inline-block; background: linear-gradient(to right, #9370DB, #BA55D3); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+          <i class="fas fa-key" style="margin-right: 10px;"></i>Admin Login<i class="fas fa-unlock-alt" style="margin-left: 10px;"></i>
+        </h2>
         <div class="card">
             <input type="text" id="admin-username" placeholder="Username" /><br/>
             <input type="password" id="admin-password" placeholder="Password" /><br/>
@@ -380,19 +516,31 @@
     </div>
 
     <div id="admin-dashboard" style="display:none;">
-        <h2>Welcome, Admin! <i class="fas fa-sun"></i></h2>
+        <h2 style="position: relative; display: inline-block;">
+          Welcome, Admin! 
+          <span class="welcome-icon" style="font-size: 0.8em; display: inline-block; animation: dance 2s infinite alternate;">
+            🌟
+          </span>
+          <span style="position: absolute; bottom: -15px; left: 0; right: 0; height: 5px; background: linear-gradient(90deg, #FFD700, #9370DB); border-radius: 5px;"></span>
+        </h2>
         <button id="logout-btn" style="background-color: var(--button-danger-bg);">Logout</button>
 
         <div class="card">
             <h3>User Saving Performance Summary</h3>
             <div class="summary-dashboard">
                 <div class="summary-box achieved">
-                    <h3>Achieved Saving Target <i class="fas fa-star"></i></h3>
+                    <h3><i class="fas fa-trophy bounce"></i> Achieved Saving Target <i class="fas fa-check-circle"></i></h3>
                     <p id="achieved-count">0</p>
+                    <div class="confetti"></div>
                 </div>
                 <div class="summary-box not-achieved">
-                    <h3>Did Not Achieve Saving Target <i class="fas fa-cloud-rain"></i></h3>
+                    <h3><i class="fas fa-meh blink"></i> Did Not Achieve <i class="fas fa-frown"></i></h3>
                     <p id="not-achieved-count">0</p>
+                    <div class="rain-drops"></div>
+                </div>
+                <div class="summary-box report">
+                    <h3>Performance Report <i class="fas fa-chart-bar"></i></h3>
+                    <p id="performance-report-text"></p>
                 </div>
             </div>
         </div>
@@ -403,12 +551,43 @@
             <table id="history-table">
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Allowance</th>
-                        <th>Expenses</th>
-                        <th>Saving Target</th>
-                        <th>Actual Saving</th>
-                        <th>Achieved Saving Target?</th>
+                        <th>Date
+                            <span class="sort-buttons">
+                                <button class="sort-asc" data-column="0"><i class="fas fa-caret-up"></i></button>
+                                <button class="sort-desc" data-column="0"><i class="fas fa-caret-down"></i></button>
+                            </span>
+                        </th>
+                        <th>Allowance
+                            <span class="sort-buttons">
+                                <button class="sort-asc" data-column="1"><i class="fas fa-caret-up"></i></button>
+                                <button class="sort-desc" data-column="1"><i class="fas fa-caret-down"></i></button>
+                            </span>
+                        </th>
+                        <th>Expenses
+                            <span class="sort-buttons">
+                                <button class="sort-asc" data-column="2"><i class="fas fa-caret-up"></i></button>
+                                <button class="sort-desc" data-column="2"><i class="fas fa-caret-down"></i></button>
+                            </span>
+                        </th>
+                        <th>Saving Target
+                            <span class="sort-buttons">
+                                <button class="sort-asc" data-column="3"><i class="fas fa-caret-up"></i></button>
+                                <button class="sort-desc" data-column="3"><i class="fas fa-caret-down"></i></button>
+                            </span>
+                        </th>
+                        <th>Actual Saving
+                            <span class="sort-buttons">
+                                <button class="sort-asc" data-column="4"><i class="fas fa-caret-up"></i></button>
+                                <button class="sort-desc" data-column="4"><i class="fas fa-caret-down"></i></button>
+                            </span>
+                        </th>
+                        <th>Achieved Saving Target?
+                            <span class="sort-buttons">
+                                <button class="sort-asc" data-column="5"><i class="fas fa-caret-up"></i></button>
+                                <button class="sort-desc" data-column="5"><i class="fas fa-caret-down"></i></button>
+                            </span>
+                        </th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -422,7 +601,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
-    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+    import { getDatabase, ref, onValue, remove } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
 
     // Firebase configuration (copy from index.html)
     const firebaseConfig = {
@@ -448,8 +627,11 @@
     const adminMsg = document.getElementById('admin-msg');
     const achievedCountSpan = document.getElementById('achieved-count');
     const notAchievedCountSpan = document.getElementById('not-achieved-count');
+    const performanceReportText = document.getElementById('performance-report-text'); // New element
     const historyTableBody = document.querySelector('#history-table tbody');
     const exportBtn = document.getElementById('export-btn');
+    const historyTable = document.getElementById('history-table');
+
 
     // --- Admin Login Logic (Client-side for demo - NOT SECURE for production) ---
     const ADMIN_USERNAME = 'admin';
@@ -459,23 +641,13 @@
         const username = adminUsernameInput.value;
         const password = adminPasswordInput.value;
 
-        // --- DEBUGGING LOGS ADDED HERE ---
-        console.log('Attempting login...');
-        console.log('Entered Username:', username);
-        console.log('Entered Password:', password);
-        console.log('Expected Username:', ADMIN_USERNAME);
-        console.log('Expected Password:', ADMIN_PASSWORD);
-        // --- END DEBUGGING LOGS ---
-
         if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
             adminMsg.textContent = '';
             adminLoginDiv.style.display = 'none';
             adminDashboardDiv.style.display = 'block';
             loadAllUserData();
-            console.log('Login successful!'); // Debugging log
         } else {
             adminMsg.textContent = 'Invalid username or password.';
-            console.log('Login failed: Invalid credentials.'); // Debugging log
         }
     });
 
@@ -487,31 +659,33 @@
         historyTableBody.innerHTML = ''; // Clear table on logout
         achievedCountSpan.textContent = '0';
         notAchievedCountSpan.textContent = '0';
+        performanceReportText.textContent = ''; // Clear report text on logout
     });
 
     // --- Load All User Data from Firebase ---
     async function loadAllUserData() {
-        historyTableBody.innerHTML = '<tr><td colspan="6">Loading user data...</td></tr>';
+        historyTableBody.innerHTML = '<tr><td colspan="7">Loading user data...</td></tr>'; // Updated colspan
         let achievedCount = 0;
         let notAchievedCount = 0;
-        const allRecords = [];
 
         try {
             const usersRef = ref(db, 'users');
             onValue(usersRef, (snapshot) => {
                 historyTableBody.innerHTML = ''; // Clear loading message
+                achievedCount = 0; // Reset counts for fresh calculation
+                notAchievedCount = 0;
+
+                const allRecords = [];
+
                 snapshot.forEach((userSnap) => {
                     const userId = userSnap.key;
                     const userData = userSnap.val();
-                    // userEmail is no longer used for display, but could be kept for internal logic if needed
-                    // const userEmail = userData.email || 'N/A';
 
-                    // Iterate through user's history
                     if (userData.history) {
-                        Object.values(userData.history).forEach((record) => {
+                        Object.entries(userData.history).forEach(([recordKey, record]) => {
                             const allowance = record.allowance || 0;
                             const expenses = record.expenses || 0;
-                            const remaining = record.remaining || 0;
+                            const remaining = allowance - expenses; // Recalculate remaining
                             const savingTarget = allowance * 0.1;
                             const achieved = remaining >= savingTarget;
 
@@ -524,51 +698,164 @@
                             const dt = new Date(record.date);
                             const formattedDate = `${("0"+(dt.getMonth()+1)).slice(-2)}/${("0"+dt.getDate()).slice(-2)}/${dt.getFullYear()}`;
 
-                            const row = `
-                                <tr>
-                                    <td data-label="Date">${formattedDate}</td>
-                                    <td data-label="Allowance">${allowance.toFixed(2)}</td>
-                                    <td data-label="Expenses">${expenses.toFixed(2)}</td>
-                                    <td data-label="Saving Target">${savingTarget.toFixed(2)}</td>
-                                    <td data-label="Actual Saving">${remaining.toFixed(2)}</td>
-                                    <td data-label="Achieved Saving Target?">${achieved ? 'Yes' : 'No'}</td>
-                                </tr>
-                            `;
-                            historyTableBody.insertAdjacentHTML('beforeend', row);
-
                             allRecords.push({
-                                date: formattedDate,
-                                // email: userEmail, // Removed email from allRecords for export if not needed
-                                allowance: allowance.toFixed(2),
-                                expenses: expenses.toFixed(2),
-                                savingTarget: savingTarget.toFixed(2),
-                                actualSaving: remaining.toFixed(2),
-                                achievedSavingTarget: achieved ? 'Yes' : 'No'
+                                userId: userId,
+                                recordKey: recordKey,
+                                date: dt, // Store Date object for proper sorting
+                                formattedDate: formattedDate,
+                                allowance: allowance,
+                                expenses: expenses,
+                                savingTarget: savingTarget,
+                                actualSaving: remaining,
+                                achieved: achieved
                             });
                         });
                     }
                 });
 
+                // Display records (initially unsorted or default sort)
+                renderTable(allRecords);
+
                 achievedCountSpan.textContent = achievedCount;
                 notAchievedCountSpan.textContent = notAchievedCount;
+
+                // Update the performance report text
+                const totalRecords = achievedCount + notAchievedCount;
+                if (totalRecords > 0) {
+                    performanceReportText.innerHTML = `
+                        Out of ${totalRecords} budget records:
+                        <ul>
+                            <li><strong style="color: var(--positive-color);">${achievedCount}</strong> students achieved their saving target. This means their actual saving was equal to or greater than their saving target (10% of Allowance).</li>
+                            <li><strong style="color: var(--button-danger-bg);">${notAchievedCount}</strong> students did not achieve their saving target. This means their actual saving was less than their saving target (10% of Allowance).</li>
+                        </ul>
+                    `;
+                } else {
+                    performanceReportText.textContent = 'No budget records available to generate a performance report.';
+                }
+
+
+                // Attach event listeners to new buttons
+                attachTableButtonListeners();
+                attachSortButtonListeners(); // Attach sort button listeners
             }, {
-                onlyOnce: true // Read data once, not real-time updates for admin panel
+                onlyOnce: false // Keep real-time updates for admin panel
             });
 
         } catch (error) {
             console.error("Error loading user data:", error);
             adminMsg.textContent = 'Error loading data. Check console for details.';
-            historyTableBody.innerHTML = '<tr><td colspan="6">Error loading data.</td></tr>';
+            historyTableBody.innerHTML = '<tr><td colspan="7">Error loading data.</td></tr>'; // Updated colspan
         }
     }
 
+    function renderTable(records) {
+        historyTableBody.innerHTML = ''; // Clear existing rows
+        records.forEach(record => {
+            const row = `
+                <tr data-user-id="${record.userId}" data-record-key="${record.recordKey}">
+                    <td data-label="Date">${record.formattedDate}</td>
+                    <td data-label="Allowance">${record.allowance.toFixed(2)}</td>
+                    <td data-label="Expenses">${record.expenses.toFixed(2)}</td>
+                    <td data-label="Saving Target">${record.savingTarget.toFixed(2)}</td>
+                    <td data-label="Actual Saving">${record.actualSaving.toFixed(2)}</td>
+                    <td data-label="Achieved Saving Target?">${record.achieved ? 'Yes' : 'No'}</td>
+                    <td data-label="Actions" class="action-buttons">
+                        <button class="delete-btn"><i class="fas fa-trash-alt"></i> Delete</button>
+                    </td>
+                </tr>
+            `;
+            historyTableBody.insertAdjacentHTML('beforeend', row);
+        });
+    }
+
+
+    function attachTableButtonListeners() {
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.onclick = (event) => {
+                const row = event.target.closest('tr');
+                const userId = row.dataset.userId;
+                const recordKey = row.dataset.recordKey;
+                deleteRecord(userId, recordKey);
+            };
+        });
+    }
+
+    async function deleteRecord(userId, recordKey) {
+        if (confirm('Are you sure you want to delete this record?')) {
+            try {
+                await remove(ref(db, `users/${userId}/history/${recordKey}`));
+                alert('Record deleted successfully!');
+                // Data will automatically reload due to onValue listener
+            } catch (error) {
+                console.error("Error deleting record:", error);
+                alert('Failed to delete record: ' + error.message);
+            }
+        }
+    }
+
+    // --- Table Sorting Logic ---
+    function attachSortButtonListeners() {
+        document.querySelectorAll('.sort-asc, .sort-desc').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const column = parseInt(event.currentTarget.dataset.column);
+                const direction = event.currentTarget.classList.contains('sort-asc') ? 'asc' : 'desc';
+                sortTable(column, direction);
+            });
+        });
+    }
+
+    function sortTable(column, direction) {
+        const tbody = historyTable.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+
+        const sortedRows = rows.sort((a, b) => {
+            let aValue = a.children[column].textContent;
+            let bValue = b.children[column].textContent;
+
+            // Custom sorting logic based on column type
+            switch (column) {
+                case 0: // Date column
+                    aValue = new Date(aValue);
+                    bValue = new Date(bValue);
+                    break;
+                case 1: // Allowance
+                case 2: // Expenses
+                case 3: // Saving Target
+                case 4: // Actual Saving
+                    aValue = parseFloat(aValue);
+                    bValue = parseFloat(bValue);
+                    break;
+                case 5: // Achieved Saving Target? (Yes/No)
+                    aValue = aValue === 'Yes' ? 1 : 0;
+                    bValue = bValue === 'Yes' ? 1 : 0;
+                    break;
+                default:
+                    // For other columns, use string comparison
+                    break;
+            }
+
+            if (aValue < bValue) {
+                return direction === 'asc' ? -1 : 1;
+            }
+            if (aValue > bValue) {
+                return direction === 'asc' ? 1 : -1;
+            }
+            return 0;
+        });
+
+        // Re-append sorted rows to the tbody
+        tbody.innerHTML = ''; // Clear existing rows
+        sortedRows.forEach(row => tbody.appendChild(row));
+    }
+
+
     // --- Export to CSV ---
     exportBtn.addEventListener('click', () => {
-        // Removed "Email" from headers for CSV export
         const headers = ["Date", "Allowance", "Expenses", "Saving Target", "Actual Saving", "Achieved Saving Target?"];
-        const rows = Array.from(historyTableBody.querySelectorAll('tr')).map(row =>
-            Array.from(row.querySelectorAll('td')).map(cell => cell.textContent)
-        );
+        const rows = Array.from(historyTableBody.querySelectorAll('tr')).map(row => {
+            // Exclude the last cell (Actions)
+            return Array.from(row.querySelectorAll('td:not(:last-child)')).map(cell => cell.textContent);
+        });
 
         let csvContent = headers.join(",") + "\n";
         rows.forEach(row => {
