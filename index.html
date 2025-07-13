@@ -67,8 +67,8 @@
       --button-primary-hover-bg: #43A047;
       --button-secondary-bg: #FF9800;
       --button-secondary-hover-bg: #FB8C00;
-      --button-danger-bg: #F44336;
-      --button-danger-hover-bg: #D32F2F;
+      --button-danger-bg: #F44336; /* Corrected value */
+      --button-danger-hover-bg: #D32F2F; /* Corrected value */
       --button-info-bg: #2196F3;
       --button-info-hover-bg: #1976D2;
       --button-purple-bg: #9C27B0;
@@ -905,6 +905,85 @@
         margin-right: auto;
     }
 
+    /* New Download Instruction Pop-up */
+    #download-instruction-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: var(--message-popup-bg); /* Reusing message popup styles */
+      border: 4px solid var(--message-popup-border);
+      border-radius: 25px;
+      padding: 35px;
+      max-width: 550px;
+      width: 90%;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+      z-index: 104; /* Higher z-index than other popups */
+      text-align: center;
+      font-family: 'Open Sans', sans-serif;
+      color: #333;
+      animation: fadeInScale 0.4s ease-out;
+      overflow-y: auto; /* Added for scrollability */
+      max-height: 85%; /* Added for scrollability */
+    }
+    #download-instruction-popup h3 {
+      font-family: 'Comic Neue', cursive;
+      color: var(--h1-color);
+      font-size: 2.5em;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+    #download-instruction-popup p {
+      font-size: 1.2em;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    #download-instruction-popup .instruction-section {
+      background-color: var(--input-bg-color);
+      border: 2px dashed var(--input-border-color);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    #download-instruction-popup .instruction-section h4 {
+      font-family: 'Comic Neue', cursive;
+      color: var(--h2-color);
+      font-size: 1.8em;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    #download-instruction-popup .instruction-section ul {
+      list-style: none; /* Remove default list style */
+      padding-left: 0;
+    }
+    #download-instruction-popup .instruction-section li {
+      margin-bottom: 10px;
+      font-size: 1.1em;
+      display: flex;
+      align-items: flex-start;
+    }
+    #download-instruction-popup .instruction-section li .emoji {
+      margin-right: 10px;
+      font-size: 1.5em;
+      line-height: 1;
+    }
+    #download-instruction-popup button {
+      background-color: var(--button-primary-bg);
+      color: white;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-size: 1.2em;
+      font-family: 'Comic Neue', cursive;
+      transition: background-color 0.3s ease;
+      display: block;
+      margin: 25px auto 0;
+    }
+    #download-instruction-popup button:hover {
+      background-color: var(--button-primary-hover-bg);
+    }
+
 
     /* Responsive adjustments */
     @media (max-width: 768px) { /* Mobile View */
@@ -1079,6 +1158,18 @@
         padding: 15px 25px;
         margin-top: 25px;
       }
+
+      #download-instruction-popup {
+        padding: 25px;
+        height: 90%; /* Adjusted for mobile to take more vertical space */
+        border-width: 3px;
+        border-radius: 20px;
+      }
+      #download-instruction-popup h3 { font-size: 2em; }
+      #download-instruction-popup p { font-size: 1em; }
+      #download-instruction-popup .instruction-section h4 { font-size: 1.5em; }
+      #download-instruction-popup .instruction-section li { font-size: 0.95em; }
+      #download-instruction-popup .instruction-section li .emoji { font-size: 1.2em; }
     }
 
     @media (max-width: 400px) {
@@ -1090,6 +1181,8 @@
       input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"] { font-size: 1em; }
       button { font-size: 1em; padding: 10px 15px; }
       #download-app-btn { font-size: 1.1em; padding: 12px 20px; }
+      #download-instruction-popup h3 { font-size: 1.8em; }
+      #download-instruction-popup .instruction-section h4 { font-size: 1.3em; }
     }
   </style>
 <script type="module">
@@ -1165,6 +1258,7 @@
               <button id="show-login-btn"><span class="icon">🔙</span> Back to Login</button>
             </div>
             <div id="auth-msg"></div>
+            <button id="download-app-btn"><span class="icon">📱</span> Get Budget Buddy App!</button>
           </div>
 
           <div id="tracker" style="display:none;">
@@ -1275,6 +1369,34 @@
             <p>Even small steps, like saving a little bit from your allowance each week, can make a big difference over time. You're already on your way by using Budget Buddy!</p>
           </div>
           <button id="close-lesson">Got It, Budget Buddy!</button>
+        </div>
+
+        <!-- New Download Instruction Pop-up -->
+        <div id="download-instruction-popup">
+          <h3>Ready to Install Budget Buddy? <span class="icon">🚀</span></h3>
+          <p>You can add Budget Buddy right to your phone or computer screen, just like a real app! It's super easy!</p>
+
+          <div class="instruction-section">
+            <h4>For Phones & Tablets <span class="icon">📱</span></h4>
+            <ul>
+              <li><span class="emoji">1️⃣</span> Look for the **three little dots** (⋮) in your browser's top or bottom bar.</li>
+              <li><span class="emoji">2️⃣</span> Tap on it to open a menu.</li>
+              <li><span class="emoji">3️⃣</span> Find and tap **"Add to Home Screen"** or **"Install App"**. It might have a little house icon! 🏠</li>
+              <li><span class="emoji">4️⃣</span> Follow any on-screen instructions, and Budget Buddy will be ready on your home screen! 🎉</li>
+            </ul>
+          </div>
+
+          <div class="instruction-section">
+            <h4>For Computers & Laptops <span class="icon">💻</span></h4>
+            <ul>
+              <li><span class="emoji">1️⃣</span> Look for a **tiny computer icon** (🖥️) or a **plus sign** (➕) in the **top right corner** of your browser's address bar.</li>
+              <li><span class="emoji">2️⃣</span> Click on that icon.</li>
+              <li><span class="emoji">3️⃣</span> A small message will pop up asking if you want to "Install" Budget Buddy. Click **"Install"**! ✅</li>
+              <li><span class="emoji">4️⃣</span> Budget Buddy will open in its own window, ready for your money adventures! ✨</li>
+            </ul>
+          </div>
+
+          <button id="close-download-instruction">Got It, Thanks!</button>
         </div>
       `;
 
@@ -1527,19 +1649,22 @@
       const showSignupBtn = document.getElementById('show-signup-btn');
       const showLoginBtn = document.getElementById('show-login-btn');
       const downloadAppBtn = document.getElementById('download-app-btn');
+      const downloadInstructionPopup = document.getElementById('download-instruction-popup');
+      const closeDownloadInstructionBtn = document.getElementById('close-download-instruction');
+
 
       showSignupBtn.onclick = () => {
         loginCard.style.display = 'none';
         signupCard.style.display = 'block';
         document.getElementById('auth-msg').innerText = '';
-        downloadAppBtn.style.display = 'none';
+        downloadAppBtn.style.display = 'none'; // Hide download button when signing up
       };
 
       showLoginBtn.onclick = () => {
         signupCard.style.display = 'none';
         loginCard.style.display = 'block';
         document.getElementById('auth-msg').innerText = '';
-        downloadAppBtn.style.display = 'block';
+        downloadAppBtn.style.display = 'block'; // Show download button when logging in
       };
 
       document.getElementById('do-signup').onclick = async () => {
@@ -1552,7 +1677,7 @@
           document.getElementById('auth-msg').innerText = "Hooray! You're signed up!";
           signupCard.style.display = 'none';
           loginCard.style.display = 'block';
-          downloadAppBtn.style.display = 'block';
+          downloadAppBtn.style.display = 'block'; // Show download button after successful signup
         } catch(e) {
           document.getElementById('auth-msg').innerText = `Oops! ${e.message}`;
         }
@@ -1579,16 +1704,26 @@
           document.getElementById('auth').style.display = 'none';
           document.getElementById('tracker').style.display = 'block';
           document.getElementById('nick-span').innerText = user.displayName || "Little Buddy";
-          downloadAppBtn.style.display = 'none';
+          downloadAppBtn.style.display = 'none'; // Hide download button once logged in
           loadHistory();
         } else {
           document.getElementById('auth').style.display = 'block';
           document.getElementById('tracker').style.display = 'none';
           signupCard.style.display = 'none';
           loginCard.style.display = 'block';
-          downloadAppBtn.style.display = 'block';
+          downloadAppBtn.style.display = 'block'; // Show download button on logout/initial load
         }
       });
+
+      // --- Download App Button & Instruction Pop-up Logic ---
+      downloadAppBtn.onclick = () => {
+        downloadInstructionPopup.style.display = 'block';
+      };
+
+      closeDownloadInstructionBtn.onclick = () => {
+        downloadInstructionPopup.style.display = 'none';
+      };
+
 
       // --- Expense UI Logic ---
       document.getElementById('exp-date').valueAsDate = new Date();
@@ -1784,18 +1919,37 @@
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-
-    deferredPrompt.prompt();
-
-    deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('✅ User accepted the install prompt');
-      } else {
-        console.log('❌ User dismissed the install prompt');
-      }
-      deferredPrompt = null;
-    });
+    // Show the install button if it's available
+    const downloadAppBtn = document.getElementById('download-app-btn');
+    if (downloadAppBtn) {
+        downloadAppBtn.style.display = 'block';
+    }
   });
+
+  // Handle the click on the custom install button
+  document.addEventListener('DOMContentLoaded', () => {
+    const downloadAppBtn = document.getElementById('download-app-btn');
+    if (downloadAppBtn) {
+        downloadAppBtn.addEventListener('click', () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('✅ User accepted the install prompt');
+                    } else {
+                        console.log('❌ User dismissed the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                // If deferredPrompt is not available (e.g., already installed, or not supported)
+                // Show the custom instruction popup
+                document.getElementById('download-instruction-popup').style.display = 'block';
+            }
+        });
+    }
+  });
+
 
  if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
