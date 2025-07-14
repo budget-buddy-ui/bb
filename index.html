@@ -1243,7 +1243,7 @@
             <h2>Join the Money Adventure!</h2>
             <div id="login" class="card">
               <h3>Already a Buddy? Log In! <span class="icon">🔑</span></h3>
-              <input id="li-email" type="email" placeholder="Your Email" /><br/>
+              <input id="li-email" type="email" placeholder="Your Active Email" /><br/>
               <input id="li-pass" type="password" placeholder="Secret Password" /><br/>
               <button id="do-login"><span class="icon">🚀</span> Come On In!</button><br/>
               <button id="do-forgot"><span class="icon">🤔</span> Forgot My Key!</button>
@@ -1252,7 +1252,7 @@
             <div id="signup" class="card" style="display:none;">
               <h3>Sign Up for Fun! <span class="icon">🎉</span></h3>
               <input id="su-nick" type="text" placeholder="Your Fun Nickname" /><br/>
-              <input id="su-email" type="email" placeholder="Your Email" /><br/>
+              <input id="su-email" type="email" placeholder="Your Active Email" /><br/>
               <input id="su-pass" type="password" placeholder="Secret Password" /><br/>
               <button id="do-signup"><span class="icon">🌟</span> Let's Go!</button><br/>
               <button id="show-login-btn"><span class="icon">🔙</span> Back to Login</button>
@@ -1693,9 +1693,9 @@
       };
       document.getElementById('do-forgot').onclick = async () => {
         const email = document.getElementById('li-email').value;
-        if (!email) return alert("Please type your email first, buddy!");
+        if (!email) return alert("Please type your active email first, buddy! 🤪");
         await sendPasswordResetEmail(auth, email);
-        alert("A magic email has been sent to reset your password!");
+        alert("Your password reset email is flying to you now! 🚀 If you don't see it, sometimes emails hide in the 'Spam' or 'Junk' folder, so give it a quick look!");
       };
       document.getElementById('do-logout').onclick = () => signOut(auth);
 
