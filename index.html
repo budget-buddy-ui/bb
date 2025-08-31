@@ -1212,194 +1212,115 @@
     setPersistence(auth, browserLocalPersistence);
 
     // --- UI Elements (Dynamically created for a cleaner HTML structure) ---
-    document.addEventListener('DOMContentLoaded', () => {
-      document.body.innerHTML = `
-        <div class="floating-element coin">💰</div>
-        <div class="floating-element star">✨</div>
-        <div class="floating-element cloud">☁️</div>
-        <div class="floating-element balloon">🎈</div>
-        <div class="floating-element heart">❤️</div>
-        <div class="floating-element diamond">💎</div>
-        <div class="floating-element flower">🌼</div>
-        <div class="floating-element ferris-wheel">
-          <div class="cabin"></div>
-          <div class="cabin"></div>
-          <div class="cabin"></div>
-          <div class="cabin"></div>
+    // Update the lesson popup content once when the script loads
+    const lessonPopup = document.getElementById('lesson-popup');
+    if (lessonPopup) {
+      lessonPopup.innerHTML = `
+        <h3>Spend wisely, save smartly! <span class="icon">🧠</span></h3>
+        <div class="lesson-content">
+          <h4>1. Allowances and Spending Plans</h4>
+          <h4>What Is an Allowance?</h4>
+          <p>An allowance is money you regularly receive from your parents or guardians. You might get it every week or month, often for doing chores or learning how to manage money responsibly.</p>
+          <h4>What Is a Spending Plan?</h4>
+          <p>A spending plan, or budget, is a guide that shows how much money you have and how you plan to use it. It helps make sure your money doesn’t run out too quickly.</p>
+          <h4>Why Are Spending Plans Important?</h4>
+          <ul>
+            <li>They help balance income (the money you get) and expenses (the money you spend).</li>
+            <li>They guide you to make better choices.</li>
+            <li>They allow you to plan for savings and donations.</li>
+          </ul>
+          <h4>The Three Main Categories in a Spending Plan:</h4>
+          <ul>
+            <li><b>Spend</b> – Use money for items you want or need now (toys, food, clothes).</li>
+            <li><b>Save</b> – Set money aside for later or bigger purchases.</li>
+            <li><b>Give</b> – Donate to others or help people in need.</li>
+          </ul>
+
+          <h4>2. Being Responsible With Money</h4>
+          <h4>What Does It Mean to Be Responsible With Money?</h4>
+          <p>Being money-responsible means knowing:</p>
+          <ul>
+            <li>How much money you have.</li>
+            <li>Where your money goes.</li>
+            <li>How to avoid spending more than you earn.</li>
+          </ul>
+          <h4>Why Should You Keep Track of Spending?</h4>
+          <p>Keeping records of your spending helps you:</p>
+          <ul>
+            <li>Stay within your plan.</li>
+            <li>See where your money went.</li>
+            <li>Avoid forgetting or guessing your expenses.</li>
+          </ul>
+          <p>You can use:</p>
+          <ul>
+            <li>Receipts to remember what you bought.</li>
+            <li>Notebooks or diaries to write down your spending.</li>
+            <li>Envelopes or folders to keep money and records organized.</li>
+          </ul>
+          <h4>What Happens If You Overspend?</h4>
+          <p>If you spend more than you have:</p>
+          <ul>
+            <li>You might not have enough for other important needs.</li>
+            <li>You may miss opportunities to buy something more useful later.</li>
+            <li>You could develop bad habits that cause problems when you grow up.</li>
+          </ul>
+
+          <h4>3. Saving and Investing</h4>
+          <h4>What Is Saving?</h4>
+          <p>Saving means keeping some of your money instead of spending it right away. You can save:</p>
+          <ul>
+            <li>In a piggy bank or jar.</li>
+            <li>In a savings account at a bank.</li>
+            <li>For short-term goals (like toys).</li>
+            <li>For long-term goals (like a bike or a trip).</li>
+          </ul>
+          <h4>What Is Interest?</h4>
+          <p>When you put money in a savings account, the bank adds extra money called interest. The longer your money stays, and the higher the interest rate, the more it grows.</p>
+          <p>Example:</p>
+          <ul>
+            <li>If you save 100 php at 10% interest per year:</li>
+            <li>After 1 year: 110 php</li>
+            <li>After 3 years: 130 php</li>
+            <li>After 10 years: 200 php</li>
+          </ul>
+          <h4>What Is Investing?</h4>
+          <p>Investing means putting money into things that can grow in value, like stocks. A stock is a tiny piece of a company. If the company does well, your stock can become more valuable.</p>
+
+          <h4>4. Comparison Shopping</h4>
+          <h4>What Is Comparison Shopping?</h4>
+          <p>Comparison shopping means checking different options before buying something. It helps you get the best value for your money.</p>
+          <h4>Why Is It Important?</h4>
+          <ul>
+            <li>Helps avoid wasting money.</li>
+            <li>Teaches you to spend wisely.</li>
+            <li>Protects you from tricky advertisements.</li>
+          </ul>
+          <h4>Needs vs. Wants</h4>
+          <ul>
+            <li>A need is something you must have (like food, water, shelter, school supplies).</li>
+            <li>A want is something nice to have but not necessary (like candy, toys, or video games).</li>
+          </ul>
+          <p>Tip: Needs come first when you spend money.</p>
+          <h4>How Do Advertisements Affect You?</h4>
+          <ul>
+            <li>Ads use colors, sounds, and catchy words to make products look more exciting than they are.</li>
+            <li>Sometimes ads make you think you need something you really don’t.</li>
+          </ul>
+          <p>Be smart—ask: “Do I really need this?” before buying.</p>
+          <h4>Making Smart Shopping Choices:</h4>
+          <ul>
+            <li>Check different brands and prices.</li>
+            <li>Read labels and features.</li>
+            <li>Don’t believe everything in ads—look for facts, not just opinions.</li>
+            <li>Choose the best item based on quality, price, and usefulness—not popularity.</li>
+          </ul>
+          <p><strong>Spend wisely, save smartly!</strong></p>
         </div>
-
-        <div id="theme-picker">
-          <button id="theme-green" class="active" data-theme="green">🌳</button>
-          <button id="theme-blue" data-theme="blue">💧</button>
-          <button id="theme-pink" data-theme="pink">🌸</button>
-          <button id="theme-yellow" data-theme="yellow">☀️</button>
-          <button id="theme-purple" data-theme="purple">💜</button>
-        </div>
-
-        <div class="container">
-          <h1><span class="icon">💰</span> Budget Buddy <span class="icon">🐷</span></h1>
-
-          <div id="auth">
-            <h2>Join the Money Adventure!</h2>
-            <div id="login" class="card">
-              <h3>Already a Buddy? Log In! <span class="icon">🔑</span></h3>
-              <input id="li-email" type="email" placeholder="Your Active Email" /><br/>
-              <input id="li-pass" type="password" placeholder="Secret Password" /><br/>
-              <button id="do-login"><span class="icon">🚀</span> Come On In!</button><br/>
-              <button id="do-forgot"><span class="icon">🤔</span> Forgot My Key!</button>
-              <button id="show-signup-btn"><span class="icon">✨</span> New Buddy? Sign Up!</button>
-            </div>
-            <div id="signup" class="card" style="display:none;">
-              <h3>Sign Up for Fun! <span class="icon">🎉</span></h3>
-              <input id="su-nick" type="text" placeholder="Your Nickname" /><br/>
-              <input id="su-email" type="email" placeholder="Your Active Email" /><br/>
-              <input id="su-pass" type="password" placeholder="Secret Password" /><br/>
-              <button id="do-signup"><span class="icon">🌟</span> Let's Go!</button><br/>
-              <button id="show-login-btn"><span class="icon">🔙</span> Back to Login</button>
-            </div>
-            <div id="auth-msg"></div>
-            <button id="download-app-btn"><span class="icon">📱</span> Get Budget Buddy App!</button>
-          </div>
-
-          <div id="tracker" style="display:none;">
-            <button id="do-logout"><span class="icon">👋</span> Bye Bye!</button>
-            <h2>Welcome, <span id="nick-span"></span>! Let's Track! <span class="icon">📈</span></h2>
-
-            <div class="card">
-              <h3><span class="icon">💡</span> Smart Money Tips for Super Savers!</h3>
-              <p>1. Keep track of every coin you spend.<br/>
-              2. Try to save at least 10% of your allowance.<br/>
-              3. Check your money adventure every week!</p>
-            </div>
-
-            <div class="card">
-              <h3><span class="icon">🗓️</span> Today's Money Mission!</h3>
-              <label>Date: <input id="exp-date" type="date"/></label><br/>
-              <label>My Allowance Today: <input id="allowance" type="number" placeholder="How much money did you get?" /></label>
-            </div>
-
-            <div class="card">
-              <h3><span class="icon">🚌</span> Transportation!</h3>
-              <label>Transportation: <input id="fixed-transport" type="number" placeholder="Bus, train, or magic carpet?" /></label><br/>
-              <label>Meals/Snacks: <input id="fixed-meals" type="number" placeholder="Yummy food and treats!" /></label>
-            </div>
-
-            <div class="card">
-              <h3><span class="icon">🛍️</span> Other Fun Spends!</h3>
-              <div id="other-list"></div>
-              <button id="add-other"><span class="icon">➕</span> Add Another Fun Thing!</button>
-            </div>
-
-            <button id="calc-submit"><span class="icon">✨</span> Calculate My Money Magic!</button>
-
-            <div class="card">
-              <h3><span class="icon">📊</span> Today's Money Story!</h3>
-              <div class="summary-item"><span class="summary-label">Allowance:</span> <span id="sum-allow" class="summary-value">0</span></div>
-              <div class="summary-item"><span class="summary-label">Expenses:</span> <span id="sum-exp" class="summary-value">0</span></div>
-              <div class="summary-item"><span class="summary-label">Remaining:</span> <span id="sum-remain" class="summary-value">0</span></div>
-              <div class="summary-item"><span class="summary-label">Target Savings (10%):</span> <span id="sum-target" class="summary-value">0</span></div>
-              <div class="summary-item"><span class="summary-label">Actual Savings:</span> <span id="sum-save" class="summary-value">0</span></div>
-            </div>
-
-            <div class="card">
-              <h3><span class="icon">📜</span> My Money Journey History!</h3>
-              <label>Filter by Month:
-                <select id="month-filter">
-                  <option value="">All Months</option>
-                  ${[...Array(12)].map((_, i)=>`<option value="${i+1}">${new Date(0, i).toLocaleString('en-US', { month: 'long' })}</option>`).join("")}
-                </select>
-              </label>
-
-              <table id="history">
-                <thead>
-                  <tr><th>Date</th><th>Allowance</th><th>Expenses</th><th>Remaining</th></tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div id="bulb-icon">💡</div>
-        <div class="tip-popup" id="tip-popup">
-          <h3>Money Saving Tip! <span class="icon">💰</span></h3>
-          <p id="tip-text"></p>
-          <button id="close-tip">Got It!</button>
-        </div>
-
-        <div id="message-popup" class="message-popup">
-          <h3 id="message-title"></h3>
-          <p id="message-text"></p>
-          <button id="close-message">Awesome!</button>
-        </div>
-
-        <!-- New Floating Budget Buddy Character -->
-        <div id="budget-buddy-char">🐷</div>
-        <!-- New "For More Ideas" Message -->
-        <div id="more-ideas-msg"> <span>⬅️</span> For more ideas click here</div>
-
-        <!-- New Lesson Pop-up -->
-        <div id="lesson-popup">
-          <h3>Smart Money Management for Kids! <span class="icon">🧠</span></h3>
-          <div class="lesson-content">
-            <h4>What is Smart Money Management?</h4>
-            <p>Smart money management is like being a superhero for your money! It means making good choices about how you earn, save, spend, and share your money. It helps you reach your goals, like buying a cool new toy or saving for something big in the future.</p>
-            <ul>
-              <li><b>Earning:</b> How you get money (allowance, chores, gifts).</li>
-              <li><b>Saving:</b> Putting money aside for later.</li>
-              <li><b>Spending:</b> Using money to buy things you need or want.</li>
-              <li><b>Sharing:</b> Giving money to help others or causes you care about.</li>
-            </ul>
-
-            <h4>How to Practice Smart Money Management?</h4>
-            <p>It's easier than you think! Here are some super tips:</p>
-            <ul>
-              <li><b>Set Goals:</b> Decide what you want to save for. A new video game? A bike? A trip to the ice cream shop? Having a goal makes saving fun!</li>
-              <li><b>Make a Budget:</b> This is your money plan! Figure out how much money you get and how much you plan to spend and save. Our Budget Buddy app helps you do this!</li>
-              <li><b>Track Your Spending:</b> Know where your money goes. Every time you spend, write it down. This helps you see if you're sticking to your budget.</li>
-              <li><b>Save First:</b> When you get money, try to put some into your savings right away, before you spend any. This is called "paying yourself first."</li>
-              <li><b>Be a Smart Shopper:</b> Before you buy something, ask yourself: "Do I really need this?" or "Is there a cheaper way to get this?" Compare prices!</li>
-              <li><b>Avoid Impulse Buys:</b> Don't buy something just because you see it and want it right now. Think about it for a day or two. You might realize you don't need it.</li>
-              <li><b>Earn Extra Money:</b> Look for ways to earn more money, like doing extra chores around the house or helping neighbors.</li>
-              <li><b>Be Patient:</b> Saving takes time. Don't get discouraged if you don't reach your goal right away. Keep going!</li>
-            </ul>
-
-            <h4>When to Start Smart Money Management?</h4>
-            <p>The best time to start is NOW! The younger you start learning about money, the better you'll be at managing it when you're older. It's like learning to ride a bike – the more you practice, the easier it gets!</p>
-            <p>Even small steps, like saving a little bit from your allowance each week, can make a big difference over time. You're already on your way by using Budget Buddy!</p>
-          </div>
-          <button id="close-lesson">Got It, Budget Buddy!</button>
-        </div>
-
-        <!-- New Download Instruction Pop-up -->
-        <div id="download-instruction-popup">
-          <h3>Ready to Install Budget Buddy? <span class="icon">🚀</span></h3>
-          <p>You can add Budget Buddy right to your phone or computer screen, just like a real app! It's super easy!</p>
-
-          <div class="instruction-section">
-            <h4>For Phones & Tablets <span class="icon">📱</span></h4>
-            <ul>
-              <li><span class="emoji">1️⃣</span> Look for the **three little dots** (⋮) in your browser's top or bottom bar.</li>
-              <li><span class="emoji">2️⃣</span> Tap on it to open a menu.</li>
-              <li><span class="emoji">3️⃣</span> Find and tap **"Add to Home Screen"** or **"Install App"**. It might have a little house icon! 🏠</li>
-              <li><span class="emoji">4️⃣</span> Follow any on-screen instructions, and Budget Buddy will be ready on your home screen! 🎉</li>
-            </ul>
-          </div>
-
-          <div class="instruction-section">
-            <h4>For Computers & Laptops <span class="icon">💻</span></h4>
-            <ul>
-              <li><span class="emoji">1️⃣</span> Look for a **tiny computer icon** (🖥️) or a **plus sign** (➕) in the **top right corner** of your browser's address bar.</li>
-              <li><span class="emoji">2️⃣</span> Click on that icon.</li>
-              <li><span class="emoji">3️⃣</span> A small message will pop up asking if you want to "Install" Budget Buddy. Click **"Install"**! ✅</li>
-              <li><span class="emoji">4️⃣</span> Budget Buddy will open in its own window, ready for your money adventures! ✨</li>
-            </ul>
-          </div>
-
-          <button id="close-download-instruction">Got It, Thanks!</button>
-        </div>
+        <button id="close-lesson">Got It, Budget Buddy!</button>
       `;
+    }
 
+    document.addEventListener('DOMContentLoaded', () => {
       // --- Theme Picker Logic ---
       const themePicker = document.getElementById('theme-picker');
       const themeButtons = themePicker.querySelectorAll('button');
@@ -1891,8 +1812,8 @@
       // --- New Budget Buddy Character and Lesson Logic ---
       const budgetBuddyChar = document.getElementById('budget-buddy-char');
       const moreIdeasMsg = document.getElementById('more-ideas-msg');
-      const lessonPopup = document.getElementById('lesson-popup');
-      const closeLessonBtn = document.getElementById('close-lesson');
+      // lessonPopup is already defined above
+      const closeLessonBtn = document.getElementById('close-lesson'); // Get the button after innerHTML is set
 
       setTimeout(() => {
         moreIdeasMsg.style.display = 'block';
@@ -1962,6 +1883,262 @@
 </head>
 <body>
 <!-- Content will be dynamically loaded by JavaScript -->
+<div class="floating-element coin">💰</div>
+<div class="floating-element star">✨</div>
+<div class="floating-element cloud">☁️</div>
+<div class="floating-element balloon">🎈</div>
+<div class="floating-element heart">❤️</div>
+<div class="floating-element diamond">💎</div>
+<div class="floating-element flower">🌼</div>
+<div class="floating-element ferris-wheel">
+  <div class="cabin"></div>
+  <div class="cabin"></div>
+  <div class="cabin"></div>
+  <div class="cabin"></div>
+</div>
+
+<div id="theme-picker">
+  <button id="theme-green" class="active" data-theme="green">🌳</button>
+  <button id="theme-blue" data-theme="blue">💧</button>
+  <button id="theme-pink" data-theme="pink">🌸</button>
+  <button id="theme-yellow" data-theme="yellow">☀️</button>
+  <button id="theme-purple" data-theme="purple">💜</button>
+</div>
+
+<div class="container">
+  <h1><span class="icon">💰</span> Budget Buddy <span class="icon">🐷</span></h1>
+
+  <div id="auth">
+    <h2>Join the Money Adventure!</h2>
+    <div id="login" class="card">
+      <h3>Already a Buddy? Log In! <span class="icon">🔑</span></h3>
+      <input id="li-email" type="email" placeholder="Your Active Email" /><br/>
+      <input id="li-pass" type="password" placeholder="Secret Password" /><br/>
+      <button id="do-login"><span class="icon">🚀</span> Come On In!</button><br/>
+      <button id="do-forgot"><span class="icon">🤔</span> Forgot My Key!</button>
+      <button id="show-signup-btn"><span class="icon">✨</span> New Buddy? Sign Up!</button>
+    </div>
+    <div id="signup" class="card" style="display:none;">
+      <h3>Sign Up for Fun! <span class="icon">🎉</span></h3>
+      <input id="su-nick" type="text" placeholder="Your Nickname" /><br/>
+      <input id="su-email" type="email" placeholder="Your Active Email" /><br/>
+      <input id="su-pass" type="password" placeholder="Secret Password" /><br/>
+      <button id="do-signup"><span class="icon">🌟</span> Let's Go!</button><br/>
+      <button id="show-login-btn"><span class="icon">🔙</span> Back to Login</button>
+    </div>
+    <div id="auth-msg"></div>
+    <button id="download-app-btn"><span class="icon">📱</span> Get Budget Buddy App!</button>
+  </div>
+
+  <div id="tracker" style="display:none;">
+    <button id="do-logout"><span class="icon">👋</span> Bye Bye!</button>
+    <h2>Welcome, <span id="nick-span"></span>! Let's Track! <span class="icon">📈</span></h2>
+
+    <div class="card">
+      <h3><span class="icon">💡</span> Smart Money Tips for Super Savers!</h3>
+      <p>1. Keep track of every coin you spend.<br/>
+      2. Try to save at least 10% of your allowance.<br/>
+      3. Check your money adventure every week!</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon">🗓️</span> Today's Money Mission!</h3>
+      <label>Date: <input id="exp-date" type="date"/></label><br/>
+      <label>My Allowance Today: <input id="allowance" type="number" placeholder="How much money did you get?" /></label>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon">🚌</span> Transportation!</h3>
+      <label>Transportation: <input id="fixed-transport" type="number" placeholder="Bus, train, or magic carpet?" /></label><br/>
+      <label>Meals/Snacks: <input id="fixed-meals" type="number" placeholder="Yummy food and treats!" /></label>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon">🛍️</span> Other Fun Spends!</h3>
+      <div id="other-list"></div>
+      <button id="add-other"><span class="icon">➕</span> Add Another Fun Thing!</button>
+    </div>
+
+    <button id="calc-submit"><span class="icon">✨</span> Calculate My Money Magic!</button>
+
+    <div class="card">
+      <h3><span class="icon">📊</span> Today's Money Story!</h3>
+      <div class="summary-item"><span class="summary-label">Allowance:</span> <span id="sum-allow" class="summary-value">0</span></div>
+      <div class="summary-item"><span class="summary-label">Expenses:</span> <span id="sum-exp" class="summary-value">0</span></div>
+      <div class="summary-item"><span class="summary-label">Remaining:</span> <span id="sum-remain" class="summary-value">0</span></div>
+      <div class="summary-item"><span class="summary-label">Target Savings (10%):</span> <span id="sum-target" class="summary-value">0</span></div>
+      <div class="summary-item"><span class="summary-label">Actual Savings:</span> <span id="sum-save" class="summary-value">0</span></div>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon">📜</span> My Money Journey History!</h3>
+      <label>Filter by Month:
+        <select id="month-filter">
+          <option value="">All Months</option>
+          ${[...Array(12)].map((_, i)=>`<option value="${i+1}">${new Date(0, i).toLocaleString('en-US', { month: 'long' })}</option>`).join("")}
+        </select>
+      </label>
+
+      <table id="history">
+        <thead>
+          <tr><th>Date</th><th>Allowance</th><th>Expenses</th><th>Remaining</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="bulb-icon">💡</div>
+<div class="tip-popup" id="tip-popup">
+  <h3>Money Saving Tip! <span class="icon">💰</span></h3>
+  <p id="tip-text"></p>
+  <button id="close-tip">Got It!</button>
+</div>
+
+<div id="message-popup" class="message-popup">
+  <h3 id="message-title"></h3>
+  <p id="message-text"></p>
+  <button id="close-message">Awesome!</button>
+</div>
+
+<!-- New Floating Budget Buddy Character -->
+<div id="budget-buddy-char">🐷</div>
+<!-- New "For More Ideas" Message -->
+<div id="more-ideas-msg"> <span>⬅️</span> For more ideas click here</div>
+
+<!-- New Lesson Pop-up -->
+<div id="lesson-popup">
+  <h3>Spend wisely, save smartly! <span class="icon">🧠</span></h3>
+  <div class="lesson-content">
+    <h4>1. Allowances and Spending Plans</h4>
+    <h4>What Is an Allowance?</h4>
+    <p>An allowance is money you regularly receive from your parents or guardians. You might get it every week or month, often for doing chores or learning how to manage money responsibly.</p>
+    <h4>What Is a Spending Plan?</h4>
+    <p>A spending plan, or budget, is a guide that shows how much money you have and how you plan to use it. It helps make sure your money doesn’t run out too quickly.</p>
+    <h4>Why Are Spending Plans Important?</h4>
+    <ul>
+      <li>They help balance income (the money you get) and expenses (the money you spend).</li>
+      <li>They guide you to make better choices.</li>
+      <li>They allow you to plan for savings and donations.</li>
+    </ul>
+    <h4>The Three Main Categories in a Spending Plan:</h4>
+    <ul>
+      <li><b>Spend</b> – Use money for items you want or need now (toys, food, clothes).</li>
+      <li><b>Save</b> – Set money aside for later or bigger purchases.</li>
+      <li><b>Give</b> – Donate to others or help people in need.</li>
+    </ul>
+
+    <h4>2. Being Responsible With Money</h4>
+    <h4>What Does It Mean to Be Responsible With Money?</h4>
+    <p>Being money-responsible means knowing:</p>
+    <ul>
+      <li>How much money you have.</li>
+      <li>Where your money goes.</li>
+      <li>How to avoid spending more than you earn.</li>
+    </ul>
+    <h4>Why Should You Keep Track of Spending?</h4>
+    <p>Keeping records of your spending helps you:</p>
+    <ul>
+      <li>Stay within your plan.</li>
+      <li>See where your money went.</li>
+      <li>Avoid forgetting or guessing your expenses.</li>
+    </ul>
+    <p>You can use:</p>
+    <ul>
+      <li>Receipts to remember what you bought.</li>
+      <li>Notebooks or diaries to write down your spending.</li>
+      <li>Envelopes or folders to keep money and records organized.</li>
+    </ul>
+    <h4>What Happens If You Overspend?</h4>
+    <p>If you spend more than you have:</p>
+    <ul>
+      <li>You might not have enough for other important needs.</li>
+      <li>You may miss opportunities to buy something more useful later.</li>
+      <li>You could develop bad habits that cause problems when you grow up.</li>
+    </ul>
+
+    <h4>3. Saving and Investing</h4>
+    <h4>What Is Saving?</h4>
+    <p>Saving means keeping some of your money instead of spending it right away. You can save:</p>
+    <ul>
+      <li>In a piggy bank or jar.</li>
+      <li>In a savings account at a bank.</li>
+      <li>For short-term goals (like toys).</li>
+      <li>For long-term goals (like a bike or a trip).</li>
+    </ul>
+    <h4>What Is Interest?</h4>
+    <p>When you put money in a savings account, the bank adds extra money called interest. The longer your money stays, and the higher the interest rate, the more it grows.</p>
+    <p>Example:</p>
+    <ul>
+      <li>If you save 100 php at 10% interest per year:</li>
+      <li>After 1 year: 110 php</li>
+      <li>After 3 years: 130 php</li>
+      <li>After 10 years: 200 php</li>
+    </ul>
+    <h4>What Is Investing?</h4>
+    <p>Investing means putting money into things that can grow in value, like stocks. A stock is a tiny piece of a company. If the company does well, your stock can become more valuable.</p>
+
+    <h4>4. Comparison Shopping</h4>
+    <h4>What Is Comparison Shopping?</h4>
+    <p>Comparison shopping means checking different options before buying something. It helps you get the best value for your money.</p>
+    <h4>Why Is It Important?</h4>
+    <ul>
+      <li>Helps avoid wasting money.</li>
+      <li>Teaches you to spend wisely.</li>
+      <li>Protects you from tricky advertisements.</li>
+    </ul>
+    <h4>Needs vs. Wants</h4>
+    <ul>
+      <li>A need is something you must have (like food, water, shelter, school supplies).</li>
+      <li>A want is something nice to have but not necessary (like candy, toys, or video games).</li>
+    </ul>
+    <p>Tip: Needs come first when you spend money.</p>
+    <h4>How Do Advertisements Affect You?</h4>
+    <ul>
+      <li>Ads use colors, sounds, and catchy words to make products look more exciting than they are.</li>
+      <li>Sometimes ads make you think you need something you really don’t.</li>
+    </ul>
+    <p>Be smart—ask: “Do I really need this?” before buying.</p>
+    <h4>Making Smart Shopping Choices:</h4>
+    <ul>
+      <li>Check different brands and prices.</li>
+      <li>Read labels and features.</li>
+      <li>Don’t believe everything in ads—look for facts, not just opinions.</li>
+      <li>Choose the best item based on quality, price, and usefulness—not popularity.</li>
+    </ul>
+    <p><strong>Spend wisely, save smartly!</strong></p>
+  </div>
+  <button id="close-lesson">Got It, Budget Buddy!</button>
+</div>
+
+<!-- New Download Instruction Pop-up -->
+<div id="download-instruction-popup">
+  <h3>Ready to Install Budget Buddy? <span class="icon">🚀</span></h3>
+  <p>You can add Budget Buddy right to your phone or computer screen, just like a real app! It's super easy!</p>
+
+  <div class="instruction-section">
+    <h4>For Phones & Tablets <span class="icon">📱</span></h4>
+    <ul>
+      <li><span class="emoji">1️⃣</span> Look for the **three little dots** (⋮) in your browser's top or bottom bar.</li>
+      <li><span class="emoji">2️⃣</span> Tap on it to open a menu.</li>
+      <li><span class="emoji">3️⃣</span> Find and tap **"Add to Home Screen"** or **"Install App"**. It might have a little house icon! 🏠</li>
+      <li><span class="emoji">4️⃣</span> Follow any on-screen instructions, and Budget Buddy will be ready on your home screen! 🎉</li>
+    </ul>
+  </div>
+
+  <div class="instruction-section">
+    <h4>For Computers & Laptops <span class="icon">💻</span></h4>
+    <ul>
+      <li><span class="emoji">1️⃣</span> Look for a **tiny computer icon** (🖥️) or a **plus sign** (➕) in the **top right corner** of your browser's address bar.</li>
+      <li><span class="emoji">2️⃣</span> Click on that icon.</li>
+      <li><span class="emoji">3️⃣</span> A small message will pop up asking if you want to "Install" Budget Buddy. Click **"Install"**! ✅</li>
+      <li><span class="emoji">4️⃣</span> Budget Buddy will open in its own window, ready for your money adventures! ✨</li>
+    </ul>
+  </div>
+
+  <button id="close-download-instruction">Got It, Thanks!</button>
+</div>
 
 </body>
 </html>
