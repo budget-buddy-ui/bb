@@ -984,6 +984,75 @@
       background-color: var(--button-primary-hover-bg);
     }
 
+    /* Video Pop-up Styles */
+    #video-popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 105; /* Higher than other popups */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    #video-popup .video-content {
+      position: relative;
+      background-color: var(--message-popup-bg);
+      border: 5px solid var(--message-popup-border);
+      border-radius: 30px;
+      padding: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+      max-width: 80%;
+      max-height: 80%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #video-popup video {
+      width: 100%;
+      height: auto;
+      max-height: 70vh; /* Limit video height */
+      border-radius: 15px;
+      margin-bottom: 15px;
+      background-color: black; /* Ensure black background for video player */
+    }
+
+    #video-popup #close-video-popup {
+      position: absolute;
+      top: -15px; /* Adjust to be outside the border */
+      right: -15px; /* Adjust to be outside the border */
+      background-color: var(--button-danger-bg);
+      color: white;
+      border: 3px solid white; /* White border for visibility */
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      font-size: 1.8em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      z-index: 106; /* Ensure close button is on top */
+    }
+
+    #video-popup #close-video-popup:hover {
+      background-color: var(--button-danger-hover-bg);
+      transform: scale(1.1);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
 
     /* Responsive adjustments */
     @media (max-width: 768px) { /* Mobile View */
@@ -1170,6 +1239,19 @@
       #download-instruction-popup .instruction-section h4 { font-size: 1.5em; }
       #download-instruction-popup .instruction-section li { font-size: 0.95em; }
       #download-instruction-popup .instruction-section li .emoji { font-size: 1.2em; }
+
+      /* Video Pop-up Mobile Adjustments */
+      #video-popup .video-content {
+        max-width: 95%;
+        padding: 15px;
+      }
+      #video-popup #close-video-popup {
+        width: 35px;
+        height: 35px;
+        font-size: 1.5em;
+        top: -10px;
+        right: -10px;
+      }
     }
 
     @media (max-width: 400px) {
@@ -1572,6 +1654,10 @@
       const downloadAppBtn = document.getElementById('download-app-btn');
       const downloadInstructionPopup = document.getElementById('download-instruction-popup');
       const closeDownloadInstructionBtn = document.getElementById('close-download-instruction');
+      const watchVideoButton = document.getElementById('watch-video-btn'); // New
+      const videoPopup = document.getElementById('video-popup'); // New
+      const downloadVideo = document.getElementById('download-video'); // New
+      const closeVideoPopupBtn = document.getElementById('close-video-popup'); // New
 
 
       showSignupBtn.onclick = () => {
@@ -1643,6 +1729,18 @@
 
       closeDownloadInstructionBtn.onclick = () => {
         downloadInstructionPopup.style.display = 'none';
+      };
+
+      // --- Video Pop-up Logic ---
+      watchVideoButton.onclick = () => {
+        videoPopup.style.display = 'flex'; // Use flex to center content
+        downloadVideo.play();
+      };
+
+      closeVideoPopupBtn.onclick = () => {
+        videoPopup.style.display = 'none';
+        downloadVideo.pause();
+        downloadVideo.currentTime = 0; // Reset video to start
       };
 
 
@@ -1850,6 +1948,7 @@
   // Handle the click on the custom install button
   document.addEventListener('DOMContentLoaded', () => {
     const downloadAppBtn = document.getElementById('download-app-btn');
+    const downloadInstructionPopup = document.getElementById('download-instruction-popup'); // Ensure this is defined
     if (downloadAppBtn) {
         downloadAppBtn.addEventListener('click', () => {
             if (deferredPrompt) {
@@ -1865,7 +1964,7 @@
             } else {
                 // If deferredPrompt is not available (e.g., already installed, or not supported)
                 // Show the custom instruction popup
-                document.getElementById('download-instruction-popup').style.display = 'block';
+                downloadInstructionPopup.style.display = 'block';
             }
         });
     }
@@ -2137,7 +2236,19 @@
     </ul>
   </div>
 
+  <button id="watch-video-btn" class="video-button"><span class="icon">▶️</span> Watch Video Guide!</button>
   <button id="close-download-instruction">Got It, Thanks!</button>
+</div>
+
+<!-- Video Pop-up Structure -->
+<div id="video-popup">
+  <div class="video-content">
+    <video id="download-video" controls playsinline>
+      <source src="video/download.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <button id="close-video-popup">✖️</button>
+  </div>
 </div>
 
 </body>
